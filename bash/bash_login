@@ -1,0 +1,6 @@
+# display login messages
+
+#echo -e "\nuptime: $(uptime | cut -d ' ' -f 4-7)"
+#echo -e "\nuptime: $(uptime | cut -b 11-23)"
+
+echo -e "\n`uname -nsrp`\n"

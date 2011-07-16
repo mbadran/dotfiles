@@ -1,0 +1,42 @@
+# avoid mistakes
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+# TODO: get this working
+# http://hintsforums.macworld.com/archive/index.php/t-9123.html
+#alias rm='mv \!* ~/.Trash/'
+
+# convenience
+alias l='ls -laFh'
+alias lt='ls -lahFrt'
+#alias tar='gtar -c something $*'
+#alias untar='gtar -zxvf $*'
+alias pu='pushd $* > /dev/null'
+alias po='popd > /dev/null'
+alias ff='find . -name $*'
+alias sfind='find . -name $* -print'
+
+#alias vi="vim"
+alias vi="mvim"
+alias vim="mvim"
+
+# admin
+alias free="free -m"
+alias ht='history | tail'
+alias h='history'
+alias j='jobs'
+alias jl='jobs -l'
+#alias mtop='top -U $USER'
+alias usage='du -ak|sort -nr|less'
+#alias hog='du -ks * | sort -nr | pg'
+#alias hog='du -khs * | sort -nr'
+#alias hog='du -m * | sort -nr'
+#alias hogs='du -ms * | sort -nr'
+alias hog='du -gs * | sort -nr'
+
+# start/stop tomcat
+#alias tomstart="~/Library/Apache\ Tomcat/bin/./startup.sh"
+#alias tomstop="~/Library/Apache\ Tomcat/bin/./startup.sh"
+
+alias python='/opt/local/bin/python3.1'
+alias python2='/usr/bin/python'

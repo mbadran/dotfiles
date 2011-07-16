@@ -1,0 +1,71 @@
+# include my binaries in path
+export PATH=$PATH:~/Dropbox/bin
+#export LC_CTYPE=en_US.UTF-8
+#export LC_CTYPE=en_AU.UTF-8
+
+# include pyflakes in path (for vim)
+#export PATH=$PATH:~/.vim/bundle/pyflakes/bin
+
+# include macports binaries in path
+export PATH=$PATH:/opt/local/bin
+export MANPATH=$MANPATH:/opt/local/share/man
+export INFOPATH=$INFOPATH:/opt/local/share/info
+
+export TERM=xterm
+
+# process .bash_login
+if [ -f ~/.bash_login ]; then
+        . ~/.bash_login
+fi
+
+# process aliases
+if [ -f ~/.bash_aliases ]; then
+	. ~/.bash_aliases
+fi
+
+# color prompt
+PS1='[$?/\t][\e[36m\w\e[m] '
+
+# set xterm title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+    ;;
+*)
+    ;;
+esac
+
+# colorise ls
+if [ -f ~/.dir_colors ]; then
+	alias ls='ls -G'
+	#export LSCOLORS="no=00:fi=00:di=00;36:ln=00;35:pi=40;33:so=01;35:bd=40;32;00:cd=40;32;00:or=01;05;37;41:mi=01;05;37;41:ex=00;33:*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:"
+	export LSCOLORS="gxfxcxdxbxegedabagacad"
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+### more configs
+
+# set the system editor
+#export EDITOR='mvim -f'
+#export EDITOR=mvim
+#export EDITOR='mvim -f -c "au VimLeave * !open -a Terminal"'
+
+# set ruby gem directory
+export GEM_HOME=/usr/lib/ruby/gems/1.8/
+
+# ITL prayer times
+#export IPT_DATA='Melbourne -37.8167 144.9667 +10 5'
+#export IPT_DATA='Sydney -33.888241 151.204041 +10 5'
+
+#SET JAVA_HOME=/usr/bin/java
+#SET CATALINA_HOME=/usr/local/Cellar/tomcat/7.0.6/libexec
+#SET AXIS_HOME=/Users/fpg/Documents/cba/axis-1_4
+#SET XERCES_HOME=<Path to Xerces base directory>
+#Set CLASSPATH= %AXIS_HOME%\lib\axis.jar;%AXIS_HOME%\lib\axis-ant.jar; %AXIS_HOME%\lib\axis-schema.jar; %AXIS_HOME%\lib\commons-discovery-0.2.jar;%AXIS_HOME%\lib\commons-logging-1.0.4.jar; %AXIS_HOME%\lib\jaxrpc.jar;%AXIS_HOME%\lib\log4j-1.2.8.jar;%AXIS_HOME%\lib\saaj.jar;%AXIS_HOME%\lib\wsdl4j-1.5.1.jar;%AXIS_HOME%\lib\wss4j.jar;%AXIS_HOME%\lib\xmlsec-1.2.97.jar; %XERCES_HOME%\xml-apis.jar; %XERCES_HOME%\resolver.jar; %XERCES_HOME%\xercesImpl.jar;%CATALINA_HOME%\common\lib\activation.jar;%CATALINA_HOME%\common\lib\mail.jar;%CATALINA_HOME%\common\lib\servlet-api.jar;%JAVA_HOME%\lib\tools.jar;.;%CLASSPATH%;
+#SET CLASSPATH=$CLASSPATH;%AXIS_HOME%\lib\axis.jar;%AXIS_HOME%\lib\axis-ant.jar; %AXIS_HOME%\lib\axis-schema.jar; %AXIS_HOME%\lib\commons-discovery-0.2.jar;%AXIS_HOME%\lib\commons-logging-1.0.4.jar; %AXIS_HOME%\lib\jaxrpc.jar;%AXIS_HOME%\lib\log4j-1.2.8.jar;%AXIS_HOME%\lib\saaj.jar;%AXIS_HOME%\lib\wsdl4j-1.5.1.jar;%AXIS_HOME%\lib\wss4j.jar;%AXIS_HOME%\lib\xmlsec-1.2.97.jar;
