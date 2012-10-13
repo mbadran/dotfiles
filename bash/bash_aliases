@@ -5,6 +5,7 @@ alias mv='mv -i'
 # TODO: get this working
 # http://hintsforums.macworld.com/archive/index.php/t-9123.html
 #alias rm='mv \!* ~/.Trash/'
+#
 
 # convenience
 alias l='ls -laFh'
@@ -37,6 +38,3 @@ alias hog='du -gs * | sort -nr'
 # start/stop tomcat
 #alias tomstart="~/Library/Apache\ Tomcat/bin/./startup.sh"
 #alias tomstop="~/Library/Apache\ Tomcat/bin/./startup.sh"
-
-alias python='/opt/local/bin/python3.1'
-alias python2='/usr/bin/python'
