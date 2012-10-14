@@ -17,7 +17,7 @@ autodetach on
 # don't show the startup message
 startup_message off
 
-defutf8 on
+defutf7 on
 
 defscrollback 10000
 
