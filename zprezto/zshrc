@@ -1,0 +1,51 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Customize to your needs...
+
+# convenience
+alias l='ls -lahF'
+alias lt='ls -larthF'
+alias u='cd ..'
+#alias tar='gtar -c something $*'
+#alias untar='gtar -zxvf $*'
+#alias pu='pushd $* > /dev/null'
+#alias po='popd > /dev/null'
+alias ff='find . -name $*'
+alias sfind='find . -name $* -print'
+alias vi="mvim -v"
+alias vim="mvim"
+alias mutt="/sw/bin/mutt"
+
+# admin
+alias usage='du -ak|sort -nr|less'
+#alias hog='du -ks * | sort -nr | pg'
+#alias hog='du -khs * | sort -nr'
+#alias hog='du -m * | sort -nr'
+#alias hogs='du -ms * | sort -nr'
+alias hog='du -gs * | sort -nr'
+
+# functionality
+# see my bin dir for now
+alias reg='whois $1 | grep -q "No match" && echo "No" || echo "Yes"'
+alias myip='curl -s https://secure.internode.on.net/webtools/showmyip\?textonly=1'
+
+# fasd (speed)
+#alias v='f -e mvim'
+
+# vimpager
+export PAGER=/usr/local/bin/vimpager
+alias less=$PAGER
+alias zless=$PAGER
+
+# key bindings
+bindkey '^R' history-incremental-pattern-search-backward
