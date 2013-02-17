@@ -13,8 +13,8 @@ fi
 # Customize to your needs...
 
 # convenience
-alias l='ls -lahF'
-alias lt='ls -larthF'
+alias ll='ls -lah'
+alias lt='ls -larth'
 alias u='cd ..'
 #alias tar='gtar -c something $*'
 #alias untar='gtar -zxvf $*'
@@ -33,11 +33,13 @@ alias usage='du -ak|sort -nr|less'
 #alias hog='du -m * | sort -nr'
 #alias hogs='du -ms * | sort -nr'
 alias hog='du -gs * | sort -nr'
+# FIXME argument
+alias dutotal='du -ch $1 | tail -1'
 
 # functionality
-# see my bin dir for now
-alias reg='whois $1 | grep -q "No match" && echo "No" || echo "Yes"'
 alias myip='curl -s https://secure.internode.on.net/webtools/showmyip\?textonly=1'
+# FIXME argument
+alias isreg='whois $1 | grep -q "No match" && echo "No" || echo "Yes"'
 
 # fasd (speed)
 #alias v='f -e mvim'
@@ -49,3 +51,5 @@ alias zless=$PAGER
 
 # key bindings
 bindkey '^R' history-incremental-pattern-search-backward
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
