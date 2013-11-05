@@ -11,20 +11,25 @@ export PATH=$PATH:/opt/mvim
 # find powerline
 export PATH=$PATH:$HOME/Library/Python/2.7/bin
 
-# set up autoscaling tools
+# set aws and autoscaling tools
 export AWS_AUTO_SCALING_HOME=/opt/as
 export PATH=$PATH:$AWS_AUTO_SCALING_HOME/bin
-source ./aws_creds
+source ~/aws_creds
 
 # set the java home dir
-export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+# export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home
+
+# use macvim with shell utilities
+export VISUAL="mvim -v"
+export EDITOR="mvim -v"
 
 # use ansible from the dev git checkout
 export PATH=$PATH:/opt/ansible/bin
 cd /opt/ansible && source /opt/ansible/hacking/env-setup >> /dev/null && cd -
 
-# use macvim with shell utilities
-export VISUAL="mvim -v"
-export EDITOR="mvim -v"
+# set vmware fusion as the default vagrant provider
+# FIXME: find out why this doesn't work (vagrant up still looks for virtualbox)
+VAGRANT_DEFAULT_PROVIDER="vmware_fusion"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
