@@ -4,15 +4,11 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # vim instead of less
-export PAGER=vimpager
+export PAGER=/usr/local/bin/vimpager
 
 # macvim instead of vim
 export EDITOR='mvim -v'
 export VISUAL='mvim -v'
-# export EDITOR='mvim -f'
-# export EDITOR='mvim -f'
-# export EDITOR=mvim
-# export EDITOR='mvim -f -c "au VimLeave * !open -a Terminal"'
 
-# java 
+# java
 export JAVA_HOME='/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/'
