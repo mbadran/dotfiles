@@ -93,20 +93,19 @@ BG_CYAN="\[\033[0;46m"
 BG_WHITE="\[\033[0;47m"
 
 # high intensity background colors
-BGI_BLACK="\[\033[0;100m"
-BGI_RED="\[\033[0;101m"
-BGI_GREEN="\[\033[0;102m"
-BGI_YELLOW="\[\033[0;103m"
-BGI_BLUE="\[\033[0;104m"
-BGI_PURPLE="\[\033[0;105m"
-BGI_CYAN="\[\033[0;106m"
-BGI_WHITE="\[\033[0;107m"
+BGH_BLACK="\[\033[0;100m"
+BGH_RED="\[\033[0;101m"
+BGH_GREEN="\[\033[0;102m"
+BGH_YELLOW="\[\033[0;103m"
+BGH_BLUE="\[\033[0;104m"
+BGH_PURPLE="\[\033[0;105m"
+BGH_CYAN="\[\033[0;106m"
+BGH_WHITE="\[\033[0;107m"
 
 ########## color definitions end
 
 # customise prompt
-# PS1="\`if [ \$? = 0 ]; then echo '$CYAN'\!$RESET; else echo '$RED'\!$RESET; fi\` $CYAN\t$RESET $YELLOW\w$RESET  "
-PS1="\`if [ \$? = 0 ]; then echo '$H_BLACK'\!$RESET; else echo '$RED'\!$RESET; fi\` $H_BLACK\t$RESET $YELLOW\w$RESET  "
+PS1="\`if [ \$? = 0 ]; then echo '$CYAN'\!$RESET; else echo '$RED'\!$RESET; fi\` $CYAN\t$RESET $YELLOW\w$RESET  "
 
 # set xterm title to user@host:dir
 case "$TERM" in
