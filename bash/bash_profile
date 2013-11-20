@@ -11,4 +11,4 @@ export EDITOR='mvim -v'
 export VISUAL='mvim -v'
 
 # java
-export JAVA_HOME='/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/'
+export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/'
