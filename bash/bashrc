@@ -17,6 +17,9 @@ if [ -f ~/.dir_colors ]; then
   alias ls='ls -G'
 fi
 
+# increase the number of commands remembered in the history
+export HISTSIZE=999
+
 ############################## color definitions begin
 
 # reset color code
@@ -110,9 +113,10 @@ BGH_WHITE="\[\033[0;107m\]"
 #}
 
 # customise prompt
-#PS1="\`if [ \$? = 0 ]; then echo '$H_BLACK'\!$RESET; else echo '$RED'\!$RESET; fi\` $H_BLACK\t$RESET $YELLOW\w$RESET$(parse_git_branch)  "
+# TODO: add git repo awareness
 PS1="\`if [ \$? = 0 ]; then echo '$H_BLACK'\!$RESET; else echo '$RED'\!$RESET; fi\` $H_BLACK\t$RESET $YELLOW\w$RESET  "
 
+# FIXME
 # set xterm title to user@host:dir
 case "$TERm\]" in
 xterm*|rxvt*)

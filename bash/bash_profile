@@ -10,5 +10,8 @@ export PAGER=/usr/local/bin/vimpager
 export EDITOR='mvim -v'
 export VISUAL='mvim -v'
 
+# use brew binaries first
+export PATH=/usr/local/bin:$PATH
+
 # java
 export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/'
