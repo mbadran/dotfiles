@@ -12,11 +12,8 @@ alias lt='ls -lhrt'
 #alias pu='pushd $* > /dev/null'
 #alias po='popd > /dev/null'
 
-# vim
-# alias less=$PAGER
+# vim instead of less
 alias less=/usr/local/bin/vimpager
-# alias vi="mvim -v"
-# alias vim="mvim -v"
 
 # usage
 alias usage='du -ak|sort -nr|less'

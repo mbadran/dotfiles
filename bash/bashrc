@@ -18,7 +18,7 @@ if [ -f ~/.dir_colors ]; then
 fi
 
 # increase the number of commands remembered in the history
-export HISTSIZE=999
+export HISTSIZE=901
 
 ############################## color definitions begin
 

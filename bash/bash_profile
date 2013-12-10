@@ -6,12 +6,14 @@ fi
 # vim instead of less
 export PAGER=/usr/local/bin/vimpager
 
-# macvim instead of vim
-export EDITOR='mvim -v'
-export VISUAL='mvim -v'
-
 # use brew binaries first
 export PATH=/usr/local/bin:$PATH
 
 # java
 export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/'
+
+# ansible
+export PATH=/opt/ansible/bin:$PATH
+export PYTHONPATH=/opt/ansible/lib:$PYTHONPATH
+export MANPATH=/opt/ansible/docs/man:$MANPATH
+export ANSIBLE_LIBRARY=/opt/ansible/library
