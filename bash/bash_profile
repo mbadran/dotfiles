@@ -1,30 +1,21 @@
-# process .bashrc
+# source .bashrc
 if [ -f ~/.bashrc ]; then
   . ~/.bashrc
 fi
 
-# vim instead of less
+# use vim instead of less
 export PAGER=/usr/local/bin/vimpager
 
 # use brew binaries first
 export PATH=/usr/local/bin:$PATH
 
 # java
-export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/'
+export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/'
 
-# ansible
-export PATH=/opt/ansible/bin:$PATH
-export PYTHONPATH=/opt/ansible/lib:$PYTHONPATH
-export MANPATH=/opt/ansible/docs/man:$MANPATH
-export ANSIBLE_LIBRARY=/opt/ansible/library
+# increase the number of commands remembered in the history
+export HISTSIZE=901
 
-# virtualenvwrapper
-# export WORKON_HOME=$HOME/Documents/projects/.virtualenvs
-# export PROJECT_HOME=$HOME/Documents/projects
-# export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-# export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-# export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
-# source /usr/local/bin/virtualenvwrapper.sh
-
-# brew
-export PATH="/usr/local/sbin:$PATH"
+# colorise ls
+if [ -f ~/.dir_colors ]; then
+  export LSCOLORS="gxfxcxdxbxegedabagacad"
+fi
