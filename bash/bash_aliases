@@ -13,6 +13,9 @@ alias lt='ls -lhrt'
 #alias pu='pushd $* > /dev/null'
 #alias po='popd > /dev/null'
 
+# neovim instead of vim
+alias vim=/usr/local/bin/nvim
+
 # vim instead of less
 alias less=/usr/local/bin/vimpager
 
