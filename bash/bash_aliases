@@ -28,3 +28,6 @@ alias dutotal='du -ch $1 | tail -1'
 
 # tools
 alias myip='curl http://wtfismyip.com/text'
+
+# gmu
+alias gmu='/Users/mo/Documents/binaries/ca/gmu/bin/GatewayMigrationUtility.sh'
