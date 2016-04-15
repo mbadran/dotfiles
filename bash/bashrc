@@ -12,6 +12,8 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # powerline
+# comment this out if powerline is not installed
+# (otherwise, the shell prompt will break)
 function _update_ps1() {
     PS1="$(~/powerline-shell.py --mode flat $? 2> /dev/null)"
 }
