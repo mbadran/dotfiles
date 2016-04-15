@@ -12,6 +12,12 @@ export PATH=/usr/local/bin:$PATH
 # java
 export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/'
 
+# go
+export GOPATH=$HOME/Documents/go
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+
 # increase the number of commands remembered in the history
 export HISTSIZE=901
 
