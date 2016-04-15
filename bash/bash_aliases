@@ -12,6 +12,9 @@ alias lt='ls -lhrt'
 #alias pu='pushd $* > /dev/null'
 #alias po='popd > /dev/null'
 
+# neovim instead of vim
+alias vim=/usr/local/bin/nvim
+
 # vim instead of less
 alias less=/usr/local/bin/vimpager
 
@@ -34,3 +37,4 @@ alias isreg='whois $1 | grep -q "No match" && echo "No" || echo "Yes"'
 
 # fpg
 alias hda='cd /Users/mo/Google\ Drive/projects/hda'
+alias uc='cd /Users/mo/Google\ Drive/projects/uc'
