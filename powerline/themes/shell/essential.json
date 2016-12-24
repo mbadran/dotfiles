@@ -1,0 +1,57 @@
+{
+        "dividers": "soft",
+	"segments": {
+		"left": [
+			{
+				"function": "powerline.segments.common.time.date",
+				"args": {
+				        "istime": true,
+				        "format": "%X"
+                                },
+                                "highlight_groups": "virtualenv",
+                                "priority": 10
+			},
+			{
+				"function": "powerline.segments.shell.last_status",
+                                "priority": 10
+			},
+			{
+				"function": "powerline.segments.shell.last_pipe_status",
+				"priority": 10
+			},
+			{
+				"function": "powerline.segments.shell.jobnum",
+				"priority": 40
+			},
+			{
+				"function": "powerline.segments.shell.mode",
+				"args": {
+                                        "default": "foo"
+                                },
+                                "priority": 10
+			},
+			{
+				"function": "powerline.segments.common.net.hostname",
+				"priority": 10
+			},
+			{
+				"function": "powerline.segments.common.env.user",
+                                "args": {
+                                        "hide_user": "mbadran"
+                                },
+				"priority": 40
+			},
+			{
+				"function": "powerline.segments.common.vcs.branch",
+				"priority": 40
+			},
+			{
+				"function": "powerline.segments.shell.cwd",
+				"priority": 10,
+                                "after": "go"
+			}
+		],
+		"right": [
+		]
+	}
+}
