@@ -7,30 +7,17 @@ alias mv='mv -i'
 # alias rm='mv \!* ~/.Trash/'
 
 # tweaks
-alias ls='ls -G'
-alias ll='ls -lah'
-alias lt='ls -lhrt'
+alias ls='ls --color'
+alias ll='ls -lahF'
+alias lt='ls -lahrtF'
 #alias pu='pushd $* > /dev/null'
 #alias po='popd > /dev/null'
 
-# neovim instead of vim
-alias vim=/usr/local/bin/nvim
-
-# vim instead of less
-alias less=/usr/local/bin/vimpager
-
 # usage
 alias usage='du -ak|sort -nr|less'
-#alias hog='du -ks * | sort -nr | pg'
-#alias hog='du -khs * | sort -nr'
-#alias hog='du -m * | sort -nr'
-#alias hogs='du -ms * | sort -nr'
 alias hog='du -gs * | sort -nr'
 # FIXME (argument)
 alias dutotal='du -ch $1 | tail -1'
 
 # tools
 alias myip='curl http://wtfismyip.com/text'
-
-# gmu
-alias gmu='/Users/mo/Documents/binaries/ca/gmu/bin/GatewayMigrationUtility.sh'

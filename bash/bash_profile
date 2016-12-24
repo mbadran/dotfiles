@@ -1,27 +1,26 @@
 # source .bashrc
-if [ -f ~/.bashrc ]; then
-  . ~/.bashrc
+if [ -f $HOME/.bashrc ]; then
+  source $HOME/.bashrc
 fi
 
 # use vim instead of less
-export PAGER=/usr/local/bin/vimpager
+# TODO: install on ubuntu first
+# https://github.com/rkitover/vimpager
+# export PAGER=/usr/local/bin/vimpager
 
-# use brew binaries first
+# include local binaries in the path
 export PATH=/usr/local/bin:$PATH
 
-# java
-export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/'
+# java (mac)
+# export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/'
 
-# go
-export GOPATH=$HOME/Documents/go
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
+# golang
+# export GOPATH=$HOME/Documents/go
+# export GOROOT=/usr/local/opt/go/libexec
+# export PATH=$PATH:$GOPATH/bin
+# export PATH=$PATH:$GOROOT/bin
 
-# increase the number of commands remembered in the history
-export HISTSIZE=901
-
-# colorise ls
-if [ -f ~/.dir_colors ]; then
-  export LSCOLORS="gxfxcxdxbxegedabagacad"
-fi
+# colorise ls (mac)
+# if [ -f $HOME/.dir_colors ]; then
+#   export LS_COLORS="gxfxcxdxbxegedabagacad"
+# fi
