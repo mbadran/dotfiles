@@ -25,6 +25,9 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# use neovim by default
+alias vim='nvim'
+
 # tools
 alias myip='curl http://wtfismyip.com/text'
 
