@@ -1,57 +1,43 @@
 {
-        "dividers": "soft",
 	"segments": {
 		"left": [
 			{
 				"function": "powerline.segments.common.time.date",
 				"args": {
-				        "istime": true,
-				        "format": "%X"
-                                },
-                                "highlight_groups": "virtualenv",
-                                "priority": 10
+					"istime": false,
+					"format": "%X"
+				}
 			},
 			{
-				"function": "powerline.segments.shell.last_status",
-                                "priority": 10
+				"function": "powerline.segments.shell.mode"
 			},
 			{
-				"function": "powerline.segments.shell.last_pipe_status",
-				"priority": 10
+				"function": "powerline.segments.shell.last_status"
 			},
 			{
-				"function": "powerline.segments.shell.jobnum",
-				"priority": 40
+				"function": "powerline.segments.shell.last_pipe_status"
 			},
 			{
-				"function": "powerline.segments.shell.mode",
-				"args": {
-                                        "default": "foo"
-                                },
-                                "priority": 10
+				"function": "powerline.segments.shell.jobnum"
 			},
 			{
-				"function": "powerline.segments.common.net.hostname",
-				"priority": 10
-			},
-			{
-				"function": "powerline.segments.common.env.user",
-                                "args": {
-                                        "hide_user": "mbadran"
-                                },
-				"priority": 40
+				"function": "powerline.segments.common.net.hostname"
 			},
 			{
 				"function": "powerline.segments.common.vcs.branch",
-				"priority": 40
+				"args": {
+					"status_colors": true
+				}
+			},
+			{
+				"function": "powerline.segments.common.vcs.stash"
 			},
 			{
 				"function": "powerline.segments.shell.cwd",
-				"priority": 10,
-                                "after": "go"
+				"args": {
+					"use_path_separator": false
+				}
 			}
-		],
-		"right": [
 		]
 	}
 }
