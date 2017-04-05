@@ -20,20 +20,23 @@ fi
 
 # add private keys to ssh-agent
 if [ -z "$SSH_AUTH_SOCK" ] ; then
-  eval `ssh-agent -s`
-  ssh-add $HOME/.ssh/overip
-  ssh-add $HOME/.ssh/mbadran-bl
+    eval `ssh-agent -s`
+    ssh-add $HOME/.ssh/overip
+    ssh-add $HOME/.ssh/mbadran-bl
 fi
 
-# use vim instead of less
-# FIXME: install on ubuntu or mac first (via ansible)
-# https://github.com/rkitover/vimpager
-# export PAGER=/usr/local/bin/vimpager
+# use vimpager instead of less (mac)
+# note that it needs to be installed first
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export PAGER=/usr/local/bin/vimpager
+fi
 
-# java (mac)
-# export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/'
+# set java path (mac)
+# if [[ "$OSTYPE" == "darwin"* ]]; then
+#     export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/'
+# fi
 
-# golang
+# set golang paths
 # export GOPATH=$HOME/Documents/go
 # export GOROOT=/usr/local/opt/go/libexec
 # export PATH=$PATH:$GOPATH/bin
@@ -42,7 +45,6 @@ fi
 # include .bashrc if it exists
 # this should always be the last thing in this file
 if [ -f "$HOME/.bashrc" ]; then
-source "$HOME/.bashrc"
+    source "$HOME/.bashrc"
 fi
-
 
