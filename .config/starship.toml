@@ -1,0 +1,55 @@
+# Don't print a new line at the start of the prompt
+# add_newline = false
+
+# Overwrite a default_prompt_order and use custom prompt_order
+prompt_order = [
+    "time",
+    "username",
+    "hostname",
+    "kubernetes",
+    "directory",
+    "git_branch",
+    "git_state",
+    "git_status",
+    "package",
+    "dotnet",
+    "golang",
+    "java",
+    "nodejs",
+    "python",
+    "ruby",
+    "rust",
+    "nix_shell",
+    "conda",
+    "memory_usage",
+    "aws",
+    "env_var",
+    "cmd_duration",
+    "line_break",
+    "jobs",
+    "battery",
+    "character",
+]
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]      # The name of the module we are configuring is "character"
+# symbol = "➜"     # The "symbol" segment is being set to "➜"
+error_symbol = "✗"
+use_symbol_for_status = true
+
+[directory]
+fish_style_pwd_dir_length = 10
+style = "cyan"
+
+[git_branch]
+symbol = "🌿 "
+
+[line_break]
+disabled = true
+
+[time]
+disabled = false
+style = "white"
+
+[nodejs]
+disabled = true

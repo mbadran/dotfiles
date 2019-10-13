@@ -34,6 +34,12 @@ fi
 # include .bashrc if it exists
 # this should always be the last thing in this file
 if [ -f "$HOME/.bashrc" ]; then
-    source "$HOME/.bashrc"
+     source "$HOME/.bashrc"
+fi
+
+# include .bash_login if it exists
+# this should always be the last thing in this file
+if [ -f "$HOME/.bash_login" ]; then
+     source "$HOME/.bash_login"
 fi
 
