@@ -30,25 +30,27 @@ prompt_order = [
 ]
 
 [character]
-# symbol = "🌀"
 symbol = "➖"
 error_symbol = "✖️ "
 use_symbol_for_status = true
 
 [directory]
 fish_style_pwd_dir_length = 10
-style = "cyan"
+style = "67"
 
 [git_branch]
 symbol = "🌿 "
-style = "green"
+style = "28"
+
+[git_status]
+style = "28"
 
 [line_break]
 disabled = true
 
 [time]
 disabled = false
-style = "dimmed cyan"
+style = "240"
 
 [nodejs]
 disabled = true
@@ -56,6 +58,6 @@ disabled = true
 # ~/.config/starship.toml
 
 [cmd_duration]
-min_time = 5
-prefix = ""
-style = "red"
+min_time = 30
+prefix = "⏱️  "
+style = "88"

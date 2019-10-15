@@ -1,3 +1,47 @@
+########################################################################### todo
+
+# - fix ls colours
+# - fix ls autocomplete colours (and make them the same as ls colours)
+# - enable case insensitive cd
+
+####################################################################### settings
+
+# enable default completions
+autoload -Uz compinit && compinit
+
+# enable case-insensitive completions
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# enable vi keybindings (and kill the delay)
+bindkey -v
+export KEYTIMEOUT=1
+
+# use vimpager instead of less
+export PAGER=vimpager
+alias less=$PAGER
+alias zless=$PAGER
+
+# search history backwards with ctrl-r (like bash)
+bindkey '^r' history-incremental-search-backward
+
+#################################################################### zsh plugins
+
+# activate additional completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+# activate syntax highlighting
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# activate auto suggestions
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# activate history search
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
 ######################################################################## aliases
 
 # avoid mistakes
@@ -5,12 +49,13 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# supercharge ls
+# improve ls
 alias ls='ls -GF'
 alias ll='ls -lahGF'
 alias lt='ls -lahrtGF'
 
-# use neovim by default
+# use neovim instead of vim
+alias vi='/usr/local/bin/nvim'
 alias vim='/usr/local/bin/nvim'
 
 # colourise grep by default
@@ -18,23 +63,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-################################################################## auto-complete
+####################################################################### starship
 
-# enable default completions
-autoload -Uz compinit && compinit
-
-# enable git completion
-zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
-fpath=(~/.zsh $fpath)
-
-# search history backwards with ctrl-r
-# bindkey '^r' history-incremental-search-backward
-
-########################################################################### misc
-
-# enable vi keybindings and kill the delay
-bindkey -v
-export KEYTIMEOUT=1
-
-# enable starship
 eval "$(starship init zsh)"
