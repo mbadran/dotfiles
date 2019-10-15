@@ -1,7 +1,5 @@
-# Don't print a new line at the start of the prompt
 # add_newline = false
 
-# Overwrite a default_prompt_order and use custom prompt_order
 prompt_order = [
     "time",
     "username",
@@ -31,10 +29,10 @@ prompt_order = [
     "character",
 ]
 
-# Replace the "❯" symbol in the prompt with "➜"
-[character]      # The name of the module we are configuring is "character"
-# symbol = "➜"     # The "symbol" segment is being set to "➜"
-error_symbol = "✗"
+[character]
+# symbol = "🌀"
+symbol = "➖"
+error_symbol = "✖️ "
 use_symbol_for_status = true
 
 [directory]
@@ -43,13 +41,21 @@ style = "cyan"
 
 [git_branch]
 symbol = "🌿 "
+style = "green"
 
 [line_break]
 disabled = true
 
 [time]
 disabled = false
-style = "white"
+style = "dimmed cyan"
 
 [nodejs]
 disabled = true
+
+# ~/.config/starship.toml
+
+[cmd_duration]
+min_time = 5
+prefix = ""
+style = "red"
