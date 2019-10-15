@@ -1,8 +1,8 @@
-" configuration guidelines:
-"
+" guidelines:
+" 
 " 1. kiss
-" 2. don't use plugins, mappings, commands, functions, abbreviations
-" 3. don't set anything that would create confusion with vanilla vim/neovim
+" 2. don't set anything that would create confusion in vanilla vim/neovim
+" 3. don't bother with plugins, mappings, commands, functions, or abbreviations
 
 " hide the intro message on startup
 set shortmess+=I
@@ -11,10 +11,10 @@ set shortmess+=I
 set background=dark
 colorscheme desert
 
-" relative line numbers
+" show relative line numbers
 set relativenumber
 
-" highlight the line the cursor is on in the current buffer
+" underline the current line
 set cursorline
 
 " keep the cursor in the middle of the window
@@ -42,8 +42,8 @@ set expandtab
 " add only one space when joining sentences
 set nojoinspaces
 
-" match angle brackets too
+" add angle brackets as a match pair
 set matchpairs+=<:>
 
-" ignore whitespace for diff
+" ignore whitespace when diffing
 set diffopt+=iwhite
