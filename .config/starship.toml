@@ -33,6 +33,8 @@ prompt_order = [
 symbol = "➖"
 error_symbol = "✖️ "
 use_symbol_for_status = true
+# vicmd_symbol = "➕"
+vicmd_symbol = "➰"
 
 [directory]
 fish_style_pwd_dir_length = 10
@@ -54,8 +56,6 @@ style = "240"
 
 [nodejs]
 disabled = true
-
-# ~/.config/starship.toml
 
 [cmd_duration]
 min_time = 30
