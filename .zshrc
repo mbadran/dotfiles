@@ -1,8 +1,6 @@
 ########################################################################### todo
-
 # - fix ls colours
 # - fix ls autocomplete colours (and make them the same as ls colours)
-# - enable case insensitive cd
 
 ####################################################################### settings
 
@@ -63,6 +61,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-####################################################################### starship
+######################################################################### prompt
 
 eval "$(starship init zsh)"
