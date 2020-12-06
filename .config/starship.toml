@@ -1,40 +1,37 @@
-# add_newline = false
-
-prompt_order = [
-    "time",
-    "username",
-    "hostname",
-    "kubernetes",
-    "directory",
-    "git_branch",
-    "git_state",
-    "git_status",
-    "package",
-    "dotnet",
-    "golang",
-    "java",
-    "nodejs",
-    "python",
-    "ruby",
-    "rust",
-    "nix_shell",
-    "conda",
-    "memory_usage",
-    "aws",
-    "env_var",
-    "cmd_duration",
-    "line_break",
-    "jobs",
-    "battery",
-    "character",
-]
+format = """\
+    $time\
+    $directory\
+    $username\
+    $hostname\
+    $kubernetes\
+    $git_branch\
+    $git_state\
+    $git_status\
+    $package\
+    $dotnet\
+    $golang\
+    $java\
+    $nodejs\
+    $python\
+    $ruby\
+    $rust\
+    $nix_shell\
+    $conda\
+    $memory_usage\
+    $aws\
+    $env_var\
+    $cmd_duration\
+    $line_break\
+    $jobs\
+    $battery\
+    $character\
+"""
 
 [character]
 symbol = "➖"
 error_symbol = "✖️ "
 use_symbol_for_status = true
-# vicmd_symbol = "➕"
-vicmd_symbol = "➰"
+vicmd_symbol = "🤖"
 
 [directory]
 fish_style_pwd_dir_length = 10
@@ -53,11 +50,15 @@ disabled = true
 [time]
 disabled = false
 style = "240"
+format = "[$time]($style) "
 
 [nodejs]
 disabled = true
 
 [cmd_duration]
-min_time = 30
-prefix = "⏱️  "
+min_time = 3000
 style = "88"
+format = "⏱️  [$duration]($style) "
+
+[aws]
+disabled = true
