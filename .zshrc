@@ -34,13 +34,16 @@ bindkey '^r' history-incremental-search-backward
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # activate syntax highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # activate auto suggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # activate history search
-source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+# source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
@@ -59,8 +62,8 @@ alias ll='ls -lahGF'
 alias lt='ls -lahrtGF'
 
 # use neovim instead of vim
-alias vi='/usr/local/bin/nvim'
-alias vim='/usr/local/bin/nvim'
+alias vi='/opt/homebrew/bin/nvim'
+alias vim='/opt/homebrew/bin/nvim'
 
 # colourise grep by default
 alias grep='grep --color=auto'
