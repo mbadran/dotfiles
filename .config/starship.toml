@@ -28,11 +28,20 @@ format = """\
 """
 
 [character]
-success_symbol = "✏️ "
-# error_symbol = "✖️ "
-error_symbol = "❌"
-use_symbol_for_status = true
-vicmd_symbol = "🤖"
+# theme 1
+# success_symbol = "🟢 "
+# error_symbol = "🔴 "
+# vicmd_symbol = "⚪ "
+
+# theme 2
+success_symbol = "➖ "
+error_symbol = "✖️  "
+vicmd_symbol = "➕ "
+
+# theme 3
+# success_symbol = "💚 "
+# error_symbol = "❤️  "
+# vicmd_symbol = "🤍 "
 
 [directory]
 fish_style_pwd_dir_length = 10
