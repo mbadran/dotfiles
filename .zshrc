@@ -31,18 +31,15 @@ bindkey '^r' history-incremental-search-backward
 #################################################################### zsh plugins
 
 # activate additional completions
-fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(/opt/homebrew/share/zsh-completions $fpath)
 
 # activate syntax highlighting
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # activate auto suggestions
-# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # activate history search
-# source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
