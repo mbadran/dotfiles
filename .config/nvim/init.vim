@@ -9,13 +9,16 @@ set shortmess+=I
 
 " set the theme
 set background=dark
-colorscheme desert
+colorscheme habamax
 
 " show relative line numbers
 set relativenumber
 
 " underline the current line
 set cursorline
+
+" highlight column 80
+set colorcolumn=80
 
 " keep the cursor in the middle of the window
 set scrolloff=999
