@@ -1,8 +1,4 @@
-########################################################################### todo
-# - fix ls colours
-# - fix ls autocomplete colours (and make them the same as ls colours)
-
-####################################################################### settings
+################################################################### zsh settings
 
 # enable brew completions
 # https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh
@@ -16,57 +12,112 @@ autoload -Uz compinit && compinit
 # enable case-insensitive completions
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-# enable vi keybindings (and kill the delay)
-bindkey -v
-export KEYTIMEOUT=1
-
-# use vimpager instead of less
-export PAGER=vimpager
-alias less=$PAGER
-alias zless=$PAGER
-
 # search history backwards with ctrl-r (like bash)
 bindkey '^r' history-incremental-search-backward
 
+# replaced with vi-mode plugin (below)
+# enable vi keybindings (and kill the delay)
+# bindkey -v
+# export KEYTIMEOUT=1
+
 #################################################################### zsh plugins
 
+# enable vi-mode
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
 # activate additional completions
-fpath=(/opt/homebrew/share/zsh-completions $fpath)
+fpath=($(brew --prefix)/share/zsh-completions $fpath)
 
 # activate syntax highlighting
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # activate auto suggestions
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # activate history search
-source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-######################################################################## aliases
+######################################################################## helpers
+
+# nodejs helpers
+alias cy='npm run test:open'
+alias cyd='npm run test:dev'
+alias cyci='npm run test:ci'
+alias cyls='npm run test:list --silent'
+
+################################################################### tui upgrades
 
 # avoid mistakes
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
 
-# improve ls
-alias ls='ls -GF'
-alias ll='ls -lahGF'
-alias lt='ls -lahrtGF'
+# replace ls with eza
+alias ls=eza
+alias ll="eza --all --long --icons --git"
 
-# use neovim instead of vim
-alias vi='/opt/homebrew/bin/nvim'
-alias vim='/opt/homebrew/bin/nvim'
+# replace tree with eza
+alias tree="eza -T"
 
-# colourise grep by default
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+# replace cd with zoxide
+alias cd=z
+eval "$(zoxide init zsh)"
 
-######################################################################### prompt
+# replace cat with bat
+alias cat="bat --style=plain --paging=never"    # aka bat -pp
 
+# replace pagers with bat
+export PAGER=bat
+alias more=bat
+alias less="bat --paging=always"
+# alias zless=bat       # for archives TODO: fix
+
+# replace man with bat
+export MANPAGER="sh -c 'col -bx | bat -l man -p'" 
+# export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+
+# replace du with dust
+alias du=dust
+
+# replace grep with ripgrep
+alias grep=rg
+
+# replace find with fd
+alias find=fd
+
+# replace top with btop
+alias top=btop
+
+# replace vim with neovim
+alias vi=nvim
+alias vim=nvim
+
+# use fuzzy search
+# (sets up fzf key bindings and fuzzy completion)
+eval "$(fzf --zsh)"
+
+# replace default prompt with starship
 eval "$(starship init zsh)"
+
+########################################################################## fixes
+
+# alacritty
+# fix terminal window title
+# before every command: set title to just the command/process name
+preexec() {
+  print -Pn "\e]0;${1%% *}\a"
+}
+# when returning to prompt: set title to 'zsh'
+precmd() {
+  print -Pn "\e]0;zsh\a"
+}
+
+####################################################################### lmstudio
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/mo/.lmstudio/bin"
+# End of LM Studio CLI section
