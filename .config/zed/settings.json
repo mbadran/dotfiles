@@ -7,24 +7,30 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "use_smartcase_search": true,
+  "icon_theme": {
+    "mode": "system",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Mocha",
+  },
+  "terminal": {
+    "font_family": "IosevkaTerm Nerd Font Mono",
+    "font_size": 18,
+  },
   "base_keymap": "VSCode",
   "agent": {
     "default_profile": "ask",
     "default_model": {
       "provider": "lmstudio",
-      "model": "qwen/qwen3-14b"
+      "model": "qwen/qwen3-14b",
     },
     "model_parameters": [],
-    "play_sound_when_agent_done": true
+    "play_sound_when_agent_done": true,
   },
   "vim_mode": true,
   "ui_font_size": 16,
   "buffer_font_size": 16,
   "buffer_font_family": "FiraCode Nerd Font",
   "wrap_guides": [80],
-  "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "Ayu Mirage"
-  }
+  "theme": "Fleet Dark Purple",
 }
