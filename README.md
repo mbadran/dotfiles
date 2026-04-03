@@ -17,7 +17,7 @@ no promises.
 | | |
 |-|-|
 | first commit | 2011 |
-| lines of config | ~2200 |
+| lines of config | ~2,200 |
 | vim burnouts | 1 |
 | vim themes | 1 |
 | vim plugins | 7 |
@@ -30,17 +30,17 @@ no promises.
 ## what's in here
 
 `$EDITOR` — post-burnout neovim config. (recovering vim-tragic here.)
-minimal, portable, opinionated, and tinker-proof. no lsp, autocomplete, or ide
+minimal, portable, opinionated, and tinker-proof. no inessentials or ide
 shenanigans. 1 theme, <=10 plugins, <=20 mappings. every line earns its keep.
 
 `$SHELL` — zsh with vi-mode, syntax highlighting, autosuggestions, history
 search. compinit cached daily. startup profiled on demand.
 
-`$PROMPT` — starship with catppuccin macchiato powerline. two-line layout:
-left prompt for essentials (directory, git, shell), right prompt for context
-(languages, status, time, a morse code tutor of questionable utility).
+`$PROMPT` — starship with barista, a custom theme inspired by catppuccin. two-
+line layout: left prompt for essentials (directory, git, shell), right prompt
+for context (languages, status, time, a morse code experiment).
 
-`$TERMINAL` — kitty. 9 lines of config.
+`$TERMINAL` — kitty. 9 lines of config. (wip)
 
 `$TUI` — eza (ls), bat (cat/less/man), dust (du), ripgrep (grep), fd (find),
 zoxide (cd), fzf (fuzzy everything), btop (top), delta (diff).
