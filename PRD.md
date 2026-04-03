@@ -61,8 +61,8 @@ Status key: `DONE` = clean and committed | `WIP` = active cleanup | `QUEUED` = n
 |--------|--------|-------|
 | nvim/init.lua | DONE | Philosophy-driven minimal config. lazy.nvim, 7 plugins, <=20 mappings. Ready to push. |
 | zed/settings.json | DONE | Clean. Fleet Dark Purple theme, vim mode, LM Studio integration. |
-| starship.toml | WIP | Cleaning up commented alternatives, adding palette grays. |
-| .zshrc | QUEUED | Park broken exit logic, add profiling foundations. |
+| starship.toml | DONE | Cleaned. 4 palettes with neutral grays. Morse tutor marked for morsel replacement. |
+| .zshrc | DONE | Cleaned. Profiling foundations added (ZSH_PROFILE=1). Exit logic parked for Rust TUI. |
 | btop.conf | QUEUED | Everforest dark theme, vim keys. Minor mods, low priority. |
 | kitty.conf | QUEUED | 6 active lines in 2939 lines of embedded docs. Needs total rewrite. |
 | gh/config.yml | QUEUED | Track config, gitignore hosts.yml (credentials). |
@@ -90,19 +90,19 @@ Status key: `DONE` = clean and committed | `WIP` = active cleanup | `QUEUED` = n
 
 - [x] **1.1** Create PRD, testing guide, and project roadmap
 - [x] **1.2** Create `working/` and `logs/` directories, update `.gitignore`
-- [ ] **1.3** Clean up `starship.toml`:
+- [x] **1.3** Clean up `starship.toml`:
   - Extract commented-out alternatives to `working/starship-notes.toml`
   - Extract morsel CLI design notes to `working/morsel-design-notes.md`
   - Remove stale comments and unused code
   - Add neutral grays (gray, silver, charcoal) to all 4 palettes
   - Mark morse code tutor with `# REPLACE: morsel`
   - Commit
-- [ ] **1.4** Clean up `.zshrc`:
+- [x] **1.4** Clean up `.zshrc`:
   - Extract broken exit logic to `working/zshrc-exit-ideas.txt`
   - Remove commented-out code and TBD placeholders
   - Add profiling foundations (zprof + EPOCHREALTIME, off by default)
   - Commit
-- [ ] **1.5** Push all commits to origin
+- [x] **1.5** Push all commits to origin
 
 ### Phase 2: Triage and cleanup (near-term)
 
