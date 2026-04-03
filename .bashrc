@@ -1,3 +1,4 @@
+# here be dragons — legacy bash config (2011–2020), superseded by zsh
 # $HOME/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples

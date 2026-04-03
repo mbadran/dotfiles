@@ -1,3 +1,4 @@
+# here be dragons — legacy bash config (2011–2020), superseded by zsh
 # everything here is only run once, on login
 
 # include pip binaries in the path (mac)
@@ -42,4 +43,3 @@ fi
 if [ -f "$HOME/.bash_login" ]; then
      source "$HOME/.bash_login"
 fi
-

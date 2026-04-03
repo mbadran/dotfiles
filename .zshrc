@@ -3,7 +3,8 @@
 export PATH="$PATH:$HOME/.local/bin"
 
 ###################################################################### profiling
-# usage: ZSH_PROFILE=1 zsh -i -c exit
+# ZSH_PROFILE=1 zsh -i -c exit    # comment/uncomment to toggle profiling
+
 # logs:  ./logs/zsh-profile-*.log (gitignored)
 
 DOTFILES_DIR="${0:A:h}"
@@ -26,9 +27,9 @@ if type brew &>/dev/null; then
   FPATH=${_brew_prefix}/share/zsh/site-functions:$FPATH
 fi
 
-# enable default completions
-# FIXME: compinit is slow (~80-120ms) — cache with daily rebuild in phase 2
-autoload -Uz compinit && compinit
+# enable default completions (cached — rebuilt once per day)
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then compinit; else compinit -C; fi
 
 # enable case-insensitive completions
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'

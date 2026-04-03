@@ -81,9 +81,9 @@ repo_root_format = "[ 󰳏 $repo_root]($repo_root_style)[$path ]($style)"
 
 [directory.substitutions]
 "Documents" = "󰈙"
-"Downloads" = ""
+"Downloads" = ""
 "Music" = "󰝚"
-"Pictures" = ""
+"Pictures" = ""
 "Developer" = "󰲋"
 
 [git_branch]

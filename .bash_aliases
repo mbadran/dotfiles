@@ -1,3 +1,4 @@
+# here be dragons — legacy bash config (2011–2020), superseded by zsh
 # avoid mistakes
 alias rm='rm -i'
 alias cp='cp -i'
@@ -41,4 +42,3 @@ alias dutotal='du -ch $1 | tail -1'
 # rm to mac trash instead of deleting
 # http://hintsforums.macworld.com/archive/index.php/t-9123.html
 # alias rm='mv \!* ~/.Trash/'
-
