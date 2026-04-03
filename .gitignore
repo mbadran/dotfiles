@@ -1,11 +1,8 @@
-# scratchpad for experimental / commented-out code
+# scratchpad for notes and experimental code
 working/
 
 # profiling and debug logs
-logs/
-
-# app themes (fetched by app)
-.config/alacritty/themes/
+.config/logs/
 
 # auto-generated
 .config/configstore/
@@ -26,13 +23,6 @@ logs/
 # app-managed configs (not handcrafted)
 .config/qBittorrent/
 .config/raycast/
-
-# not used
-.config/karabiner/
-
-# starship backup / reference files
-.config/starship.toml.catppuccin
-.config/starship.toml.orig
 
 # claude
 .claude/

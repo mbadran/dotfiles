@@ -3,16 +3,14 @@
 export PATH="$PATH:$HOME/.local/bin"
 
 ###################################################################### profiling
-# ZSH_PROFILE=1 zsh -i -c exit    # comment/uncomment to toggle profiling
+# measures total zsh startup time + per-function breakdown (via zprof).
+# flip to 1, open a new shell, flip back to 0. logs are gitignored.
+ZSH_PROFILE=0                                   # 1 to enable, 0 to disable
+ZSH_LOG_DIR="$HOME/.config/logs"
 
-# logs:  ./logs/zsh-profile-*.log (gitignored)
-
-DOTFILES_DIR="${0:A:h}"
-ZSH_LOG_DIR="${ZSH_LOG_DIR:-${DOTFILES_DIR}/logs}"
-
-if [[ "$ZSH_PROFILE" == "1" ]]; then
-  zmodload zsh/zprof
-  zmodload zsh/datetime
+if (( ZSH_PROFILE )); then
+  zmodload zsh/zprof                            # per-function call profiler
+  zmodload zsh/datetime                         # high-precision $EPOCHREALTIME
   _zsh_start=$EPOCHREALTIME
 fi
 
@@ -143,19 +141,23 @@ alias cyls='npm run test:list --silent'
 # startup time. apps that auto-append config (eg. lmstudio) will land
 # below this, so move them above manually after they're added.
 
-if [[ "$ZSH_PROFILE" == "1" ]]; then
+if (( ZSH_PROFILE )); then
   _zsh_end=$EPOCHREALTIME
   _zsh_elapsed=$(( (_zsh_end - _zsh_start) * 1000 ))
   mkdir -p "$ZSH_LOG_DIR"
-  _logfile="${ZSH_LOG_DIR}/zsh-profile-$(date +%Y%m%d-%H%M%S).log"
+  _logfile="${ZSH_LOG_DIR}/zsh-profile_$(date +%Y%m%d-%H%M%S).log"
   {
     echo "=== zsh startup profile ==="
-    echo "date: $(date -Iseconds)"
+    echo "date:    $(date -Iseconds)"
     printf "elapsed: %.0fms\n" "$_zsh_elapsed"
+    echo ""
+    echo "--- per-function breakdown (zprof) ---"
     echo ""
     zprof
   } > "$_logfile"
-  printf "profiled in %.0fms → %s\n" "$_zsh_elapsed" "$_logfile"
+  echo "\n─────────────────────────────────────────"
+  printf "  Profiled zsh in %.0fms → %s\n" "$_zsh_elapsed" "$_logfile"
+  echo "─────────────────────────────────────────"
 fi
 
 ############################################################# app customisations

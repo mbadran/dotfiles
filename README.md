@@ -1,28 +1,35 @@
 # dotfiles
 
-Mostly curated CLI/TUI replacements and config. There may be some things of
-interest here, but no promises.
+██████╗  ██████╗ ████████╗███████╗██╗██╗     ███████╗███████╗
+██╔══██╗██╔═══██╗╚══██╔══╝██╔════╝██║██║     ██╔════╝██╔════╝
+██║  ██║██║   ██║   ██║   █████╗  ██║██║     █████╗  ███████╗
+██║  ██║██║   ██║   ██║   ██╔══╝  ██║██║     ██╔══╝  ╚════██║
+██████╔╝╚██████╔╝   ██║   ██║     ██║███████╗███████╗███████║
+╚═════╝  ╚═════╝    ╚═╝   ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝
+
+curated cli/tui configs and replacements. some things may be useful, but
+no promises.
 
 ## stats
 
 | | |
 |-|-|
 | first commit | 2011 |
-| mass extinction of defaults | ongoing |
-| vim plugins | 7 (hard limit: 10) |
-| vim mappings | 15 (hard limit: 20) |
-| vim themes | 1 (hard limit: 1) |
+| lines of config | ~2200 |
+| vim burnouts | 1 |
+| vim themes | 1 |
+| vim plugins | 7 |
+| vim mappings | 15 |
 | tools replaced | 13 |
 | aliases defined | 21 |
-| lines of config | ~2200 |
-| lines of kitty docs deleted | 2929 |
+| defaults exterminated | ongoing |
 | morse code characters learned | debatable |
 
 ## what's in here
 
-`$EDITOR` — neovim. post-burnout config. philosophy-driven, minimal, resists
-tweaking. 7 plugins, <=20 mappings, 1 theme (kanagawa dragon). every line
-earns its place or gets deleted.
+`$EDITOR` — post-burnout neovim config. (recovering vim-tragic here.)
+minimal, portable, opinionated, and tinker-proof. no lsp, autocomplete, or ide
+shenanigans. 1 theme, <=10 plugins, <=20 mappings. every line earns its keep.
 
 `$SHELL` — zsh with vi-mode, syntax highlighting, autosuggestions, history
 search. compinit cached daily. startup profiled on demand.

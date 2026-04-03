@@ -18,9 +18,9 @@
             - plugins -- <=10
             - themes -- 1
             - everything else -- 0
-                - ignore tabs, commands, functions, abbreviations, etc
-                - use a graphical editor or ide
-    3. go outside
+                - ignore tabs, commands, functions, abbreviations, lsp, etc
+                - use a graphical editor or ide, if necessary
+    3. go outdoors
         - use plugins passively (with defaults only or minimal options)
         - resist checking out other themes and plugins
         - avoid tweaking at all costs

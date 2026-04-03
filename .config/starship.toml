@@ -2,10 +2,6 @@
 # Based on: https://starship.rs/presets/catppuccin-powerline (macchiato)
 # https://starship.rs/config/ | https://www.nerdfonts.com/cheat-sheet
 # Alternatives and design notes: ../working/starship-notes.toml
-#
-# CAUTION: format/right_format blocks contain 4 powerline PUA glyphs
-# (U+E0B6, U+E0B0, U+E0B2, U+E0B4) that get stripped by some text tools.
-# Edit those blocks with care — run the verification script in TESTING.md after.
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
@@ -69,11 +65,11 @@ palette = "catppuccin_macchiato"
 
 [directory]
 style = "bg:blue fg:crust"
-format = "[ $path]($style)[$read_only ](bg:blue fg:yellow)"
+format = "[ $path]($style)([$read_only ](bg:blue fg:yellow))"
 truncation_length = 10
-truncate_to_repo = true
 truncation_symbol = "󰽘/"
-home_symbol = "󰮧"
+truncate_to_repo = true
+home_symbol = ""
 read_only = " 󰏮"
 use_os_path_sep = true
 repo_root_style = "bg:blue fg:crust"
@@ -87,7 +83,7 @@ repo_root_format = "[ 󰳏 $repo_root]($repo_root_style)[$path ]($style)"
 "Developer" = "󰲋"
 
 [git_branch]
-symbol = ""
+symbol = ""
 style = "bg:teal fg:crust"
 format = "[ $symbol $branch ]($style)"
 
@@ -111,7 +107,7 @@ format = "[ $symbol ]($style)([$number ]($style))"
 disabled = false
 style = "bg:lavender fg:crust"
 format = "[ $indicator ]($style)"
-bash_indicator = ""
+bash_indicator = ""
 fish_indicator = "󰈺"
 zsh_indicator = "󱆃"
 powershell_indicator = "󰨊"
@@ -119,10 +115,10 @@ pwsh_indicator = "󰨊"
 ion_indicator = "󱪯"
 elvish_indicator = "󰳝"
 tcsh_indicator = "󰰩"
-xonsh_indicator = ""
-cmd_indicator = ""
+xonsh_indicator = ""
+cmd_indicator = ""
 nu_indicator = "󱒊"
-unknown_indicator = ""
+unknown_indicator = ""
 
 [shlvl]
 disabled = false
@@ -133,7 +129,7 @@ format = "([$shlvl ]($style))"
 disabled = false
 success_symbol = "[󰍟](fg:text)"
 error_symbol = "[󰍞](fg:red)"
-vimcmd_symbol = "[](fg:green)"
+vimcmd_symbol = "[](fg:green)"
 
 ########################################################### right prompt modules
 
@@ -143,23 +139,23 @@ style = "bg:surface0 fg:subtext1"
 format = "[ $symbol ]($style)"
 
 [os.symbols]
-Windows = ""
+Windows = ""
 Ubuntu = "󰕈"
-SUSE = ""
+SUSE = ""
 Raspbian = "󰐿"
 Mint = "󰣭"
 Macos = "󰀵"
-Manjaro = ""
+Manjaro = ""
 Linux = "󰌽"
 Gentoo = "󰣨"
 Fedora = "󰣛"
-Alpine = ""
-Amazon = ""
-Android = ""
-AOSC = ""
+Alpine = ""
+Amazon = ""
+Android = ""
+AOSC = ""
 Arch = "󰣇"
 Artix = "󰣇"
-CentOS = ""
+CentOS = ""
 Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
@@ -215,7 +211,7 @@ ignore_base = false
 
 # TODO: test
 [docker_context]
-symbol = ""
+symbol = ""
 style = "bg:blue fg:crust"
 format = "[ $symbol ($context) ]($style)"
 
@@ -232,12 +228,12 @@ style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 [golang]
-symbol = ""
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 [haskell]
-symbol = ""
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
@@ -247,27 +243,27 @@ style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 [kotlin]
-symbol = ""
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 [nodejs]
-symbol = ""
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 [php]
-symbol = ""
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 [python]
-symbol = ""
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) (#$virtualenv) ]($style)"
 
 [rust]
-symbol = ""
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
