@@ -1,74 +1,444 @@
-format = """\
-    $time\
-    $directory\
-    $username\
-    $hostname\
-    $kubernetes\
-    $git_branch\
-    $git_state\
-    $git_status\
-    $package\
-    $dotnet\
-    $golang\
-    $java\
-    $nodejs\
-    $python\
-    $ruby\
-    $rust\
-    $nix_shell\
-    $conda\
-    $memory_usage\
-    $aws\
-    $env_var\
-    $cmd_duration\
-    $line_break\
-    $jobs\
-    $battery\
-    $character\
-"""
+# Starship Prompt Configuration
+# https://starship.rs/config/ | https://www.nerdfonts.com/cheat-sheet
+# Alternatives and design notes: ../working/starship-notes.toml
 
-[character]
-# theme 1
-# success_symbol = "🟢 "
-# error_symbol = "🔴 "
-# vicmd_symbol = "⚪ "
+"$schema" = 'https://starship.rs/config-schema.json'
 
-# theme 2
-success_symbol = "➖ "
-error_symbol = "✖️  "
-vicmd_symbol = "➕ "
+scan_timeout = 250          # for scanning files
+command_timeout = 2000      # for executing commands
 
-# theme 3
-# success_symbol = "💚 "
-# error_symbol = "❤️  "
-# vicmd_symbol = "🤍 "
+# left prompt -- minimal -- key details often referred to
+format = """
+[](fg:blue)\
+$directory\
+[](bg:teal fg:blue)\
+$git_branch\
+[](bg:white fg:teal)\
+$git_status\
+$git_metrics\
+[](bg:pink fg:white)\
+$jobs\
+[](bg:lavender fg:pink)\
+$shell\
+$shlvl\
+[](fg:lavender)\
+$line_break\
+$character"""
+
+# right prompt -- broader -- supplementary details less referred to
+right_format = """
+[](mantle)\
+$custom\
+[](bg:mantle fg:blue)\
+$docker_context\
+$conda\
+$package\
+[](bg:blue fg:mauve)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](bg:mauve fg:red)\
+$status\
+[](bg:red fg:overlay2)\
+$env_var\
+[](bg:overlay2 fg:overlay0)\
+$username\
+[](bg:overlay0 fg:surface2)\
+$hostname\
+[](bg:surface2 fg:surface1)\
+$cmd_duration\
+[](bg:surface1 fg:surface0)\
+$time\
+$os\
+[](fg:surface0)"""
+
+palette = "catppuccin_macchiato"
+
+############################################################ left prompt modules
 
 [directory]
-fish_style_pwd_dir_length = 10
-style = "67"
+style = "bg:blue fg:crust"
+format = "[ $path]($style)[$read_only ](bg:blue fg:yellow)"
+truncation_length = 10
+truncate_to_repo = true
+truncation_symbol = "󰽘/"
+home_symbol = "󰮧"
+read_only = " 󰏮"
+use_os_path_sep = true
+repo_root_style = "bg:blue fg:crust"
+repo_root_format = "[ 󰳏 $repo_root]($repo_root_style)[$path ]($style)"
+
+[directory.substitutions]
+"Documents" = "󰈙"
+"Downloads" = ""
+"Music" = "󰝚"
+"Pictures" = ""
+"Developer" = "󰲋"
 
 [git_branch]
-symbol = "🌿 "
-style = "28"
+symbol = ""
+style = "bg:teal fg:crust"
+format = "[ $symbol $branch ]($style)"
 
 [git_status]
-style = "28"
+style = "bg:white fg:crust"
+format = "([ $all_status]($style)[$ahead_behind ]($style))"
 
-[line_break]
-disabled = true
+[git_metrics]
+disabled = false
+added_style = "bold bg:white fg:green"
+deleted_style = "bold bg:white fg:red"
+format = "([+$added ]($added_style))([-$deleted ]($deleted_style))"
+
+[jobs]
+style = "bg:pink fg:black"
+symbol = "󰒲"
+number_threshold = 2
+format = "[ $symbol ]($style)([$number ]($style))"
+
+[shell]
+disabled = false
+style = "bg:lavender fg:crust"
+format = "[ $indicator ]($style)"
+bash_indicator = ""
+fish_indicator = "󰈺"
+zsh_indicator = "󱆃"
+powershell_indicator = "󰨊"
+pwsh_indicator = "󰨊"
+ion_indicator = "󱪯"
+elvish_indicator = "󰳝"
+tcsh_indicator = "󰰩"
+xonsh_indicator = ""
+cmd_indicator = ""
+nu_indicator = "󱒊"
+unknown_indicator = ""
+
+[shlvl]
+disabled = false
+style = "bold bg:lavender fg:crust"
+format = "([$shlvl ]($style))"
+
+[character]
+disabled = false
+success_symbol = '[󰍟](fg:text)'
+error_symbol = '[󰍞](fg:red)'
+vimcmd_symbol = '[](fg:green)'
+
+########################################################### right prompt modules
+
+[os]
+disabled = false
+style = "bg:surface0 fg:subtext1"
+format = "[ $symbol ]($style)"
+
+[os.symbols]
+Windows = ""
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+AOSC = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
 
 [time]
 disabled = false
-style = "240"
-format = "[$time]($style) "
-
-[nodejs]
-disabled = true
+time_format = "%R"
+style = "bg:surface0 fg:subtext1"
+format = "[ $time]($style)"
 
 [cmd_duration]
-min_time = 3000
-style = "88"
-format = "⏱️  [$duration]($style) "
+disabled = false
+show_milliseconds = false
+min_time = 30000
+show_notifications = true
+style = "bg:surface1 fg:subtext0"
+format = "[ $duration 󱦟 ]($style)"
 
-[aws]
-disabled = true
+[hostname]
+style = "bg:surface2 fg:peach"
+format = "[ $hostname$ssh_symbol 󰍹 ]($style)"
+
+[username]
+style_user = "bg:overlay0 fg:crust"
+style_root = "italic bg:overlay0 fg:white"
+format = "[ $user  ]($style)"
+
+[env_var.PROGRAM]
+description = "The terminal program in the environment"
+variable = "TERM_PROGRAM"
+style = "bg:overlay2 fg:white"
+format = "[ $env_value  ]($style)"
+
+[status]
+disabled = false
+style = "bg:red fg:crust"
+symbol = "󰇷"
+not_executable_symbol = "󰔢"
+not_found_symbol = "󰢚"
+sigint_symbol = "󰊠"                    # cancelling process
+signal_symbol = "󰒲"                    # suspending process (matches jobs symbol)
+map_symbol = true
+format = "([ $common_meaning$maybe_int$signal_name ]($style))[$symbol ]($style)"
+
+############################################################ context modules
+
+[conda]                                 # untested
+symbol = "  "
+style = "bg:blue fg:crust"
+format = "[ $symbol$environment ]($style)"
+ignore_base = false
+
+[docker_context]                        # untested
+symbol = ""
+style = "bg:blue fg:crust"
+format = "[ $symbol ($context) ]($style)"
+
+[package]                               # untested
+style = "bg:blue fg:crust"
+format = "[ $package ]($style)"
+
+########################################################### language modules
+
+[c]
+symbol = " "
+style = "bg:mauve fg:crust"
+format = "[ $symbol$version ]($style)"
+
+[rust]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+[golang]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+[nodejs]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+[php]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+[java]
+symbol = " "
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+[kotlin]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+[haskell]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+[python]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) (#$virtualenv) ]($style)"
+
+################################################################# custom modules
+
+# REPLACE: morsel — see working/morsel-design-notes.md
+[custom.anchor]
+description = "Morse code tutor — random letter with Google pictogram"
+command = """python3 -c "
+import random
+chars = {
+  'A': ('· ━',      'A·rchery'),
+  'B': ('━ · · ·',  'B·anjo'),
+  'C': ('━ · ━ ·',  'C·andy'),
+  'D': ('━ · ·',    'D·og'),
+  'E': ('·',        'E·ye'),
+  'F': ('· · ━ ·',  'F·iretruck'),
+  'G': ('━ ━ ·',    'G·iraffe'),
+  'H': ('· · · ·',  'H·ippo'),
+  'I': ('· ·',      'I·nsect'),
+  'J': ('· ━ ━ ━',  'J·et'),
+  'K': ('━ · ━',    'K·ite'),
+  'L': ('· ━ · ·',  'L·aboratory'),
+  'M': ('━ ━',      'M·ustache'),
+  'N': ('━ ·',      'N·et'),
+  'O': ('━ ━ ━',    'O·rchestra'),
+  'P': ('· ━ ━ ·',  'P·addle'),
+  'Q': ('━ ━ · ━',  'Q·uarterback'),
+  'R': ('· ━ ·',    'R·obot'),
+  'S': ('· · ·',    'S·ubmarine'),
+  'T': ('━',        'T·ape'),
+  'U': ('· · ━',    'U·nicorn'),
+  'V': ('· · · ━',  'V·acuum'),
+  'W': ('· ━ ━',    'W·and'),
+  'X': ('━ · · ━',  'X·-ray'),
+  'Y': ('━ · ━ ━',  'Y·ard'),
+  'Z': ('━ ━ · ·',  'Z·ebra'),
+}
+l = random.choice(list(chars))
+m, p = chars[l]
+print(m)
+"
+"""
+when = "true"
+style = "bg:mantle fg:surface2"
+format = "[ $output ]($style)"
+
+################################################################# theme palettes
+# All four Catppuccin flavours + neutral grays for theme-agnostic utility colours.
+# Only catppuccin_macchiato is active — others kept for publishing / theme switching.
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+black = "#000000"
+white = "#ffffff"
+gray = "#808080"
+silver = "#c0c0c0"
+charcoal = "#36454f"
+
+[palettes.catppuccin_frappe]
+rosewater = "#f2d5cf"
+flamingo = "#eebebe"
+pink = "#f4b8e4"
+mauve = "#ca9ee6"
+red = "#e78284"
+maroon = "#ea999c"
+peach = "#ef9f76"
+yellow = "#e5c890"
+green = "#a6d189"
+teal = "#81c8be"
+sky = "#99d1db"
+sapphire = "#85c1dc"
+blue = "#8caaee"
+lavender = "#babbf1"
+text = "#c6d0f5"
+subtext1 = "#b5bfe2"
+subtext0 = "#a5adce"
+overlay2 = "#949cbb"
+overlay1 = "#838ba7"
+overlay0 = "#737994"
+surface2 = "#626880"
+surface1 = "#51576d"
+surface0 = "#414559"
+base = "#303446"
+mantle = "#292c3c"
+crust = "#232634"
+black = "#000000"
+white = "#ffffff"
+gray = "#808080"
+silver = "#c0c0c0"
+charcoal = "#36454f"
+
+[palettes.catppuccin_latte]
+rosewater = "#dc8a78"
+flamingo = "#dd7878"
+pink = "#ea76cb"
+mauve = "#8839ef"
+red = "#d20f39"
+maroon = "#e64553"
+peach = "#fe640b"
+yellow = "#df8e1d"
+green = "#40a02b"
+teal = "#179299"
+sky = "#04a5e5"
+sapphire = "#209fb5"
+blue = "#1e66f5"
+lavender = "#7287fd"
+text = "#4c4f69"
+subtext1 = "#5c5f77"
+subtext0 = "#6c6f85"
+overlay2 = "#7c7f93"
+overlay1 = "#8c8fa1"
+overlay0 = "#9ca0b0"
+surface2 = "#acb0be"
+surface1 = "#bcc0cc"
+surface0 = "#ccd0da"
+base = "#eff1f5"
+mantle = "#e6e9ef"
+crust = "#dce0e8"
+black = "#000000"
+white = "#ffffff"
+gray = "#808080"
+silver = "#c0c0c0"
+charcoal = "#36454f"
+
+[palettes.catppuccin_macchiato]
+rosewater = "#f4dbd6"
+flamingo = "#f0c6c6"
+pink = "#f5bde6"
+mauve = "#c6a0f6"
+red = "#ed8796"
+maroon = "#ee99a0"
+peach = "#f5a97f"
+yellow = "#eed49f"
+green = "#a6da95"
+teal = "#8bd5ca"
+sky = "#91d7e3"
+sapphire = "#7dc4e4"
+blue = "#8aadf4"
+lavender = "#b7bdf8"
+text = "#cad3f5"
+subtext1 = "#b8c0e0"
+subtext0 = "#a5adcb"
+overlay2 = "#939ab7"
+overlay1 = "#8087a2"
+overlay0 = "#6e738d"
+surface2 = "#5b6078"
+surface1 = "#494d64"
+surface0 = "#363a4f"
+base = "#24273a"
+mantle = "#1e2030"
+crust = "#181926"
+black = "#000000"
+white = "#ffffff"
+gray = "#808080"
+silver = "#c0c0c0"
+charcoal = "#36454f"
