@@ -1,7 +1,38 @@
+# scratchpad for experimental / commented-out code
+working/
+
+# profiling and debug logs
+logs/
+
+# app themes (fetched by app)
 .config/alacritty/themes/
+
+# auto-generated
 .config/configstore/
 .config/htop/
 .config/nvim/.netrwhist
+.config/nvim/lazy-lock.json
+
+# zed transient data
 .config/zed/conversations/
 .config/zed/prompts/
 .config/zed/settings_backup.json
+
+# credentials / runtime state
+.config/gh/hosts.yml
+.config/op/
+.config/pulse/
+
+# app-managed configs (not handcrafted)
+.config/qBittorrent/
+.config/raycast/
+
+# not used
+.config/karabiner/
+
+# starship backup / reference files
+.config/starship.toml.catppuccin
+.config/starship.toml.orig
+
+# claude
+.claude/
