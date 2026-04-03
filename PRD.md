@@ -63,20 +63,16 @@ Status key: `DONE` = clean and committed | `WIP` = active cleanup | `QUEUED` = n
 | zed/settings.json | DONE | Clean. Fleet Dark Purple theme, vim mode, LM Studio integration. |
 | starship.toml | DONE | Cleaned. 4 palettes with neutral grays. Morse tutor marked for morsel replacement. |
 | .zshrc | DONE | Cleaned. Profiling foundations added (ZSH_PROFILE=1). Exit logic parked for Rust TUI. |
-| btop.conf | QUEUED | Everforest dark theme, vim keys. Minor mods, low priority. |
-| kitty.conf | QUEUED | 6 active lines in 2939 lines of embedded docs. Needs total rewrite. |
-| gh/config.yml | QUEUED | Track config, gitignore hosts.yml (credentials). |
-| git/ignore | QUEUED | Track. |
+| btop.conf | DONE | Stripped to 88 lines. Everforest dark, vim keys, braille graphs. |
+| kitty.conf | DONE | Stripped from 2939 to 9 lines. IosevkaTerm + Catppuccin Macchiato. |
+| gh/config.yml | DONE | Tracked. hosts.yml gitignored (credentials). |
+| git/ignore | DONE | Tracked. |
 
 ### Legacy files (tracked, future triage)
 
 | File | Notes |
 |------|-------|
-| .bash_aliases | Bash-era, 2017. Superseded by .zshrc aliases. |
-| .bash_login | 1 line, 2019. |
-| .bash_logout | 2018. |
-| .bash_profile | 2020. |
-| .bashrc | 2019. |
+| .bash_* | Here be dragons. 2011–2020. Superseded by zsh. Kept for zsh-less servers. |
 | .dir_colors | 2017. Superseded by eza. |
 | .inputrc | 2017. Readline config, still useful for bash-based tools. |
 | .screenrc | 2017. Superseded by tmux. |
@@ -106,14 +102,20 @@ Status key: `DONE` = clean and committed | `WIP` = active cleanup | `QUEUED` = n
 
 ### Phase 2: Triage and cleanup (near-term)
 
-- [ ] **2.1** Track `.config/gh/config.yml` (gitignore hosts.yml)
-- [ ] **2.2** Track `.config/git/ignore`
-- [ ] **2.3** Clean up `btop.conf` -- strip to active config only, commit
-- [ ] **2.4** Clean up `kitty.conf` -- rewrite as minimal file with only active directives, commit
-- [ ] **2.5** Decide fate of legacy bash files (remove or archive to `working/`)
+- [x] **2.1** Track `.config/gh/config.yml` (gitignore hosts.yml)
+- [x] **2.2** Track `.config/git/ignore`
+- [x] **2.3** Clean up `btop.conf` -- stripped to 88 lines, active config only
+- [x] **2.4** Clean up `kitty.conf` -- stripped from 2939 to 9 lines
+- [x] **2.5** Legacy bash files tagged with here-be-dragons warning, kept for zsh-less servers
 - [ ] **2.6** Delete `starship.toml.catppuccin` and `starship.toml.orig` (or move to `working/`)
 - [ ] **2.7** Add per-file profiling markers (wrap each `source` call with timing)
-- [ ] **2.8** Update README.md with actual documentation
+- [x] **2.8** Update README.md with stats and env-var section style
+- [x] **2.9** Cache compinit with daily rebuild
+- [x] **2.10** Cache brew --prefix (called 6 times)
+- [x] **2.11** Replace cd=z alias with zoxide --cmd cd (fixes non-interactive scripts)
+- [x] **2.12** Add delta as diff replacement (installed via brew)
+- [x] **2.13** Add zsh history config (10k, shared, deduped)
+- [x] **2.14** Revisit README with something more whimsical
 
 ### Phase 3: Rust CLI integrations (future, blocked on separate projects)
 
