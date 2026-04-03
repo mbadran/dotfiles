@@ -1,3 +1,20 @@
+################################################################### path updates
+
+export PATH="$PATH:$HOME/.local/bin"
+
+#################################################################### profiling
+# usage: ZSH_PROFILE=1 zsh -i -c exit
+# logs:  ./logs/zsh-profile-*.log (gitignored)
+
+DOTFILES_DIR="${0:A:h}"
+ZSH_LOG_DIR="${ZSH_LOG_DIR:-${DOTFILES_DIR}/logs}"
+
+if [[ "$ZSH_PROFILE" == "1" ]]; then
+  zmodload zsh/zprof
+  zmodload zsh/datetime
+  _zsh_start=$EPOCHREALTIME
+fi
+
 ################################################################### zsh settings
 
 # enable brew completions
@@ -15,10 +32,8 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 # search history backwards with ctrl-r (like bash)
 bindkey '^r' history-incremental-search-backward
 
-# replaced with vi-mode plugin (below)
-# enable vi keybindings (and kill the delay)
-# bindkey -v
-# export KEYTIMEOUT=1
+# remove the 1-character gap on the right of the prompt
+export ZLE_RPROMPT_INDENT=0
 
 #################################################################### zsh plugins
 
@@ -40,14 +55,6 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
-
-######################################################################## helpers
-
-# nodejs helpers
-alias cy='npm run test:open'
-alias cyd='npm run test:dev'
-alias cyci='npm run test:ci'
-alias cyls='npm run test:list --silent'
 
 ################################################################### tui upgrades
 
@@ -74,11 +81,9 @@ alias cat="bat --style=plain --paging=never"    # aka bat -pp
 export PAGER=bat
 alias more=bat
 alias less="bat --paging=always"
-# alias zless=bat       # for archives TODO: fix
 
 # replace man with bat
-export MANPAGER="sh -c 'col -bx | bat -l man -p'" 
-# export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # replace du with dust
 alias du=dust
@@ -93,6 +98,8 @@ alias find=fd
 alias top=btop
 
 # replace vim with neovim
+export EDITOR=nvim
+export VISUAL=nvim
 alias vi=nvim
 alias vim=nvim
 
@@ -103,21 +110,47 @@ eval "$(fzf --zsh)"
 # replace default prompt with starship
 eval "$(starship init zsh)"
 
-########################################################################## fixes
+################################################################### misc aliases
 
-# alacritty
-# fix terminal window title
-# before every command: set title to just the command/process name
-preexec() {
-  print -Pn "\e]0;${1%% *}\a"
-}
-# when returning to prompt: set title to 'zsh'
-precmd() {
-  print -Pn "\e]0;zsh\a"
-}
+# nodejs helpers
+alias cy='npm run test:open'
+alias cyd='npm run test:dev'
+alias cyci='npm run test:ci'
+alias cyls='npm run test:list --silent'
 
-####################################################################### lmstudio
+######################################################################### logout
+# login/logout: handled by .zlogin / .zlogout / exit TUI (WIP)
+# see working/zshrc-exit-ideas.txt for design notes
+
+############################################################# app customisations
+
+### lmstudio ###################################################################
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/mo/.lmstudio/bin"
+export PATH="$PATH:/Users/mb/.lmstudio/bin"
 # End of LM Studio CLI section
+
+### claude #####################################################################
+
+export DISABLE_AUTOUPDATER=1
+
+### qqwing #####################################################################
+
+alias qqwing='docker run --rm -i qqwing'
+
+################################################################# profiling (end)
+
+if [[ "$ZSH_PROFILE" == "1" ]]; then
+  _zsh_end=$EPOCHREALTIME
+  _zsh_elapsed=$(( (_zsh_end - _zsh_start) * 1000 ))
+  mkdir -p "$ZSH_LOG_DIR"
+  _logfile="${ZSH_LOG_DIR}/zsh-profile-$(date +%Y%m%d-%H%M%S).log"
+  {
+    echo "=== zsh startup profile ==="
+    echo "date: $(date -Iseconds)"
+    printf "elapsed: %.0fms\n" "$_zsh_elapsed"
+    echo ""
+    zprof
+  } > "$_logfile"
+  printf "profiled in %.0fms → %s\n" "$_zsh_elapsed" "$_logfile"
+fi
