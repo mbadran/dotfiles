@@ -1,6 +1,11 @@
 # Starship Prompt Configuration
+# Based on: https://starship.rs/presets/catppuccin-powerline (macchiato)
 # https://starship.rs/config/ | https://www.nerdfonts.com/cheat-sheet
 # Alternatives and design notes: ../working/starship-notes.toml
+#
+# CAUTION: format/right_format blocks contain 4 powerline PUA glyphs
+# (U+E0B6, U+E0B0, U+E0B2, U+E0B4) that get stripped by some text tools.
+# Edit those blocks with care — run the verification script in TESTING.md after.
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
@@ -9,31 +14,31 @@ command_timeout = 2000      # for executing commands
 
 # left prompt -- minimal -- key details often referred to
 format = """
-[](fg:blue)\
+[](fg:blue)\
 $directory\
-[](bg:teal fg:blue)\
+[](bg:teal fg:blue)\
 $git_branch\
-[](bg:white fg:teal)\
+[](bg:white fg:teal)\
 $git_status\
 $git_metrics\
-[](bg:pink fg:white)\
+[](bg:pink fg:white)\
 $jobs\
-[](bg:lavender fg:pink)\
+[](bg:lavender fg:pink)\
 $shell\
 $shlvl\
-[](fg:lavender)\
+[](fg:lavender)\
 $line_break\
 $character"""
 
 # right prompt -- broader -- supplementary details less referred to
 right_format = """
-[](mantle)\
+[](mantle)\
 $custom\
-[](bg:mantle fg:blue)\
+[](bg:mantle fg:blue)\
 $docker_context\
 $conda\
 $package\
-[](bg:blue fg:mauve)\
+[](bg:blue fg:mauve)\
 $c\
 $rust\
 $golang\
@@ -43,20 +48,20 @@ $java\
 $kotlin\
 $haskell\
 $python\
-[](bg:mauve fg:red)\
+[](bg:mauve fg:red)\
 $status\
-[](bg:red fg:overlay2)\
+[](bg:red fg:overlay2)\
 $env_var\
-[](bg:overlay2 fg:overlay0)\
+[](bg:overlay2 fg:overlay0)\
 $username\
-[](bg:overlay0 fg:surface2)\
+[](bg:overlay0 fg:surface2)\
 $hostname\
-[](bg:surface2 fg:surface1)\
+[](bg:surface2 fg:surface1)\
 $cmd_duration\
-[](bg:surface1 fg:surface0)\
+[](bg:surface1 fg:surface0)\
 $time\
 $os\
-[](fg:surface0)"""
+[](fg:surface0)"""
 
 palette = "catppuccin_macchiato"
 
@@ -126,9 +131,9 @@ format = "([$shlvl ]($style))"
 
 [character]
 disabled = false
-success_symbol = '[󰍟](fg:text)'
-error_symbol = '[󰍞](fg:red)'
-vimcmd_symbol = '[](fg:green)'
+success_symbol = "[󰍟](fg:text)"
+error_symbol = "[󰍞](fg:red)"
+vimcmd_symbol = "[](fg:green)"
 
 ########################################################### right prompt modules
 
@@ -201,30 +206,28 @@ format = "([ $common_meaning$maybe_int$signal_name ]($style))[$symbol ]($style)"
 
 ############################################################ context modules
 
-[conda]                                 # untested
+# TODO: test
+[conda]
 symbol = "  "
 style = "bg:blue fg:crust"
 format = "[ $symbol$environment ]($style)"
 ignore_base = false
 
-[docker_context]                        # untested
+# TODO: test
+[docker_context]
 symbol = ""
 style = "bg:blue fg:crust"
 format = "[ $symbol ($context) ]($style)"
 
-[package]                               # untested
+# TODO: test
+[package]
 style = "bg:blue fg:crust"
 format = "[ $package ]($style)"
 
-########################################################### language modules
+############################################################### language modules
 
 [c]
 symbol = " "
-style = "bg:mauve fg:crust"
-format = "[ $symbol$version ]($style)"
-
-[rust]
-symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
@@ -233,12 +236,7 @@ symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
-[nodejs]
-symbol = ""
-style = "bg:mauve fg:crust"
-format = "[ $symbol ($version) ]($style)"
-
-[php]
+[haskell]
 symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
@@ -253,7 +251,12 @@ symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
-[haskell]
+[nodejs]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+[php]
 symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
@@ -263,9 +266,14 @@ symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) (#$virtualenv) ]($style)"
 
+[rust]
+symbol = ""
+style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
 ################################################################# custom modules
 
-# REPLACE: morsel — see working/morsel-design-notes.md
+# TODO: REPLACE: morsel — see working/morsel-design-notes.md
 [custom.anchor]
 description = "Morse code tutor — random letter with Google pictogram"
 command = """python3 -c "
@@ -308,8 +316,7 @@ style = "bg:mantle fg:surface2"
 format = "[ $output ]($style)"
 
 ################################################################# theme palettes
-# All four Catppuccin flavours + neutral grays for theme-agnostic utility colours.
-# Only catppuccin_macchiato is active — others kept for publishing / theme switching.
+# All four Catppuccin flavours + monochromes for theme-agnostic utility shades.
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
@@ -410,6 +417,7 @@ gray = "#808080"
 silver = "#c0c0c0"
 charcoal = "#36454f"
 
+# default
 [palettes.catppuccin_macchiato]
 rosewater = "#f4dbd6"
 flamingo = "#f0c6c6"
