@@ -1,12 +1,9 @@
 # dotfiles PRD
-> Living document. Last updated: 2026-04-04.
+> Living document. Last updated: 2026-04-19.
 
 ## Vision
 
-A single, clean dotfiles repository that captures an intentional, terminal-centric
-development environment. Every tracked file should be production-ready: no commented-out
-experiments, no embedded documentation bloat, no unresolved TODOs. Experimental work lives
-in `working/` (gitignored), not in committed configs.
+A single, clean dotfiles repository that captures an intentional, terminal-centric development environment. Every tracked file should be production-ready: no commented-out experiments, no embedded documentation bloat, no unresolved TODOs. Experimental work lives in `working/` (gitignored), not in committed configs.
 
 ### Principles
 
@@ -31,43 +28,45 @@ in `working/` (gitignored), not in committed configs.
 | gh | GitHub CLI | `.config/gh/config.yml` |
 | git | Version control | `.config/git/ignore` |
 
-### Shell ecosystem (installed via Homebrew)
+### Shell ecosystem 
 
-eza, bat, dust, ripgrep, fd, zoxide, fzf, delta, starship, btop, zsh-vi-mode,
-zsh-syntax-highlighting, zsh-autosuggestions, zsh-history-substring-search,
-zsh-completions
+> Managed via [Homebrew](https://brew.sh)
 
-### Not tracked
+bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggestions, zsh-completions, zsh-history-substring-search, zsh-syntax-highlighting, zsh-vi-mode
+
+### Not tracked (TODO: review)
 
 | Tool | Reason |
 |------|--------|
+| Raycast | App-managed, may contain keys |
+| qBittorrent | App-managed, not handcrafted |
 | 1Password CLI | Runtime state / credentials |
 | PulseAudio | Runtime symlinks |
-| qBittorrent | App-managed, not handcrafted |
-| Raycast | App-managed, may contain keys |
 
 ---
 
-## Config Status
+## Status legend
 
-Status key: `DONE` = clean and committed | `WIP` = active cleanup | `TODO` = not yet started | `SKIP` = do not track
+`TODO` = Not Started | `FIXME` = Bug | `WIP` = Active Cleanup | `DONE` = Clean And Committed |`SKIP` = Do Not Track
 
 ### Tracked configs
 
 | Config | Status | Notes |
 |--------|--------|-------|
-| nvim/init.lua | DONE | Philosophy-driven minimal config. lazy.nvim, 7 plugins, <=20 mappings. |
-| zed/settings.json | DONE | Fleet Dark Purple theme, vim mode, LM Studio integration. |
-| starship.toml | DONE | Catppuccin Macchiato powerline. 4 palettes with neutral grays. Morse tutor marked for morsel replacement. |
-| .zshrc | DONE | Profiling toggle, cached compinit/brew, delta, zoxide --cmd cd. |
+| .zshrc | DONE | Profiling toggle, cached compinit/brew, delta, zoxide --cmd cd, nvimpager pager/manpager, ccsl/qqwing aliases. |
 | btop.conf | DONE | 88 lines. Everforest dark, vim keys, braille graphs. |
-| kitty.conf | DONE | 9 lines. IosevkaTerm + Catppuccin Macchiato. |
+| ccstatusline | DONE | Powerline statusline for Claude Code sessions. |
 | gh/config.yml | DONE | hosts.yml gitignored (credentials). |
 | git/ignore | DONE | Global gitignore. |
+| homebrew | | |
+| kitty.conf | DONE | 9 lines. IosevkaTerm + Catppuccin Macchiato. |
+| nvim/init.lua | DONE | Philosophy-driven minimal config. lazy.nvim, 7 plugins, <=20 mappings. |
+| starship.toml | DONE | Catppuccin Macchiato powerline. 4 palettes with neutral grays. Morse tutor marked for morsel replacement. |
+| zed/settings.json | DONE | Fleet Dark Purple theme, vim mode, LM Studio integration. |
 
-### Legacy files (tracked, future triage)
+### Retired configs (tracked for future triage)
 
-| File | Notes |
+| Config | Notes |
 |------|-------|
 | .bash_* | Here be dragons. 2011-2020. Superseded by zsh. Kept for zsh-less servers. |
 | .dir_colors | 2017. Superseded by eza. |
@@ -107,16 +106,27 @@ Status key: `DONE` = clean and committed | `WIP` = active cleanup | `TODO` = not
 - [x] **2.16** Fix starship home_symbol (BMP PUA glyph)
 - [x] **2.17** Retire alacritty config (no longer maintained as cask, kitty replaces it)
 
-### Phase 3: Rust CLI integrations (blocked on separate projects)
+### Phase 3: Stragglers and polish
 
-- [ ] **3.1** Replace starship Python morse code block with `morsel` CLI invocation
-- [ ] **3.2** Replace zsh exit/login message with dedicated Rust TUI tool
+- [x] **3.1** Incorporate latest changes, fix zoxide warning, and polish
+- [x] **3.5** Track ccstatusline config
+- [ ] **3.2** Import and symlink key ~/.claude settings (gitignoring the rest)
+- [ ] **3.3** Replace downloaded apps and binaries with brew equivalents
+- [ ] **3.4** Develop a brewfile to manage future mac migrations
+
+### Phase 4: TUI tools
+
+- [ ] **4.1** Replace starship Python morse code block with `morsel` CLI calls
+- [ ] **4.2** Replace zsh login/logout message with `aloha` CLI calls
 
 ### Ongoing
 
 - Keep `.gitignore` current
-- Update this PRD as tasks complete
+- Manage tasks within this PRD
+- Track changes within files via config status keys
+- Update files and this PRD as tasks complete
 - One config = one commit with descriptive message
+- Commit style: lowercase sentence, no file-prefix colon, natural language — e.g. *"fix starship read_only style, swap PUA glyph"* not *"starship: fix read_only"*
 - Experiments go in `working/`, never in committed files
 
 ---
@@ -124,21 +134,19 @@ Status key: `DONE` = clean and committed | `WIP` = active cleanup | `TODO` = not
 ## Planned Rust CLI Tools
 
 ### morsel
-Morse code tutor and conversion swiss pocket knife. Will replace the inline Python
-in `starship.toml`'s `custom.anchor` module. See `working/morsel-design-notes.md` for
-CLI design notes. Separate repo.
+
+Morse code tutor and conversion swiss pocket knife. Will replace the inline Python in `starship.toml`'s `custom.anchor` module. See `working/morsel-design-notes.md` for CLI design notes. Separate repo.
 
 ### aloha
-TUI for shell dashboards. Can be used interactively or in one shot. Use cases
-include interactive dashboards, login/logout messages, prompt sections, and
-more. Will use `.zlogin`, `.zlogout`, and `zshexit()` functions. Separate repo.
-See `working/zshrc-exit-ideas.txt` for design notes.
+
+TUI for shell dashboards. Can be used interactively or in one shot. Use cases include interactive dashboards, login/logout messages, prompt sections, and more. Will use `.zlogin`, `.zlogout`, and `zshexit()` functions. Separate repo. See `working/zshrc-exit-ideas.txt` for design notes.
 
 ---
 
 ## Profiling
 
 ### Approach
+
 Use zsh built-ins only. No external plugins needed.
 
 - `zsh/zprof` module -- per-function call profiling
@@ -147,8 +155,7 @@ Use zsh built-ins only. No external plugins needed.
 
 ### Usage
 
-Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-guide.md`
-for how to read the output.
+Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-guide.md` for how to read the output.
 
 ### Log location
 
@@ -156,7 +163,7 @@ for how to read the output.
 
 ---
 
-## Directory Structure
+## Directory structure
 
 ```
 dotfiles/

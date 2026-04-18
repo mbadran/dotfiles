@@ -30,6 +30,18 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] Check log: `cat logs/zsh-profile-*.log`
 - [ ] Set `ZSH_PROFILE=0` -- no profiling output, no overhead
 
+## nvimpager
+
+- [ ] `less README.md` -- opens in nvimpager pager mode with sorbet colorscheme
+- [ ] `man ls` -- opens in nvimpager with zaibatsu theme
+- [ ] `more README.md` -- displays inline without paging (cat mode)
+- [ ] `echo "test" | less` -- piped input works
+
+## ccstatusline
+
+- [ ] `ccsl` -- runs without error, prints usage or version
+- [ ] Claude Code statusline renders correctly in the terminal
+
 ## git
 
 - [ ] `git status` -- only expected files

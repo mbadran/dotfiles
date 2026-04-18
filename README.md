@@ -23,7 +23,7 @@ no promises.
 | vim plugins | 7 |
 | vim mappings | 15 |
 | tools replaced | 13 |
-| aliases defined | 21 |
+| aliases defined | 22 |
 | defaults exterminated | ongoing |
 | morse code characters learned | debatable |
 
@@ -42,7 +42,7 @@ for context (languages, status, time, a morse code experiment).
 
 `$TERMINAL` — kitty. 9 lines of config. (wip)
 
-`$TUI` — eza (ls), bat (cat/less/man), dust (du), ripgrep (grep), fd (find),
+`$TUI` — eza (ls), bat (cat), nvimpager (less/man/more), dust (du), ripgrep (grep), fd (find),
 zoxide (cd), fzf (fuzzy everything), btop (top), delta (diff).
 
 `$LEGACY` — bash configs from 2011–2020. here be dragons. kept for the
