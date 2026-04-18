@@ -67,7 +67,7 @@ palette = "catppuccin_macchiato"
 
 [directory]
 style = "bg:blue fg:crust"
-format = "[ $path]($style)([$read_only ]($style fg:yellow))"
+format = "[ $path ]($style)([$read_only ]($style fg:yellow))"
 truncation_length = 10
 truncation_symbol = "󰽘/"
 truncate_to_repo = true

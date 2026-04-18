@@ -3,8 +3,10 @@
 export PATH="$PATH:$HOME/.local/bin"
 
 ###################################################################### profiling
+
 # measures total zsh startup time + per-function breakdown (via zprof).
 # flip to 1, open a new shell, flip back to 0. logs are gitignored.
+
 ZSH_PROFILE=0                                   # 1 to enable, 0 to disable
 ZSH_LOG_DIR="$HOME/.config/logs"
 
@@ -67,6 +69,11 @@ bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+######################################################################### logout
+
+# login/logout: handled by .zlogin / .zlogout / exit TUI (WIP)
+# see working/zshrc-exit-ideas.txt for design notes
+
 ################################################################### tui upgrades
 
 # avoid mistakes
@@ -120,40 +127,33 @@ eval "$(fzf --zsh)"
 # replace default prompt with starship
 eval "$(starship init zsh)"
 
-################################################################### misc aliases
-
-### nodejs helpers  ############################################################
-alias cy='npm run test:open'
-alias cyd='npm run test:dev'
-alias cyci='npm run test:ci'
-alias cyls='npm run test:list --silent'
-
-######################################################################### logout
-# login/logout: handled by .zlogin / .zlogout / exit TUI (WIP)
-# see working/zshrc-exit-ideas.txt for design notes
-
 ############################################################# app customisations
 
 # NOTE: apps often auto-append config to the end of .zshrc.
 # after installing a new app, move its config above profiling (end).
 
 ### lmstudio ###################################################################
-
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/mb/.lmstudio/bin"
 # End of LM Studio CLI section
 
 ### claude #####################################################################
-
 # auto update doesn't work with the homebrew cask
 export DISABLE_AUTOUPDATER=1
 
-# configure claude statusline
+### claude code statusline #####################################################
 alias ccsl='npx -y ccstatusline@latest'
 
-### qqwing #####################################################################
+### nodejs helpers #############################################################
+alias cy='npm run test:open'
+alias cyd='npm run test:dev'
+alias cyci='npm run test:ci'
+alias cyls='npm run test:list --silent'
 
+### qqwing #####################################################################
 alias qqwing='docker run --rm -i qqwing'
+
+### zoxide #####################################################################
 
 # replace cd with zoxide (must init after all plugins and config)
 eval "$(zoxide init zsh --cmd cd)"
