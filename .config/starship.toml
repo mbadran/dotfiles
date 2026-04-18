@@ -1,7 +1,9 @@
-# Barista - A Starship Prompt
+# Barista - A prompt theme for Starship
+# By mbadran <mebadran@gmail.com>
 # Based on: https://starship.rs/presets/catppuccin-powerline (macchiato)
+#
 # https://starship.rs/config/ | https://www.nerdfonts.com/cheat-sheet
-# Alternatives and design notes: ../working/starship-notes.toml
+# Notes and experiments: ../working/starship-notes.toml
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
@@ -65,7 +67,7 @@ palette = "catppuccin_macchiato"
 
 [directory]
 style = "bg:blue fg:crust"
-format = "[ $path]($style)([$read_only ](bg:blue fg:yellow))"
+format = "[ $path]($style)([$read_only ]($style fg:yellow))"
 truncation_length = 10
 truncation_symbol = "󰽘/"
 truncate_to_repo = true
@@ -99,7 +101,7 @@ format = "([+$added ]($added_style))([-$deleted ]($deleted_style))"
 
 [jobs]
 style = "bg:pink fg:black"
-symbol = "󰒲"
+symbol = "⚡︎"
 number_threshold = 2
 format = "[ $symbol ]($style)([$number ]($style))"
 
@@ -139,26 +141,26 @@ style = "bg:surface0 fg:subtext1"
 format = "[ $symbol ]($style)"
 
 [os.symbols]
-Windows = ""
-Ubuntu = "󰕈"
-SUSE = ""
-Raspbian = "󰐿"
-Mint = "󰣭"
-Macos = "󰀵"
-Manjaro = ""
-Linux = "󰌽"
-Gentoo = "󰣨"
-Fedora = "󰣛"
+AOSC = ""
 Alpine = ""
 Amazon = ""
 Android = ""
-AOSC = ""
 Arch = "󰣇"
 Artix = "󰣇"
 CentOS = ""
 Debian = "󰣚"
-Redhat = "󱄛"
+Fedora = "󰣛"
+Gentoo = "󰣨"
+Linux = "󰌽"
+Macos = "󰀵"
+Manjaro = ""
+Mint = "󰣭"
+Raspbian = "󰐿"
 RedHatEnterprise = "󱄛"
+Redhat = "󱄛"
+SUSE = ""
+Ubuntu = "󰕈"
+Windows = ""
 
 [time]
 disabled = false
@@ -196,9 +198,9 @@ symbol = "󰇷"
 not_executable_symbol = "󰔢"
 not_found_symbol = "󰢚"
 sigint_symbol = "󰊠"                    # cancelling process
-signal_symbol = "󰒲"                    # suspending process (matches jobs symbol)
+signal_symbol = "⚡︎"                    # suspending process (matches jobs symbol)
 map_symbol = true
-format = "([ $common_meaning$maybe_int$signal_name ]($style))[$symbol ]($style)"
+format = "([ ·$status·( $common_meaning( $maybe_int))]($style))[( $signal_name( ·$signal_number·))]($style bold fg:white)[ $symbol ]($style)"
 
 ############################################################ context modules
 
