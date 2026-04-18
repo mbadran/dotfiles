@@ -81,20 +81,16 @@ alias ll="eza --all --long --icons --git"
 # replace tree with eza
 alias tree="eza -T"
 
-# replace cd with zoxide (--cmd cd replaces cd with a smart function
-# that uses zoxide interactively but falls back to builtin cd in scripts)
-eval "$(zoxide init zsh --cmd cd)"
-
 # replace cat with bat
 alias cat="bat --style=plain --paging=never"    # aka bat -pp
 
-# replace pagers with bat
-export PAGER=bat
-alias more=bat
-alias less="bat --paging=always"
+# replace pagers and viewers with nvimpager
+export PAGER="nvimpager -p -- --cmd \"colorscheme sorbet | set rnu so=999 siso=999\""
+export MANPAGER="nvimpager -p -- --cmd \"colorscheme zaibatsu | set so=999 siso=999\""
 
-# replace man with bat
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# replace more and less
+alias more="nvimpager -c"   # cat mode
+alias less="$PAGER"         # pager mode
 
 # replace du with dust
 alias du=dust
@@ -126,7 +122,7 @@ eval "$(starship init zsh)"
 
 ################################################################### misc aliases
 
-# nodejs helpers
+### nodejs helpers  ############################################################
 alias cy='npm run test:open'
 alias cyd='npm run test:dev'
 alias cyci='npm run test:ci'
@@ -136,10 +132,37 @@ alias cyls='npm run test:list --silent'
 # login/logout: handled by .zlogin / .zlogout / exit TUI (WIP)
 # see working/zshrc-exit-ideas.txt for design notes
 
+############################################################# app customisations
+
+# NOTE: apps often auto-append config to the end of .zshrc.
+# after installing a new app, move its config above profiling (end).
+
+### lmstudio ###################################################################
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/mb/.lmstudio/bin"
+# End of LM Studio CLI section
+
+### claude #####################################################################
+
+# auto update doesn't work with the homebrew cask
+export DISABLE_AUTOUPDATER=1
+
+# configure claude statusline
+alias ccsl='npx -y ccstatusline@latest'
+
+### qqwing #####################################################################
+
+alias qqwing='docker run --rm -i qqwing'
+
+# replace cd with zoxide (must init after all plugins and config)
+eval "$(zoxide init zsh --cmd cd)"
+
 ################################################################ profiling (end)
-# NOTE: this block must stay below all other config — it captures total
-# startup time. apps that auto-append config (eg. lmstudio) will land
-# below this, so move them above manually after they're added.
+
+# note: this block must stay below all other config — it captures total startup
+# time. apps that auto-append config (eg. lmstudio) will land below this, so
+# move them above manually after they're added.
 
 if (( ZSH_PROFILE )); then
   _zsh_end=$EPOCHREALTIME
@@ -159,21 +182,3 @@ if (( ZSH_PROFILE )); then
   printf "  Profiled zsh in %.0fms → %s\n" "$_zsh_elapsed" "$_logfile"
   echo "─────────────────────────────────────────"
 fi
-
-############################################################# app customisations
-# NOTE: apps often auto-append config to the end of .zshrc.
-# after installing a new app, move its config above profiling (end).
-
-### lmstudio ###################################################################
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/mb/.lmstudio/bin"
-# End of LM Studio CLI section
-
-### claude #####################################################################
-
-export DISABLE_AUTOUPDATER=1
-
-### qqwing #####################################################################
-
-alias qqwing='docker run --rm -i qqwing'
