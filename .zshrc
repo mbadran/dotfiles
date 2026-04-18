@@ -91,13 +91,33 @@ alias tree="eza -T"
 # replace cat with bat
 alias cat="bat --style=plain --paging=never"    # aka bat -pp
 
-# replace pagers and viewers with nvimpager
-export PAGER="nvimpager -p -- --cmd \"colorscheme sorbet | set rnu so=999 siso=999\""
-export MANPAGER="nvimpager -p -- --cmd \"colorscheme zaibatsu | set so=999 siso=999\""
+# replace pagers and viewers with page
+export PAGER='page -q -P'
+export MANPAGER='page -t man'
 
 # replace more and less
-alias more="nvimpager -c"   # cat mode
-alias less="$PAGER"         # pager mode
+alias more='page -O'    # cat mode: print inline if fits, skip neovim
+alias less="$PAGER"     # pager mode
+
+# man with proper section handling (enables man://prog(N) URI navigation)
+man() {
+    local section="${@[-2]}"
+    local program="${@[-1]}"
+    page -W "man://$program${section:+($section)}"
+}
+
+# follow a file or stream (like tail -f but in neovim)
+alias logf='page -f'
+
+# name pager buffers after the command that produced them (zsh)
+preexec() {
+    if [[ -z "$NVIM" ]]; then
+        export PAGE_BUFFER_NAME="page"
+    else
+        local words=(${1// *|*})
+        export PAGE_BUFFER_NAME="${words[1,2]}"
+    fi
+}
 
 # replace du with dust
 alias du=dust

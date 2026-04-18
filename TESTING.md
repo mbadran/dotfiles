@@ -30,12 +30,14 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] Check log: `cat logs/zsh-profile-*.log`
 - [ ] Set `ZSH_PROFILE=0` -- no profiling output, no overhead
 
-## nvimpager
+## page
 
-- [ ] `less README.md` -- opens in nvimpager pager mode with sorbet colorscheme
-- [ ] `man ls` -- opens in nvimpager with zaibatsu theme
-- [ ] `more README.md` -- displays inline without paging (cat mode)
+- [ ] `less README.md` -- opens in page with habamax colorscheme, relative numbers, cursorline
+- [ ] `man ls` -- opens with man filetype syntax highlighting
+- [ ] `more README.md` -- prints inline if fits, opens page only if longer than screen
 - [ ] `echo "test" | less` -- piped input works
+- [ ] `page README.md` -- file view mode, retrobox colorscheme
+- [ ] `logf somefile` -- follow mode, content streams in
 
 ## ccstatusline
 

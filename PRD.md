@@ -53,7 +53,7 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 
 | Config | Status | Notes |
 |--------|--------|-------|
-| .zshrc | DONE | Profiling toggle, cached compinit/brew, delta, zoxide --cmd cd, nvimpager pager/manpager, ccsl/qqwing aliases. |
+| .zshrc | DONE | Profiling toggle, cached compinit/brew, delta, zoxide --cmd cd, page pager/manpager, ccsl/qqwing aliases. |
 | btop.conf | DONE | 88 lines. Everforest dark, vim keys, braille graphs. |
 | ccstatusline | DONE | Powerline statusline for Claude Code sessions. |
 | gh/config.yml | DONE | hosts.yml gitignored (credentials). |
