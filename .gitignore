@@ -5,6 +5,7 @@ working/
 .config/logs/
 
 # auto-generated
+*.DS_Store
 .config/configstore/
 .config/htop/
 .config/nvim/.netrwhist
