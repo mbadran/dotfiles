@@ -92,12 +92,12 @@ alias tree="eza -T"
 alias cat="bat --style=plain --paging=never"    # aka bat -pp
 
 # replace pagers and viewers with page
-export PAGER='page -q -P'
-export MANPAGER='page -t man'
+export PAGER='page -W -q -P'
+export MANPAGER='page -W -t man'
 
 # replace more and less
-alias more='page -O'    # cat mode: print inline if fits, skip neovim
-alias less="$PAGER"     # pager mode
+more() { page -W -O -- "$@" }   # cat mode: inline if fits, skip neovim; function (not alias) to avoid -O consuming filename as its optional arg
+alias less="$PAGER"             # pager mode
 
 # man with proper section handling (enables man://prog(N) URI navigation)
 man() {
@@ -107,7 +107,7 @@ man() {
 }
 
 # follow a file or stream (like tail -f but in neovim)
-alias logf='page -f'
+alias logf='page -W -f'
 
 # name pager buffers after the command that produced them (zsh)
 preexec() {
