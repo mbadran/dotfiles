@@ -1,107 +1,179 @@
--- page init.lua
--- https://github.com/I60R/page
---
--- page spawns its own neovim instance using this file. your main
--- ~/.config/nvim/init.lua and its plugins are NOT loaded. only built-in
--- neovim colorschemes are available (habamax, zaibatsu, sorbet, etc.)
---
--- buffer patterns:
---   PageOpen     -- piped/redirected content  (cmd | less, PAGER)
---   PageOpenFile -- file opened directly       (page file.txt)
---   FileType man -- man page content           (triggered by -t man in MANPAGER)
+--[[------------------------------------------------------------- overview ♠ ---
 
--- ── global options ───────────────────────────────────────────────────────────────
--- use vim.opt (not vim.g) to set editor options -- vim.g sets neovim globals
--- (shell-like variables), not options. these apply before any autocmd fires.
+page config - https://github.com/I60R/page
 
-vim.opt.scrolloff      = 999   -- keep cursor vertically centred while scrolling
-vim.opt.sidescrolloff  = 999   -- keep cursor horizontally centred
-vim.opt.relativenumber = true  -- relative line numbers (useful for jump targeting)
-vim.opt.cursorline     = true  -- highlight the current line
+- page spawns its own neovim instance using the settings in this file
+- neovim's config ($XDG_CONFIG_HOME/nvim/init.lua) and plugins are not loaded
+- this also means the only colorschemes available are neovim's built-in ones
 
--- ── statusline icons ─────────────────────────────────────────────────────────
--- page embeds these into the buffer name shown in the statusline.
--- choose distinct chars so you can tell at a glance how page was invoked:
---
---   page_icon_pipe     │  stdin pipe        cmd | less, PAGER, MANPAGER
---   page_icon_redirect ›  pty redirect      cmd > $(page -p)  (exposes a pty device)
---   page_icon_instance @  named instance    page -i name  (reusable buffer)
---
--- swap for nerd font glyphs if preferred, eg.  (terminal),  (arrow)
+the following patterns configure unique neovim buffers for each pager type:
 
-vim.g.page_icon_pipe     = '│'   -- vertical bar
-vim.g.page_icon_redirect = '›'   -- single right angle
-vim.g.page_icon_instance = '@'        -- at-sign (instance identifier)
++---------------------+------------+-------------------------+-----------------+
+| pattern             | pager type | content                 | example         |
++---------------------+------------+-------------------------+-----------------+
+| User PageOpenFile   | default    | files opened directly   | page file.txt   |
+|                     |            | shell pager ($PAGER)    | less ABOUT.md   |
+|                     |            |                         | more .zshrc     |
+|---------------------+------------+-------------------------+-----------------+
+| User PageOpen       | pipe       | stdin pipe              | cat a.md | less |
+|                     |            | pty redirect            | ls > $(page -p) |
+|                     |            | TODO: this redirects too| page            |
+|                     |            | named instance          | page -i reuseme |
+|---------------------+------------+-------------------------+-----------------+
+| FileType man        | man        | man pages ($MANPAGER)   | man curl        |
++---------------------+------------+-------------------------+-----------------+
 
--- ── statusline ────────────────────────────────────────────────────────────────────
--- custom statusline using catppuccin macchiato colours.
--- no plugins -- uses neovim's built-in statusline format strings (:h statusline).
--- highlight groups are re-applied via ColorScheme autocmd since :colorscheme
--- clears all custom highlights on load.
---
--- left:   [page label] [buffer name + icon] [flags]
--- right:  [line:col] [total lines] [scroll%]
+]]
 
-local function setup_statusline_hl()
-    local c = {
-        base     = '#24273a',
-        surface1 = '#494d64',
-        text     = '#cad3f5',
-        subtext0 = '#a5adcb',
-        blue     = '#8aadf4',
-        crust    = '#181926',
-    }
-    vim.api.nvim_set_hl(0, 'PageSLLabel', { bg = c.blue,     fg = c.crust,    bold = true })
-    vim.api.nvim_set_hl(0, 'PageSLName',  { bg = c.surface1, fg = c.text })
-    vim.api.nvim_set_hl(0, 'PageSLFill',  { bg = c.base,     fg = c.subtext0 })
-    vim.api.nvim_set_hl(0, 'PageSLRight', { bg = c.surface1, fg = c.subtext0 })
-end
+----------------------------------------------------------- global options ♠ ---
 
--- re-apply after any :colorscheme call clears custom groups
-vim.api.nvim_create_autocmd('ColorScheme', {
-    pattern  = '*',
-    callback = setup_statusline_hl,
-})
+-- these apply before any autocmd fires
 
-vim.opt.statusline =
-    '%#PageSLLabel# page '   ..  -- label
-    '%#PageSLName# %f %m%r ' ..  -- buffer name (with embedded icon), flags
-    '%#PageSLFill#%='         ..  -- fill + right-align remainder
-    '%#PageSLRight# %l:%c '  ..  -- line:col
-    ' %L ln '                ..  -- total lines in buffer
-    ' %p%% '                     -- scroll percentage
+vim.opt.scrolloff      = 999  -- keep cursor vertically centred while scrolling
+vim.opt.sidescrolloff  = 999  -- keep cursor horizontally centred
+vim.opt.relativenumber = true -- relative line numbers (useful for jump targeting)
+vim.opt.cursorline     = true -- highlight the current line
 
--- ── piped content ─────────────────────────────────────────────────────────────────
--- triggered when content arrives via stdin: cmd | less, PAGER invocations
+------------------------------------------------------ pager type: default ♠ ---
 
-vim.api.nvim_create_autocmd('User', {
-    pattern  = 'PageOpen',
-    callback = function()
-        vim.cmd('colorscheme habamax')
-        vim.opt.wrap = false  -- pipe output is often wide; scroll horizontally
-    end,
-})
-
--- ── file view ───────────────────────────────────────────────────────────────────────
--- triggered when page opens a file directly: page file.txt, page README.md
+-- triggered when page opens a file directly or receives input from the shell
+-- pager (ie. less or more)
+-- examples: page file.txt, more .gitignore, less README.md
 
 vim.api.nvim_create_autocmd('User', {
     pattern  = 'PageOpenFile',
     callback = function()
+        if vim.bo.filetype == 'man' then return end
         vim.cmd('colorscheme zaibatsu')
-        vim.opt.wrap = true  -- file content should wrap
+        vim.opt.wrap = true -- file content should wrap
     end,
 })
 
--- ── man pages ──────────────────────────────────────────────────────────────────────
--- triggered by the -t man flag in MANPAGER, fires after PageOpen so its
--- settings take precedence. man pages are structured prose -- different needs.
+--------------------------------------------------------- pager type: pipe ♠ ---
+
+-- triggered when content arrives via stdin or redirect: eg. cmd | less
+-- examples: cmd | less
+--   page_icon_pipe     │  stdin pipe        cmd | less, PAGER, MANPAGER
+--   page_icon_redirect ›  pty redirect      cmd > $(page -p)  (exposes a pty device)
+--   page_icon_instance @  named instance    page -i name  (reusable buffer)
+
+vim.api.nvim_create_autocmd('User', {
+    pattern  = 'PageOpen',
+    callback = function()
+        if vim.bo.filetype == 'man' then return end
+        vim.cmd('colorscheme habamax')
+        vim.opt.wrap = false -- pipe output is often wide; scroll horizontally
+    end,
+})
+
+---------------------------------------------------------- pager type: man ♠ ---
+
+-- triggered by the -t man flag in MANPAGER
+-- fires after PageOpen so its settings take precedence
+-- man pages are structured prose, so optimising for that
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern  = 'man',
     callback = function()
-        vim.cmd('colorscheme sorbet')
-        vim.opt.relativenumber = false  -- section headers matter more than line numbers
-        vim.opt.wrap           = true   -- man pages are written to wrap
+        vim.cmd('colorscheme darkblue')
+        vim.opt.relativenumber = false -- section headers matter more than line numbers
+        vim.opt.wrap           = true  -- man pages are written to wrap
     end,
 })
+
+--------------------------------------------------------------- statusline ♠ ---
+
+--- ♠ statusline icons ---------------------------------------------------------
+
+-- page embeds these into the buffer name shown in the statusline
+
+vim.g.page_icon_pipe     = '↦'
+vim.g.page_icon_redirect = '↣'
+vim.g.page_icon_instance = '#'
+
+--- ♠ statusline config --------------------------------------------------------
+
+-- uses neovim's built-in statusline format strings (:h statusline).
+-- no custom highlight groups -- custom groups need re-applying after every
+-- :colorscheme call (which fires per-buffer) and are not set at startup.
+--
+-- page buffer name formats:
+--   pipe/redirect : {PAGE_BUFFER_NAME}"{icon}"
+--   instance      : {instancename}"{icon}"{PAGE_BUFFER_NAME}
+--   file/man://   : plain path or man://prog(N) URI
+--
+-- PageStatus() format: 📟 <name> · <type icon> <type> · <caller> · [flags]
+--   pipe     📟 git log · ⋮ pipe · less · [RO]
+--   instance 📟 testing · ∞ instance · page -i · [RO]
+--   redirect 📟 ? · ⇢ redirect · $(page -p)
+--   direct   📟 .zshrc · ◌ direct · less
+--   man      📟 curl · ℹ man · [RO]
+--
+-- PAGE_PIPE_CMD (set by preexec in .zshrc): full typed command, eg. "git log | less"
+-- used to extract the content source (before |) and pager caller (last segment)
+
+_G.PageStatus            = function()
+    local SEP      = ' · '
+    local name     = vim.fn.bufname()
+    local full_cmd = os.getenv('PAGE_PIPE_CMD') or ''
+
+    -- first word of last pipe segment → the pager caller (eg. "less")
+    local function get_pager(cmd)
+        local last = vim.trim(cmd:match('[^|]*$') or '')
+        return last:match('^%S+') or ''
+    end
+
+    -- [+] if modified, [RO] if readonly — nil if neither
+    local function get_flags()
+        local f = (vim.bo.modified and '[+]' or '') .. (vim.bo.readonly and '[RO]' or '')
+        return f ~= '' and f or nil
+    end
+
+    -- join non-nil, non-empty varargs with SEP, append flags
+    local function join(...)
+        local t = {}
+        for i = 1, select('#', ...) do
+            local v = (select(i, ...))
+            if v and v ~= '' then t[#t + 1] = v end
+        end
+        local fl = get_flags()
+        if fl then t[#t + 1] = fl end
+        return table.concat(t, SEP)
+    end
+
+    -- man:// URI (from man() shell function)
+    local manpage = name:match('^man://(.*)')
+    if manpage then return join('📟 ' .. manpage, 'ℹ man') end
+
+    -- instance: {instancename}"{icon}"{PAGE_BUFFER_NAME} — name is before first quote
+    local inst = name:match('^(.+)".-".+$')
+    if inst then return join('📟 ' .. inst, '∞ instance', 'page -i') end
+
+    -- pipe/redirect: {PAGE_BUFFER_NAME}"{icon}"
+    local cmd_prefix, icon = name:match('^(.-)"(.-)"$')
+    if icon == '↦' then
+        local has_pipe = full_cmd:find('|', 1, true)
+        local source   = has_pipe
+            and vim.trim(full_cmd:match('^(.-)%s*|') or '')
+            or (cmd_prefix ~= '' and cmd_prefix ~= 'page') and cmd_prefix
+            or nil
+        local pager    = get_pager(full_cmd)
+        return join('📟 ' .. (source or '?'), '⋮ pipe', pager ~= '' and pager or nil)
+    end
+    if icon == '↣' then
+        local source = (cmd_prefix ~= '' and cmd_prefix ~= 'page') and cmd_prefix or nil
+        return join('📟 ' .. (source or '?'), '⇢ redirect', '$(page -p)')
+    end
+
+    -- plain file (PageOpenFile: less, more, page file)
+    local filename = vim.fn.fnamemodify(name, ':t')
+    local pager    = get_pager(full_cmd)
+    return join('📟 ' .. filename, '◌ direct', pager ~= '' and pager or nil)
+end
+
+vim.opt.statusline       =
+    ' %{v:lua.PageStatus()}' .. -- full status string with embedded flags
+    '%=' ..                     -- right-align
+    ' %l:%c ' ..                -- line:col
+    ' %L ln ' ..                -- total lines
+    ' %p%% '                    -- scroll %
