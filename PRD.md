@@ -118,6 +118,7 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 
 - [ ] **4.1** Replace starship Python morse code block with `morsel` CLI calls
 - [ ] **4.2** Replace zsh login/logout message with `aloha` CLI calls
+- [ ] **4.3** Fix `page -p` PTY redirect (`ls > $(page -p)` fails -- neovim startup emits ANSI escape codes before the device path, corrupting the `$()` expansion)
 
 ### Ongoing
 
