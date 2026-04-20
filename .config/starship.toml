@@ -225,7 +225,7 @@ format = "[ $package ]($style)"
 ############################################################### language modules
 
 [c]
-symbol = " "
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
@@ -240,7 +240,7 @@ style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 [java]
-symbol = " "
+symbol = ""
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 

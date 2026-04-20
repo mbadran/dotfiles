@@ -1,29 +1,29 @@
 --[[----------------------------------------------------------- philosophy ♠ ---
 
-    1. improve vim, but kiss
-        - key: vim is a human -> text interface, not an ide
-        - make vim behave like a modern text editor without losing its essence
-        - upgrade usability across three areas:
-            1. extensions -- add what's clearly missing
-            2. consistency -- align with modern conventions
-            3. efficiency -- reduce friction and improve flow
-    2. be portable, with some concessions
-        - use the defaults, by default
-        - only configure things that are:
-            - a) essential
-            - b) compelling
-        - minimise configs that behave differently in vanilla vim
-        - limit config areas:
-            - mappings -- <=20
-            - plugins -- <=10
-            - themes -- 1
-            - everything else -- 0
-                - ignore tabs, commands, functions, abbreviations, lsp, etc
-                - use a graphical editor or ide, if necessary
-    3. go outdoors
-        - use plugins passively (with defaults only or minimal options)
-        - resist checking out other themes and plugins
-        - avoid tweaking at all costs
+1. improve vim, but kiss
+    - key: vim is a human -> text interface, not an ide
+    - make vim behave like a modern text editor without losing its essence
+    - upgrade usability across three areas:
+        1. extensions -- add what's clearly missing
+        2. consistency -- align with modern conventions
+        3. efficiency -- reduce friction and improve flow
+2. be portable, with some concessions
+    - use the defaults, by default
+    - only configure things that are:
+        - a) essential
+        - b) compelling
+    - minimise configs that behave differently in vanilla vim
+    - limit config areas:
+        - mappings -- <=20
+        - plugins -- <=10
+        - themes -- 1
+        - everything else -- 0
+            - ignore tabs, commands, functions, abbreviations, lsp, etc
+            - use a graphical editor or ide, if necessary
+3. go outdoors
+    - use plugins passively (with defaults only or minimal options)
+    - resist checking out other themes and plugins
+    - avoid tweaking at all costs
 
 ]]
 
@@ -215,28 +215,26 @@ require("lazy").setup({
         dependencies = { "nvim-lua/plenary.nvim" }
     },
 
-    -- add operators for editing surrounding characters [extensions]
     --[[
+    add operators for editing surrounding characters [extensions]
+
     - new operators (sa, sd, sr) edit characters around motions and text objects
-    - these replace the s (substitute) operator, by default
 
-    - sa{motion or text object}{char}       -- surround add
-    - sd{char}                              -- surround delete
-    - sr{char1}{char2}                      -- surround replace
+    1. sa{motion or text object}{char}       -- surround add
+    2. sd{char}                              -- surround delete
+    3. sr{char1}{char2}                      -- surround replace
 
-    examples:
+    - important: these replace the s (substitute) operator, by default
+    - examples:
 
-    sa                  iw                  "
-    ^ surround add      ^ inside word       ^ double quotes
-    ^ operator          ^ target            ^ char
+    +-----+--------+------+-----+----------------------------+-----------------+
+    | op  | target | char | sub | description                | meaning         +
+    +-----+--------+------+-----+----------------------------|-----------------+
+    | sa  | iw     | (    |     | surround add inside word ( | wrap word in () +
+    | sd  |        | [    |     | surround delete [          | unwrap []       +
+    | sr  |        | '    | "   | surround replace ' with "  | rewrap with "   +
+    +-----+-------------+--------+--------+------------------+-----------------+
 
-    sd                                      "
-    ^ surround delete                       ^ double quotes
-    ^ operator                              ^ char
-
-    sr                                      "                   '
-    ^ surround replace                      ^ double quotes     ^ single quotes
-    ^ operator                              ^ char1             char2
     -- ]]
     {
         "echasnovski/mini.surround",
