@@ -94,10 +94,11 @@ alias cat="bat --style=plain --paging=never"    # aka bat -pp
 # replace pagers and viewers with page
 export PAGER='page -W -q -P'
 export MANPAGER='page -W -t man'
+export PAGE_REDIRECTION_PROTECT=0  # always spawn fresh; disable redirect-into-existing-instance check
 
 # replace more and less
 more() { page -W -O -- "$@" }   # cat mode: inline if fits, skip neovim; function (not alias) to avoid -O consuming filename as its optional arg
-alias less="$PAGER"             # pager mode
+alias less='page -W'            # file viewer (no -P: avoids PTY redirect mode)
 
 # man with proper section handling (enables man://prog(N) URI navigation)
 man() {
@@ -110,13 +111,17 @@ man() {
 alias logf='page -W -f'
 
 # name pager buffers after the command that produced them (zsh)
+# also set the terminal window title to the running command
 preexec() {
-    if [[ -z "$NVIM" ]]; then
-        export PAGE_BUFFER_NAME="page"
-    else
-        local words=(${1// *|*})
-        export PAGE_BUFFER_NAME="${words[1,2]}"
-    fi
+    local words=(${1%%[|>]*})    # strip from first | or > then word-split
+    export PAGE_BUFFER_NAME="${words[1,2]}"
+    export PAGE_PIPE_CMD="${1}"  # full typed command (used by page statusline)
+    printf "\e]0;%s\e\\" "${1}"  # set title to full command (reset by precmd)
+}
+
+# reset terminal title to current directory after each command
+precmd() {
+    print -Pn "\e]0;%~\e\\"
 }
 
 # replace du with dust
