@@ -63,7 +63,6 @@ brew "macmon"  # sudoless performance monitoring for Apple Silicon
 
 brew "llama.cpp"  # LLM inference in C/C++
 brew "llmfit"     # check which models your hardware can run
-brew "ollama"     # run and manage large language models locally
 brew "rich-cli"   # rich text and formatting in the terminal
 
 # -------------------------------------------------------- terminal extras ♠ ---
@@ -106,7 +105,6 @@ cask "claudebar"       # menu bar monitor for Claude Code quotas
 cask "google-gemini"   # Google Gemini desktop app
 cask "jan"             # offline AI chat
 cask "lm-studio"       # discover, download, and run local LLMs
-cask "ollamac"         # macOS GUI for Ollama
 cask "ovim"            # system-wide vim mode for macOS
 
 # --------------------------------------------------------------- browsers ♠ ---
@@ -146,20 +144,20 @@ cask "vlc"       # multimedia player
 
 # -------------------------------------------------------------- utilities ♠ ---
 
-cask "appcleaner"          # uninstall apps and remove all related files
+# cask "appcleaner"        # uninstall apps and remove all related files
 cask "daisydisk"           # disk space visualiser
 cask "displaylink"         # drivers for DisplayLink docks and monitors
-cask "flux"                # screen colour temperature by time of day
+cask "flux-app"            # screen colour temperature by time of day
 cask "pearcleaner"         # uninstall apps and remove orphaned files
-cask "raspberry-pi-imager"  # imaging utility for Raspberry Pi OS
+cask "raspberry-pi-imager" # imaging utility for Raspberry Pi OS
 cask "stats"               # system monitor in the menu bar
 cask "transmission"        # open-source BitTorrent client
 
 # --------------------------------------------------------------- hardware ♠ ---
 
-cask "balenaetcher"       # flash OS images to SD cards and USB drives
+cask "balenaetcher"        # flash OS images to SD cards and USB drives
 cask "elgato-stream-deck"  # Stream Deck configuration software
 
 # ----------------------------------------------------------------- gaming ♠ ---
 
-cask "steam"  # gaming platform
+# cask "steam"  # gaming platform

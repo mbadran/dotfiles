@@ -157,13 +157,22 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
 - [x] **3.4** Develop a brewfile to manage future mac migrations
 - [ ] **3.5** Replace downloaded apps and binaries with brew equivalents
 - [ ] **3.6** Import and symlink key ~/.claude settings (gitignoring the rest)
+- [ ] **3.7** Fix `page -p` PTY redirect (`ls > $(page -p)` fails -- neovim startup emits ANSI escape codes before the device path, corrupting the `$()` expansion)
 
-### Phase 4: TUI tools
+### Phase 4: morsel
 
-- [ ] **4.1** Fix `page -p` PTY redirect (`ls > $(page -p)` fails -- neovim startup emits ANSI escape codes before the device path, corrupting the `$()` expansion)
-- [ ] **4.2** Replace starship Python morse code block with `morsel` CLI calls
-- [ ] **4.3** Replace zsh login/logout message with `aloha` CLI calls
-- [ ] **4.4** Replace page + neovim pager with `neopager`
+- [ ] **4.1** Replace starship Python morse code block with `morsel` CLI calls
+- [ ] **4.2** Polish
+
+### Phase 5: aloha
+
+- [ ] **5.1** Replace zsh login/logout message with `aloha` CLI calls
+- [ ] **5.2** Polish
+
+### Phase 6: neopager
+
+- [ ] **6.1** Replace `page` + neovim pager with `neopager`
+- [ ] **6.2** Polish
 
 ---
 
