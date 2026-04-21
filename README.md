@@ -14,17 +14,17 @@ no promises.
 
 ## stats
 
-| | |
-|-|-|
-| first commit | 2011 |
-| lines of config | ~2,200 |
-| vim burnouts | 1 |
-| vim themes | 1 |
-| vim plugins | 7 |
-| vim mappings | 15 |
-| tools replaced | 13 |
-| aliases defined | 22 |
-| defaults exterminated | ongoing |
+| stat                          | value     |
+| ----------------------------- | --------- |
+| first commit                  | 2011      |
+| lines of config               | ~2,200    |
+| vim burnouts                  | 1         |
+| vim themes                    | 1         |
+| vim plugins                   | 7         |
+| vim mappings                  | 15        |
+| tools replaced                | 13        |
+| aliases defined               | 22        |
+| defaults exterminated         | ongoing   |
 | morse code characters learned | debatable |
 
 ## what's in here
@@ -40,10 +40,11 @@ search. compinit cached daily. startup profiled on demand.
 line layout: left prompt for essentials (directory, git, shell), right prompt
 for context (languages, status, time, a morse code experiment).
 
-`$TERMINAL` — kitty. 9 lines of config. (wip)
+`$TERMINAL` — kitty. minimal config, remote control enabled for stream deck.
 
 `$TUI` — eza (ls), bat (cat), page (less/man/more), dust (du), ripgrep (grep), fd (find),
 zoxide (cd), fzf (fuzzy everything), btop (top), delta (diff).
 
 `$LEGACY` — bash configs from 2011–2020. here be dragons. kept for the
 increasingly rare server without zsh.
+

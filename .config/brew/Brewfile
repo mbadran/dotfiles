@@ -1,0 +1,164 @@
+# --------------------------------------------------------------- brewfile ♠ ---
+#
+#   a declarative list of all homebrew packages and casks
+#
+#   fresh install    brew bundle
+#   check drift      brew bundle check --verbose
+#   list extras      brew bundle cleanup
+#   purge extras     brew bundle cleanup --force
+#   update all       brew upgrade --greedy
+#
+#   see README.md for the full guide
+#
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------- taps ♠ ---
+
+tap "arthur-ficial/tap"
+tap "tonisives/tap"
+tap "vecartier/tap"
+
+# ------------------------------------------------------------------ shell ♠ ---
+
+brew "fzf"                             # fuzzy finder
+brew "starship"                        # cross-shell prompt
+brew "zoxide"                          # smarter cd with frecency ranking
+brew "zsh-autosuggestions"             # fish-style command suggestions
+brew "zsh-completions"                 # additional completion definitions
+brew "zsh-history-substring-search"    # fish-style history search
+brew "zsh-syntax-highlighting"         # fish-style syntax highlighting
+brew "zsh-vi-mode"                     # vi mode for zsh
+
+# --------------------------------------------------------- files & search ♠ ---
+
+brew "bat"       # cat with syntax highlighting and git integration
+brew "dust"      # du replacement, written in Rust
+brew "eza"       # modern ls replacement
+brew "fd"        # user-friendly find alternative
+brew "ripgrep"   # fast grep replacement
+brew "tree"      # display directories as trees
+
+# -------------------------------------------------------- editor & pagers ♠ ---
+
+brew "neovim"     # extensible vim-fork
+brew "nvimpager"  # neovim as pager for man pages, diffs, etc.
+brew "page"       # lightweight neovim pager
+brew "glow"       # render markdown in the terminal
+brew "pandoc"     # universal markup format converter
+
+# -------------------------------------------------------------- dev tools ♠ ---
+
+brew "gh"               # GitHub CLI
+brew "git-delta"        # syntax-highlighting pager for git and diff output
+brew "netcat"           # utility for managing network connections
+brew "tree-sitter-cli"  # parser generator tool and CLI
+brew "yarn"             # JavaScript package manager
+
+# ----------------------------------------------------------------- system ♠ ---
+
+brew "btop"  # resource monitor — C++ successor to bashtop
+
+# --------------------------------------------------------------- llm & ai ♠ ---
+
+brew "llama.cpp"  # LLM inference in C/C++
+brew "llmfit"     # check which models your hardware can run
+brew "ollama"     # run and manage large language models locally
+brew "rich-cli"   # rich text and formatting in the terminal
+
+# -------------------------------------------------------- terminal extras ♠ ---
+
+brew "ascii"    # list ASCII idiomatic names and code points
+brew "cmatrix"  # the matrix, in your terminal
+brew "figlet"   # ASCII art text banners
+brew "gum"      # interactive prompts for glamorous shell scripts
+brew "nudoku"   # ncurses sudoku
+brew "sttr"     # string manipulation swiss-army knife
+brew "toilet"   # colorful figlet alternative using libcaca
+
+# --------------------------------------------------------- personal tools ♠ ---
+
+brew "arthur-ficial/tap/apfel"  # on-device Apple Foundation Models CLI
+brew "ccusage"                  # analyse Claude Code token usage from JSONL logs
+brew "morse"                    # QSO generator and morse code trainer
+brew "mq"                       # jq-like tool for markdown processing
+brew "qman"                     # modern man page viewer
+brew "sheets"                   # terminal spreadsheet
+
+# ------------------------------------------------------------------ fonts ♠ ---
+
+cask "font-fira-code-nerd-font"     # Fira Code with Nerd Font glyphs
+cask "font-iosevka-term-nerd-font"  # IosevkaTerm with Nerd Font glyphs
+
+# ----------------------------------------------------- terminal & editors ♠ ---
+
+cask "kitty"      # GPU-based terminal emulator
+cask "zed"        # multiplayer code editor
+
+# --------------------------------------------------------------- ai & llm ♠ ---
+
+cask "cc-beeper"       # Claude Code companion — monitors sessions, speaks summaries
+cask "chatgpt"         # OpenAI ChatGPT desktop app
+cask "claude"          # Anthropic Claude desktop app
+cask "claude-code"     # terminal-based AI coding assistant
+cask "claude-devtools"  # visualise and analyse Claude Code session executions
+cask "claudebar"       # menu bar monitor for Claude Code quotas
+cask "google-gemini"   # Google Gemini desktop app
+cask "jan"             # offline AI chat
+cask "lm-studio"       # discover, download, and run local LLMs
+cask "ollamac"         # macOS GUI for Ollama
+cask "ovim"            # system-wide vim mode for macOS
+
+# --------------------------------------------------------------- browsers ♠ ---
+
+cask "arc"            # Chromium-based browser
+cask "brave-browser"  # privacy-focused browser
+cask "google-chrome"  # Google Chrome
+cask "orion"          # WebKit-based browser with native ad blocking
+cask "vivaldi"        # customisable browser with built-in email
+
+# -------------------------------------------------------------------- dev ♠ ---
+
+cask "docker"   # build and run containerised apps and microservices
+cask "postman"  # API development and testing
+
+# ----------------------------------------------------------- productivity ♠ ---
+
+cask "1password"      # password manager
+cask "1password-cli"  # 1Password command-line interface
+cask "obsidian"       # knowledge base on local Markdown files
+cask "raycast"        # extensible launcher and productivity tool
+cask "unite"          # turn websites into standalone apps
+
+# ---------------------------------------------------------- communication ♠ ---
+
+cask "discord"          # voice and text chat
+cask "microsoft-teams"  # chat, calls, and collaboration
+cask "slack"            # team communication
+cask "termius"          # SSH client
+cask "zoom"             # video meetings
+
+# ------------------------------------------------------- media & creative ♠ ---
+
+cask "inkscape"  # vector graphics editor
+cask "spotify"   # music streaming
+cask "vlc"       # multimedia player
+
+# -------------------------------------------------------------- utilities ♠ ---
+
+cask "appcleaner"          # uninstall apps and remove all related files
+cask "daisydisk"           # disk space visualiser
+cask "displaylink"         # drivers for DisplayLink docks and monitors
+cask "flux"                # screen colour temperature by time of day
+cask "pearcleaner"         # uninstall apps and remove orphaned files
+cask "raspberry-pi-imager"  # imaging utility for Raspberry Pi OS
+cask "stats"               # system monitor in the menu bar
+cask "transmission"        # open-source BitTorrent client
+
+# --------------------------------------------------------------- hardware ♠ ---
+
+cask "balenaetcher"       # flash OS images to SD cards and USB drives
+cask "elgato-stream-deck"  # Stream Deck configuration software
+
+# ----------------------------------------------------------------- gaming ♠ ---
+
+cask "steam"  # gaming platform

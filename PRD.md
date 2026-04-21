@@ -1,5 +1,5 @@
 # dotfiles PRD
-> Living document. Last updated: 2026-04-19.
+> Living document. Last updated: 2026-04-21.
 
 ## Vision
 
@@ -17,16 +17,17 @@ A single, clean dotfiles repository that captures an intentional, terminal-centr
 
 ## Environment
 
-| Tool | Role | Config file(s) |
-|------|------|----------------|
-| zsh | Shell | `.zshrc`, `.zprofile` |
-| starship | Prompt | `.config/starship.toml` |
-| nvim | Editor | `.config/nvim/init.lua` |
-| kitty | Terminal | `.config/kitty/kitty.conf`, `.config/kitty/current-theme.conf` |
-| btop | System monitor | `.config/btop/btop.conf` |
-| zed | GUI editor | `.config/zed/settings.json` |
-| gh | GitHub CLI | `.config/gh/config.yml` |
-| git | Version control | `.config/git/ignore` |
+| Tool     | Role            | Config file(s)                                                 |
+| -------- | --------------- | -------------------------------------------------------------- |
+| zsh      | Shell           | `.zshrc`, `.zprofile`                                          |
+| starship | Prompt          | `.config/starship.toml`                                        |
+| nvim     | Editor          | `.config/nvim/init.lua`                                        |
+| kitty    | Terminal        | `.config/kitty/kitty.conf`, `.config/kitty/current-theme.conf` |
+| btop     | System monitor  | `.config/btop/btop.conf`                                       |
+| zed      | GUI editor      | `.config/zed/settings.json`                                    |
+| gh       | GitHub CLI      | `.config/gh/config.yml`                                        |
+| git      | Version control | `.config/git/ignore`                                           |
+| homebrew | Package manager | `.config/brew/Brewfile`, `.config/brew/brew.env`               |
 
 ### Shell ecosystem 
 
@@ -36,12 +37,12 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 
 ### Not tracked (TODO: review)
 
-| Tool | Reason |
-|------|--------|
-| Raycast | App-managed, may contain keys |
-| qBittorrent | App-managed, not handcrafted |
-| 1Password CLI | Runtime state / credentials |
-| PulseAudio | Runtime symlinks |
+| Tool          | Reason                        |
+| ------------- | ----------------------------- |
+| Raycast       | App-managed, may contain keys |
+| qBittorrent   | App-managed, not handcrafted  |
+| 1Password CLI | Runtime state / credentials   |
+| PulseAudio    | Runtime symlinks              |
 
 ---
 
@@ -51,28 +52,28 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 
 ### Tracked configs
 
-| Config | Status | Notes |
-|--------|--------|-------|
-| .zshrc | DONE | Profiling toggle, cached compinit/brew, delta, zoxide --cmd cd, page pager/manpager, ccsl/qqwing aliases. |
-| btop.conf | DONE | 88 lines. Everforest dark, vim keys, braille graphs. |
-| ccstatusline | DONE | Powerline statusline for Claude Code sessions. |
-| gh/config.yml | DONE | hosts.yml gitignored (credentials). |
-| git/ignore | DONE | Global gitignore. |
-| homebrew | | |
-| kitty.conf | DONE | 9 lines. IosevkaTerm + Catppuccin Macchiato. |
-| nvim/init.lua | DONE | Philosophy-driven minimal config. lazy.nvim, 7 plugins, <=20 mappings. |
-| starship.toml | DONE | Catppuccin Macchiato powerline. 4 palettes with neutral grays. Morse tutor marked for morsel replacement. |
-| zed/settings.json | DONE | Fleet Dark Purple theme, vim mode, LM Studio integration. |
+| Config            | Status | Notes                                                                                                                         |
+| ----------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| .zshrc            | DONE   | Profiling toggle, cached compinit/brew, delta, zoxide --cmd cd, page pager/manpager, ccsl/qqwing aliases.                     |
+| btop.conf         | DONE   | 88 lines. Everforest dark, vim keys, braille graphs.                                                                          |
+| ccstatusline      | DONE   | Powerline statusline for Claude Code sessions.                                                                                |
+| gh/config.yml     | DONE   | hosts.yml gitignored (credentials).                                                                                           |
+| git/ignore        | DONE   | Global gitignore.                                                                                                             |
+| homebrew          | DONE   | Brewfile + brew.env in `.config/brew/`. Taps: arthur-ficial, tonisives, vecartier. Non-brew apps indexed in non-brew-apps.md. |
+| kitty.conf        | DONE   | IosevkaTerm + Catppuccin Macchiato. Remote control via socket (stream deck).                                                  |
+| nvim/init.lua     | DONE   | Philosophy-driven minimal config. lazy.nvim, 7 plugins, <=20 mappings.                                                        |
+| starship.toml     | DONE   | Catppuccin Macchiato powerline. 4 palettes with neutral grays. Morse tutor marked for morsel replacement.                     |
+| zed/settings.json | DONE   | Fleet Dark Purple theme, vim mode, LM Studio integration.                                                                     |
 
 ### Retired configs (tracked for future triage)
 
-| Config | Notes |
-|------|-------|
-| .bash_* | Here be dragons. 2011-2020. Superseded by zsh. Kept for zsh-less servers. |
-| .dir_colors | 2017. Superseded by eza. |
-| .inputrc | 2017. Readline config, still useful for bash-based tools. |
-| .screenrc | 2017. Superseded by tmux. |
-| .tmux.conf | TODO: revisit. 2017. Still relevant if tmux is used. |
+| Config      | Notes                                                                     |
+| ----------- | ------------------------------------------------------------------------- |
+| .bash_*     | Here be dragons. 2011-2020. Superseded by zsh. Kept for zsh-less servers. |
+| .dir_colors | 2017. Superseded by eza.                                                  |
+| .inputrc    | 2017. Readline config, still useful for bash-based tools.                 |
+| .screenrc   | 2017. Superseded by tmux.                                                 |
+| .tmux.conf  | TODO: revisit. 2017. Still relevant if tmux is used.                      |
 
 ---
 
@@ -112,7 +113,7 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 - [x] **3.5** Track ccstatusline config
 - [ ] **3.2** Import and symlink key ~/.claude settings (gitignoring the rest)
 - [ ] **3.3** Replace downloaded apps and binaries with brew equivalents
-- [ ] **3.4** Develop a brewfile to manage future mac migrations
+- [x] **3.4** Develop a brewfile to manage future mac migrations
 
 ### Phase 4: TUI tools
 
@@ -129,6 +130,7 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 - One config = one commit with descriptive message
 - Commit style: lowercase sentence, no file-prefix colon, natural language — e.g. *"fix starship read_only style, swap PUA glyph"* not *"starship: fix read_only"*
 - Experiments go in `working/`, never in committed files
+- Table formatting: all markdown tables use column-aligned cells padded to the widest value in each column, outer `|` borders on both sides, and separator rows matching column width — readable as plain text without a markdown viewer. horizontal scrolling is fine; never hard-wrap cell content
 
 ---
 
@@ -169,6 +171,7 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
 ```
 dotfiles/
   .config/          # XDG config directory
+    brew/           # homebrew: Brewfile, brew.env, non-brew-apps.md
   working/          # scratchpad for experiments and extracted code (gitignored)
   logs/             # profiling and debug logs (gitignored)
   PRD.md            # this file
