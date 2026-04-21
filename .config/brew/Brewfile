@@ -56,7 +56,8 @@ brew "yarn"             # JavaScript package manager
 
 # ----------------------------------------------------------------- system ♠ ---
 
-brew "btop"  # resource monitor — C++ successor to bashtop
+brew "btop"    # resource monitor — C++ successor to bashtop
+brew "macmon"  # sudoless performance monitoring for Apple Silicon
 
 # --------------------------------------------------------------- llm & ai ♠ ---
 

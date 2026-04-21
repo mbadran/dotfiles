@@ -3,19 +3,55 @@
 
 ## Vision
 
-A single, clean dotfiles repository that captures an intentional, terminal-centric development environment. Every tracked file should be production-ready: no commented-out experiments, no embedded documentation bloat, no unresolved TODOs. Experimental work lives in `working/` (gitignored), not in committed configs.
+A single, clean dotfiles repository for an intentional, terminal-centric development environment. Every tracked file is production-ready — no commented-out experiments, no documentation bloat, no unresolved TODOs.
 
-### Principles
+## Principles
 
-1. **One config at a time** -- focus switches explicitly, never refactor in the background
-2. **Clean before commit** -- move experiments to `working/`, resolve TODOs, then commit
-3. **Minimal and intentional** -- understand before changing, every line earns its keep
-4. **Consistent aesthetic** -- Catppuccin (Macchiato), IosevkaTerm Nerd Font, vim keybindings everywhere
-5. **Separate concerns** -- CLI tools live in their own repos, configs reference them
+1. **One config at a time** — focus switches explicitly, never refactor in the background
+2. **Minimal and intentional** — understand before changing, every line earns its keep
+3. **Consistent aesthetic** — Catppuccin (Macchiato), IosevkaTerm Nerd Font, vim keybindings everywhere
+4. **Separate concerns** — CLI tools live in their own repos, configs reference them
+5. **Production-ready only** — experiments go in `working/`, never in committed files
+
+## Guardrails
+
+**Workflow** — enforce Principle 1 and 5
+- Manage tasks and focus within this PRD; update it after relevant changes
+- Update README.md, TESTING.md, and brew artefacts after relevant changes
+- Keep `.gitignore` current
+
+**Commits** — enforce Principle 2
+- One config = one commit with a descriptive message
+- Style: lowercase sentence, no file prefix — e.g. *"fix starship read_only style, swap PUA glyph"* not *"starship: fix read_only"*
+
+**Drift management** — enforce Principle 1 and 5
+- At the start of each session, check for untracked configs in project root and `.config/`. Run `brew bundle check --verbose`. If new configs exist that are neither tracked nor referenced in `./brew/non-brew-apps.md`, either track them or add them (with a note) to that file and `.gitignore`. If tracked configs are absent on the system, install them or remove their references.
+
+**Tables** — enforce Principle 2
+- Column-aligned cells padded to widest value per column, outer `|` borders, separator rows matching column width. Readable as plain text. Horizontal scrolling is fine; never hard-wrap cell content.
 
 ---
 
 ## Environment
+
+### Directory structure
+
+```
+dotfiles/
+  .config/          # XDG config directory
+    brew/           # homebrew: Brewfile, brew.env, non-brew-apps.md
+  working/          # scratchpad for experiments and extracted code (gitignored)
+  logs/             # profiling and debug logs (gitignored)
+  PRD.md            # this file
+  TESTING.md        # verification checklists
+  README.md         # project overview
+```
+
+### Bundles and packages
+
+> Managed via [Homebrew](https://brew.sh). See [`.config/brew/README.md`](.config/brew/README.md) for the full package list.
+
+### Key tools
 
 | Tool     | Role            | Config file(s)                                                 |
 | -------- | --------------- | -------------------------------------------------------------- |
@@ -29,32 +65,22 @@ A single, clean dotfiles repository that captures an intentional, terminal-centr
 | zed      | GUI editor      | `.config/zed/settings.json`                                    |
 | zsh      | Shell           | `.zshrc`, `.zprofile`                                          |
 
-### Shell ecosystem
-
-> Managed via [Homebrew](https://brew.sh). See [`.config/brew/README.md`](.config/brew/README.md) for the full package list.
-
----
-
-## Status legend
-
-`TODO` = Not Started | `FIXME` = Bug | `WIP` = Active Cleanup | `DONE` = Clean And Committed |`SKIP` = Do Not Track
-
 ### Tracked configs
 
-| Config            | Status | Notes                                                                                                                         |
-| ----------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| .zprofile         | DONE   | Sources brew shellenv and brew.env for Homebrew env vars.                                                                     |
-| .zshrc            | DONE   | Profiling toggle, cached compinit/brew, delta, zoxide --cmd cd, page pager/manpager, ccsl/qqwing aliases.                     |
-| btop.conf         | DONE   | 88 lines. Everforest dark, vim keys, braille graphs.                                                                          |
-| ccstatusline      | DONE   | Powerline statusline for Claude Code sessions.                                                                                |
-| gh/config.yml     | DONE   | hosts.yml gitignored (credentials).                                                                                           |
-| git/ignore        | DONE   | Global gitignore.                                                                                                             |
-| homebrew          | DONE   | Brewfile + brew.env in `.config/brew/`. Taps: arthur-ficial, tonisives, vecartier. Non-brew apps indexed in non-brew-apps.md. |
-| kitty.conf        | DONE   | IosevkaTerm + Catppuccin Macchiato. Remote control via socket (stream deck).                                                  |
-| nvim/init.lua     | DONE   | Philosophy-driven minimal config. lazy.nvim, 8 plugins, 18 mappings.                                                          |
-| page/init.lua     | DONE   | Habamax colorscheme, relative numbers, cursorline. Used as less/man/more via zshrc aliases.                                   |
-| starship.toml     | DONE   | Catppuccin Macchiato powerline. 4 palettes with neutral grays. Morse tutor marked for morsel replacement.                     |
-| zed/settings.json | DONE   | Fleet Dark Purple theme, vim mode, LM Studio integration.                                                                     |
+| Config            | Description                                                 |
+| ----------------- | ----------------------------------------------------------- |
+| .zprofile         | Login shell — brew shellenv, Homebrew env vars              |
+| .zshrc            | Interactive shell — vi-mode, plugins, aliases, pager wiring |
+| btop.conf         | System monitor — Everforest theme, vim keys                 |
+| ccstatusline      | Statusline for Claude Code sessions                         |
+| gh/config.yml     | GitHub CLI (hosts.yml gitignored)                           |
+| git/ignore        | Global gitignore patterns                                   |
+| homebrew          | Brewfile + brew.env + non-brew-apps index                   |
+| kitty.conf        | GPU terminal emulator                                       |
+| nvim/init.lua     | Neovim — minimal, lazy.nvim, 8 plugins                      |
+| page/init.lua     | Neovim-based pager for less/man/more                        |
+| starship.toml     | Starship prompt — Catppuccin Macchiato                      |
+| zed/settings.json | Zed GUI editor                                              |
 
 ### Retired configs 
 
@@ -65,12 +91,35 @@ _Tracked for future triage_
 | .bash_*     | Here be dragons. 2011-2020. Superseded by zsh. Kept for zsh-less servers. |
 | .dir_colors | 2017. Superseded by eza.                                                  |
 | .inputrc    | 2017. Readline config, still useful for bash-based tools.                 |
-| .screenrc   | 2017. Superseded by tmux.                                                 |
 | .tmux.conf  | TODO: revisit. 2017. Still relevant if tmux is used.                      |
 
 ---
 
+## Profiling
+
+### Approach
+
+Use zsh built-ins only. No external plugins needed.
+
+- `zsh/zprof` module -- per-function call profiling
+- `$EPOCHREALTIME` from `zsh/datetime` -- wall-clock timing
+- Toggle: `ZSH_PROFILE=1` in `.zshrc` (flip to 0 when done)
+
+### Usage
+
+Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-guide.md` for how to read the output.
+
+### Log location
+
+`logs/zsh-profile-YYYYMMDD-HHMMSS.log` (gitignored, no rotation, delete manually)
+
+---
+
 ## Roadmap
+
+### Status legend
+
+`TODO` = Not Started | `FIXME` = Bug | `WIP` = Active Cleanup | `DONE` = Clean And Committed |`SKIP` = Do Not Track
 
 ### Phase 1: Foundation -- DONE
 
@@ -103,36 +152,26 @@ _Tracked for future triage_
 ### Phase 3: Stragglers and polish
 
 - [x] **3.1** Incorporate latest changes, fix zoxide warning, and polish
-- [x] **3.5** Track ccstatusline config
-- [ ] **3.2** Import and symlink key ~/.claude settings (gitignoring the rest)
-- [x] **3.3** Develop a brewfile to manage future mac migrations
-- [ ] **3.4** Replace downloaded apps and binaries with brew equivalents
+- [x] **3.2** Track ccstatusline config
+- [x] **3.3** Update pager config (via page)
+- [x] **3.4** Develop a brewfile to manage future mac migrations
+- [ ] **3.5** Replace downloaded apps and binaries with brew equivalents
+- [ ] **3.6** Import and symlink key ~/.claude settings (gitignoring the rest)
 
 ### Phase 4: TUI tools
 
 - [ ] **4.1** Fix `page -p` PTY redirect (`ls > $(page -p)` fails -- neovim startup emits ANSI escape codes before the device path, corrupting the `$()` expansion)
 - [ ] **4.2** Replace starship Python morse code block with `morsel` CLI calls
 - [ ] **4.3** Replace zsh login/logout message with `aloha` CLI calls
-
-### Ongoing
-
-- Manage tasks within this PRD
-- Experiments go in `working/`, never in committed files
-- Track changes within files via config status keys
-- One config = one commit, with descriptive message
-- Commit style: lowercase sentence, no file-prefix colon, natural language — e.g. *"fix starship read_only style, swap PUA glyph"* not *"starship: fix read_only"*
-- Keep `.gitignore` current
-- Update this PRD and related files after relevant changes
-- Update README.md, TESTING.md, and homebrew artefacts after relevant changes
-- Table formatting: all markdown tables use column-aligned cells padded to the widest value in each column, outer `|` borders on both sides, and separator rows matching column width — readable as plain text without a markdown viewer. horizontal scrolling is fine; never hard-wrap cell content
+- [ ] **4.4** Replace page + neovim pager with `neopager`
 
 ---
 
-## Planned Rust CLI Tools
+## Planned TUI tools
 
 ### morsel
 
-Morse code tutor and conversion swiss pocket knife. Will replace the inline Python in `starship.toml`'s `custom.anchor` module. See `working/morsel-design-notes.md` for CLI design notes. Separate repo.
+Morse code tutor and conversion swiss pocket knife. Will replace the inline Python in `starship.toml`'s `custom.anchor` module. Separate repo. See `working/morsel-design-notes.md` for design notes.
 
 ### aloha
 
@@ -140,39 +179,4 @@ TUI for shell dashboards. Can be used interactively or in one shot. Use cases in
 
 ### neopager
 
-A from-scratch pager built in Rust. Intended to replace `page` (which wraps neovim) with a standalone binary that has no neovim dependency but keeps the same UX contract: syntax highlighting, vi keys, and the ability to act as a drop-in for less/man/more. Separate repo.
-
----
-
-## Profiling
-
-### Approach
-
-Use zsh built-ins only. No external plugins needed.
-
-- `zsh/zprof` module -- per-function call profiling
-- `$EPOCHREALTIME` from `zsh/datetime` -- wall-clock timing
-- Toggle: `ZSH_PROFILE=1` in `.zshrc` (flip to 0 when done)
-
-### Usage
-
-Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-guide.md` for how to read the output.
-
-### Log location
-
-`logs/zsh-profile-YYYYMMDD-HHMMSS.log` (gitignored, no rotation, delete manually)
-
----
-
-## Directory structure
-
-```
-dotfiles/
-  .config/          # XDG config directory
-    brew/           # homebrew: Brewfile, brew.env, non-brew-apps.md
-  working/          # scratchpad for experiments and extracted code (gitignored)
-  logs/             # profiling and debug logs (gitignored)
-  PRD.md            # this file
-  TESTING.md        # verification checklists
-  README.md         # project overview
-```
+A from-scratch pager built in Rust. Intended to replace `page` (which wraps neovim) with a standalone binary that has no neovim dependency but keeps the same UX contract: syntax highlighting, vi keys, and the ability to act as a drop-in for less/man/more. Alternatively, integrates with neovim in headless mode. Separate repo. See `working/NEOPAGER-PRD.md` for design notes.

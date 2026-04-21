@@ -25,5 +25,6 @@ working/
 .config/qBittorrent/
 .config/raycast/
 
-# claude
-.claude/
+# claude -- settings.json tracked; everything else ignored
+.claude/*
+!.claude/settings.json
