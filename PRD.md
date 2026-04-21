@@ -19,30 +19,19 @@ A single, clean dotfiles repository that captures an intentional, terminal-centr
 
 | Tool     | Role            | Config file(s)                                                 |
 | -------- | --------------- | -------------------------------------------------------------- |
-| zsh      | Shell           | `.zshrc`, `.zprofile`                                          |
-| starship | Prompt          | `.config/starship.toml`                                        |
-| nvim     | Editor          | `.config/nvim/init.lua`                                        |
-| kitty    | Terminal        | `.config/kitty/kitty.conf`, `.config/kitty/current-theme.conf` |
 | btop     | System monitor  | `.config/btop/btop.conf`                                       |
-| zed      | GUI editor      | `.config/zed/settings.json`                                    |
 | gh       | GitHub CLI      | `.config/gh/config.yml`                                        |
 | git      | Version control | `.config/git/ignore`                                           |
 | homebrew | Package manager | `.config/brew/Brewfile`, `.config/brew/brew.env`               |
+| kitty    | Terminal        | `.config/kitty/kitty.conf`, `.config/kitty/current-theme.conf` |
+| nvim     | Editor          | `.config/nvim/init.lua`                                        |
+| starship | Prompt          | `.config/starship.toml`                                        |
+| zed      | GUI editor      | `.config/zed/settings.json`                                    |
+| zsh      | Shell           | `.zshrc`, `.zprofile`                                          |
 
-### Shell ecosystem 
+### Shell ecosystem
 
-> Managed via [Homebrew](https://brew.sh)
-
-bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggestions, zsh-completions, zsh-history-substring-search, zsh-syntax-highlighting, zsh-vi-mode
-
-### Not tracked (TODO: review)
-
-| Tool          | Reason                        |
-| ------------- | ----------------------------- |
-| Raycast       | App-managed, may contain keys |
-| qBittorrent   | App-managed, not handcrafted  |
-| 1Password CLI | Runtime state / credentials   |
-| PulseAudio    | Runtime symlinks              |
+> Managed via [Homebrew](https://brew.sh). See [`.config/brew/README.md`](.config/brew/README.md) for the full package list.
 
 ---
 
@@ -54,6 +43,7 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 
 | Config            | Status | Notes                                                                                                                         |
 | ----------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| .zprofile         | DONE   | Sources brew shellenv and brew.env for Homebrew env vars.                                                                     |
 | .zshrc            | DONE   | Profiling toggle, cached compinit/brew, delta, zoxide --cmd cd, page pager/manpager, ccsl/qqwing aliases.                     |
 | btop.conf         | DONE   | 88 lines. Everforest dark, vim keys, braille graphs.                                                                          |
 | ccstatusline      | DONE   | Powerline statusline for Claude Code sessions.                                                                                |
@@ -61,11 +51,14 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 | git/ignore        | DONE   | Global gitignore.                                                                                                             |
 | homebrew          | DONE   | Brewfile + brew.env in `.config/brew/`. Taps: arthur-ficial, tonisives, vecartier. Non-brew apps indexed in non-brew-apps.md. |
 | kitty.conf        | DONE   | IosevkaTerm + Catppuccin Macchiato. Remote control via socket (stream deck).                                                  |
-| nvim/init.lua     | DONE   | Philosophy-driven minimal config. lazy.nvim, 7 plugins, <=20 mappings.                                                        |
+| nvim/init.lua     | DONE   | Philosophy-driven minimal config. lazy.nvim, 8 plugins, 18 mappings.                                                          |
+| page/init.lua     | DONE   | Habamax colorscheme, relative numbers, cursorline. Used as less/man/more via zshrc aliases.                                   |
 | starship.toml     | DONE   | Catppuccin Macchiato powerline. 4 palettes with neutral grays. Morse tutor marked for morsel replacement.                     |
 | zed/settings.json | DONE   | Fleet Dark Purple theme, vim mode, LM Studio integration.                                                                     |
 
-### Retired configs (tracked for future triage)
+### Retired configs 
+
+_Tracked for future triage_
 
 | Config      | Notes                                                                     |
 | ----------- | ------------------------------------------------------------------------- |
@@ -112,24 +105,25 @@ bat, btop, delta, dust, eza, fd, fzf, ripgrep, starship, zoxide, zsh-autosuggest
 - [x] **3.1** Incorporate latest changes, fix zoxide warning, and polish
 - [x] **3.5** Track ccstatusline config
 - [ ] **3.2** Import and symlink key ~/.claude settings (gitignoring the rest)
-- [ ] **3.3** Replace downloaded apps and binaries with brew equivalents
-- [x] **3.4** Develop a brewfile to manage future mac migrations
+- [x] **3.3** Develop a brewfile to manage future mac migrations
+- [ ] **3.4** Replace downloaded apps and binaries with brew equivalents
 
 ### Phase 4: TUI tools
 
-- [ ] **4.1** Replace starship Python morse code block with `morsel` CLI calls
-- [ ] **4.2** Replace zsh login/logout message with `aloha` CLI calls
-- [ ] **4.3** Fix `page -p` PTY redirect (`ls > $(page -p)` fails -- neovim startup emits ANSI escape codes before the device path, corrupting the `$()` expansion)
+- [ ] **4.1** Fix `page -p` PTY redirect (`ls > $(page -p)` fails -- neovim startup emits ANSI escape codes before the device path, corrupting the `$()` expansion)
+- [ ] **4.2** Replace starship Python morse code block with `morsel` CLI calls
+- [ ] **4.3** Replace zsh login/logout message with `aloha` CLI calls
 
 ### Ongoing
 
-- Keep `.gitignore` current
 - Manage tasks within this PRD
-- Track changes within files via config status keys
-- Update files and this PRD as tasks complete
-- One config = one commit with descriptive message
-- Commit style: lowercase sentence, no file-prefix colon, natural language — e.g. *"fix starship read_only style, swap PUA glyph"* not *"starship: fix read_only"*
 - Experiments go in `working/`, never in committed files
+- Track changes within files via config status keys
+- One config = one commit, with descriptive message
+- Commit style: lowercase sentence, no file-prefix colon, natural language — e.g. *"fix starship read_only style, swap PUA glyph"* not *"starship: fix read_only"*
+- Keep `.gitignore` current
+- Update this PRD and related files after relevant changes
+- Update README.md, TESTING.md, and homebrew artefacts after relevant changes
 - Table formatting: all markdown tables use column-aligned cells padded to the widest value in each column, outer `|` borders on both sides, and separator rows matching column width — readable as plain text without a markdown viewer. horizontal scrolling is fine; never hard-wrap cell content
 
 ---
@@ -143,6 +137,10 @@ Morse code tutor and conversion swiss pocket knife. Will replace the inline Pyth
 ### aloha
 
 TUI for shell dashboards. Can be used interactively or in one shot. Use cases include interactive dashboards, login/logout messages, prompt sections, and more. Will use `.zlogin`, `.zlogout`, and `zshexit()` functions. Separate repo. See `working/zshrc-exit-ideas.txt` for design notes.
+
+### neopager
+
+A from-scratch pager built in Rust. Intended to replace `page` (which wraps neovim) with a standalone binary that has no neovim dependency but keeps the same UX contract: syntax highlighting, vi keys, and the ability to act as a drop-in for less/man/more. Separate repo.
 
 ---
 

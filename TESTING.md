@@ -44,6 +44,20 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] `ccsl` -- runs without error, prints usage or version
 - [ ] Claude Code statusline renders correctly in the terminal
 
+## kitty
+
+- [ ] Open kitty -- no errors or warnings in startup
+- [ ] Remote control socket active: `ls /tmp/kitty.sock` -- file exists
+- [ ] Remote control works: `kitty @ --to unix:/tmp/kitty.sock ls` -- returns window list
+
+## homebrew
+
+- [ ] `brew bundle check` -- no missing packages
+- [ ] `source ~/.config/brew/brew.env` -- sets `HOMEBREW_BUNDLE_FILE` correctly
+- [ ] `echo $HOMEBREW_BUNDLE_FILE` -- points to `.config/brew/Brewfile`
+- [ ] `brew bundle check --verbose` -- all entries satisfied
+- [ ] New terminal tab -- `brew` available (shellenv sourced from .zprofile)
+
 ## git
 
 - [ ] `git status` -- only expected files

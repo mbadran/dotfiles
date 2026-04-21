@@ -2,6 +2,17 @@
 
 Apps requiring App Store purchase or direct download — cannot be managed in Brewfile.
 
+## Not Tracked
+
+Config not tracked in this repo — either app-managed, credential-bearing, or runtime state.
+
+| Tool          | Reason                        |
+| ------------- | ----------------------------- |
+| 1Password CLI | Runtime state / credentials   |
+| PulseAudio    | Runtime symlinks              |
+| Raycast       | App-managed, may contain keys |
+| qBittorrent   | App-managed, not handcrafted  |
+
 ## App Store
 
 | App                           | Link                                                                                     |
