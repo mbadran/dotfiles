@@ -1,23 +1,24 @@
 --[[----------------------------------------------------------- philosophy ♠ ---
 
 1. improve vim, but kiss
+    - use case: lightweight file viewing and editing in the terminal
+    - goal: make vim behave like a modern text editor without losing its essence
     - key: vim is a human -> text interface, not an ide
-    - make vim behave like a modern text editor without losing its essence
     - upgrade usability across three areas:
-        1. extensions -- add what's clearly missing
-        2. consistency -- align with modern conventions
-        3. efficiency -- reduce friction and improve flow
+        1. extensions: add what's clearly missing
+        2. consistency: align with modern conventions
+        3. efficiency: reduce friction and improve flow
 2. be portable, with some concessions
     - use the defaults, by default
     - only configure things that are:
         - a) essential
         - b) compelling
     - minimise configs that behave differently in vanilla vim
-    - limit config areas:
-        - mappings -- <=20
-        - plugins -- <=10
-        - themes -- 1
-        - everything else -- 0
+    - limit config surface area:
+        - mappings: <=20
+        - plugins: <=10
+        - themes: 1
+        - everything else: 0
             - ignore tabs, commands, functions, abbreviations, lsp, etc
             - use a graphical editor or ide, if necessary
 3. go outdoors
@@ -108,9 +109,20 @@ vim.keymap.set("n", "<C-s>", "<cmd>up<CR>", { desc = "♠ save" })
 -- close buffer [consistency]
 vim.keymap.set("n", "<C-q>", "<cmd>bd<CR>", { desc = "♠ quit" })
 
+-- open new empty buffer [extensions]
+vim.keymap.set("n", "<C-n>", "<cmd>enew<CR>", { desc = "♠ new buffer" })
+
+-- next / previous buffer (tab bar navigation) [extensions]
+vim.keymap.set("n", "<C-l>", "<cmd>bnext<CR>", { desc = "♠ next buffer" })
+vim.keymap.set("n", "<C-h>", "<cmd>bprev<CR>", { desc = "♠ prev buffer" })
+
 -- fuzzy find files [extensions]
-vim.keymap.set("n", "<C-p>", "<cmd>Telescope find_files<CR>",
+vim.keymap.set("n", "<C-p>", "<cmd>FzfLua files<CR>",
     { desc = "♠ find files" })
+
+-- search file contents (live grep) [extensions]
+vim.keymap.set("n", "<C-t>", "<cmd>FzfLua live_grep<CR>",
+    { desc = "♠ search contents" })
 
 --- ♠ editing ------------------------------------------------------------------
 
@@ -209,10 +221,58 @@ require("lazy").setup({
         opts = {}
     },
 
-    -- enable fuzzy find for files, text, & more [extensions]
+    -- animate and highlight the current scope's indent level [efficiency]
     {
-        "nvim-telescope/telescope.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" }
+        "nvim-mini/mini.indentscope",
+        opts = {}
+    },
+
+    -- fast fuzzy finder using native fzf binary [extensions]
+    {
+        "ibhagwan/fzf-lua",
+        opts = {}
+    },
+
+    -- show open buffers as a tab bar [extensions]
+    {
+        "nvim-mini/mini.tabline",
+        opts = {}
+    },
+
+    -- enhance f/t motions: highlights jump targets in the line [extensions]
+    {
+        "nvim-mini/mini.jump",
+        opts = {}
+    },
+
+    -- animate common ui actions (scroll, cursor, resize) [efficiency]
+    {
+        "nvim-mini/mini.animate",
+        opts = {}
+    },
+
+    -- highlight all instances of the word under the cursor [efficiency]
+    {
+        "nvim-mini/mini.cursorword",
+        opts = {}
+    },
+
+    -- highlight and remove trailing whitespace [consistency]
+    {
+        "nvim-mini/mini.trailspace",
+        opts = {}
+    },
+
+    -- customisable start screen [efficiency]
+    {
+        "nvim-mini/mini.starter",
+        opts = {}
+    },
+
+    -- improved command-line at the cursor position [extensions]
+    {
+        'nvim-mini/mini.cmdline',
+        opts = {}
     },
 
     --[[
@@ -237,7 +297,7 @@ require("lazy").setup({
 
     -- ]]
     {
-        "echasnovski/mini.surround",
+        "nvim-mini/mini.surround",
         opts = {}
     },
 

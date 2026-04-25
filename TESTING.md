@@ -19,6 +19,7 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 ## zsh
 
 - [ ] Open a new terminal tab -- clean startup, no errors
+- [ ] Symlinks resolve: `readlink ~/.zshrc` → `~/.config/zsh/.zshrc`, `readlink ~/.zprofile` → `~/.config/zsh/.zprofile`
 - [ ] Test core aliases: `ls`, `ll`, `cat`, `grep`, `find`, `top`, `vim`, `cd`, `tree`
 - [ ] Test vim mode: `Esc`, then `k`/`j` for history
 - [ ] Test fzf: `Ctrl-R` (history), `Ctrl-T` (files)
@@ -57,6 +58,28 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] `echo $HOMEBREW_BUNDLE_FILE` -- points to `.config/brew/Brewfile`
 - [ ] `brew bundle check --verbose` -- all entries satisfied
 - [ ] New terminal tab -- `brew` available (shellenv sourced from .zprofile)
+
+## neovim
+
+- [ ] `nvim` -- opens with kanagawa-dragon theme, mini.starter screen, no errors
+- [ ] `:Lazy` -- all plugins installed and up to date
+- [ ] `<C-p>` -- fzf-lua file picker opens
+- [ ] `<C-t>` -- fzf-lua live grep opens
+- [ ] `<C-h>` / `<C-l>` -- prev/next buffer navigation
+- [ ] `<C-n>` -- new empty buffer opens
+- [ ] `<C-b>` -- netrw file explorer toggles
+- [ ] `<leader>?` -- shows all ♠ custom mappings
+- [ ] Open a file -- mini.tabline shows buffer tab bar
+- [ ] Type trailing spaces -- mini.trailspace highlights them
+- [ ] Scroll a long file -- mini.animate scroll animation visible
+- [ ] Move cursor over a word -- mini.cursorword highlights other instances
+- [ ] `:` -- mini.cmdline appears at cursor position, not bottom bar
+- [ ] `sa(` on a word -- mini.surround wraps in parens
+- [ ] `gc` on a line -- built-in commenting toggles (no mini.comment)
+
+## macmon
+
+- [ ] `macmon` -- TUI opens with sparkline view, green color, 1s refresh
 
 ## git
 

@@ -36,6 +36,7 @@ brew "dust"      # du replacement, written in Rust
 brew "eza"       # modern ls replacement
 brew "fd"        # user-friendly find alternative
 brew "ripgrep"   # fast grep replacement
+brew "tealdeer"  # fast Rust implementation of tldr (man page summaries)
 brew "tree"      # display directories as trees
 
 # -------------------------------------------------------- editor & pagers ♠ ---
@@ -77,12 +78,16 @@ brew "toilet"   # colorful figlet alternative using libcaca
 
 # --------------------------------------------------------- personal tools ♠ ---
 
-brew "arthur-ficial/tap/apfel"  # on-device Apple Foundation Models CLI
-brew "ccusage"                  # analyse Claude Code token usage from JSONL logs
-brew "morse"                    # QSO generator and morse code trainer
-brew "mq"                       # jq-like tool for markdown processing
-brew "qman"                     # modern man page viewer
-brew "sheets"                   # terminal spreadsheet
+brew "arthur-ficial/tap/apfel"      # on-device Apple Foundation Models CLI
+brew "arthur-ficial/tap/apfel-mcp"  # token-budget MCP servers: url-fetch, ddg-search, compound
+brew "arthur-ficial/tap/apfel-run"  # wrangler-style TOML config for apfel
+brew "arthur-ficial/tap/auge"       # Apple Vision CLI — OCR, classification, barcode, face detection
+brew "arthur-ficial/tap/ohr"        # on-device speech-to-text CLI and OpenAI-compatible transcription server
+brew "ccusage"                      # analyse Claude Code token usage from JSONL logs
+brew "morse"                        # QSO generator and morse code trainer
+brew "mq"                           # jq-like tool for markdown processing
+brew "qman"                         # modern man page viewer
+brew "sheets"                       # terminal spreadsheet
 
 # ------------------------------------------------------------------ fonts ♠ ---
 
@@ -105,7 +110,7 @@ cask "claudebar"       # menu bar monitor for Claude Code quotas
 cask "google-gemini"   # Google Gemini desktop app
 cask "jan"             # offline AI chat
 cask "lm-studio"       # discover, download, and run local LLMs
-cask "ovim"            # system-wide vim mode for macOS
+# cask "ovim"          # system-wide vim mode for macOS
 
 # --------------------------------------------------------------- browsers ♠ ---
 
@@ -117,8 +122,8 @@ cask "vivaldi"        # customisable browser with built-in email
 
 # -------------------------------------------------------------------- dev ♠ ---
 
-cask "docker"   # build and run containerised apps and microservices
-cask "postman"  # API development and testing
+cask "docker-desktop"   # build and run containerised apps and microservices
+cask "postman"          # API development and testing
 
 # ----------------------------------------------------------- productivity ♠ ---
 
@@ -126,6 +131,7 @@ cask "1password"      # password manager
 cask "1password-cli"  # 1Password command-line interface
 cask "obsidian"       # knowledge base on local Markdown files
 cask "raycast"        # extensible launcher and productivity tool
+cask "tolaria"        # Markdown knowledgebase manager
 cask "unite"          # turn websites into standalone apps
 
 # ---------------------------------------------------------- communication ♠ ---

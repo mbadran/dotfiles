@@ -13,13 +13,19 @@
       "Bash(git rm:*)",
       "Bash(git mv:*)",
       "Bash(git commit:*)",
+      "Bash(git -c:*)",
+      "Bash(git branch:*)",
+      "Bash(git remote:*)",
+      "Bash(git stash:*)",
+      "Bash(git config:*)",
 
       "Bash(brew info:*)",
       "Bash(brew list:*)",
       "Bash(brew leaves:*)",
       "Bash(brew search:*)",
-      "Bash(brew bundle check)",
-      "Bash(brew bundle check:*)",
+      "Bash(brew bundle)",
+      "Bash(brew bundle:*)",
+      "Bash(brew tap:*)",
       "Bash(brew tap-info:*)",
 
       "Bash(ls:*)",
@@ -32,6 +38,8 @@
       "Bash(du:*)",
       "Bash(df:*)",
       "Bash(tree:*)",
+      "Bash(comm:*)",
+      "Bash(cp:*)",
 
       "Bash(grep:*)",
       "Bash(sort:*)",
@@ -69,12 +77,24 @@
       "Bash(bat:*)",
       "Bash(fd:*)",
       "Bash(rg:*)",
-      "Bash(dust:*)"
+      "Bash(dust:*)",
+
+      "Bash(python3:*)",
+      "Bash(jq:*)",
+      "Bash(npm info:*)",
+      "Bash(npx:*)",
+
+      "WebFetch(domain:*)"
 
     ],
     "ask": [
       "Bash(git push)",
       "Bash(git push:*)"
+    ],
+    "additionalDirectories": [
+      "~/.config",
+      "~/.claude",
+      "/opt/homebrew"
     ]
   }
 }

@@ -1,5 +1,5 @@
 # dotfiles PRD
-> Living document. Last updated: 2026-04-21.
+> Living document. Last updated: 2026-04-25.
 
 ## Vision
 
@@ -15,19 +15,9 @@ A single, clean dotfiles repository for an intentional, terminal-centric develop
 
 ## Guardrails
 
-**Workflow** — enforce Principle 1 and 5
-- Manage tasks and focus within this PRD; update it after relevant changes
-- Update README.md, TESTING.md, and brew artefacts after relevant changes
-- Keep `.gitignore` current
+See **AGENTS.md** for all workflow, commit style, drift management, and phase polish instructions.
 
-**Commits** — enforce Principle 2
-- One config = one commit with a descriptive message
-- Style: lowercase sentence, no file prefix — e.g. *"fix starship read_only style, swap PUA glyph"* not *"starship: fix read_only"*
-
-**Drift management** — enforce Principle 1 and 5
-- At the start of each session, check for untracked configs in project root and `.config/`. Run `brew bundle check --verbose`. If new configs exist that are neither tracked nor referenced in `./brew/non-brew-apps.md`, either track them or add them (with a note) to that file and `.gitignore`. If tracked configs are absent on the system, install them or remove their references.
-
-**Tables** — enforce Principle 2
+**Tables** — for human reference when editing this file directly
 - Column-aligned cells padded to widest value per column, outer `|` borders, separator rows matching column width. Readable as plain text. Horizontal scrolling is fine; never hard-wrap cell content.
 
 ---
@@ -38,13 +28,17 @@ A single, clean dotfiles repository for an intentional, terminal-centric develop
 
 ```
 dotfiles/
-  .config/          # XDG config directory
-    brew/           # homebrew: Brewfile, brew.env, non-brew-apps.md
-  working/          # scratchpad for experiments and extracted code (gitignored)
-  logs/             # profiling and debug logs (gitignored)
-  PRD.md            # this file
-  TESTING.md        # verification checklists
-  README.md         # project overview
+  .config/              # XDG config directory (~/.config symlinks here)
+    brew/               # homebrew: Brewfile, brew.env, non-brew-apps.md
+    retired/
+      bash/             # legacy bash configs (2011-2020)
+      tmux/             # legacy tmux config (2017)
+    zsh/                # zsh configs (~/.zshrc and ~/.zprofile symlink here)
+  working/              # scratchpad for experiments and extracted code (gitignored)
+  logs/                 # profiling and debug logs (gitignored)
+  PRD.md                # this file
+  TESTING.md            # verification checklists
+  README.md             # project overview
 ```
 
 ### Bundles and packages
@@ -60,38 +54,40 @@ dotfiles/
 | git      | Version control | `.config/git/ignore`                                           |
 | homebrew | Package manager | `.config/brew/Brewfile`, `.config/brew/brew.env`               |
 | kitty    | Terminal        | `.config/kitty/kitty.conf`, `.config/kitty/current-theme.conf` |
+| macmon   | Perf monitor    | `.config/macmon.json`                                          |
 | nvim     | Editor          | `.config/nvim/init.lua`                                        |
 | starship | Prompt          | `.config/starship.toml`                                        |
 | zed      | GUI editor      | `.config/zed/settings.json`                                    |
-| zsh      | Shell           | `.zshrc`, `.zprofile`                                          |
+| zsh      | Shell           | `.config/zsh/.zshrc`, `.config/zsh/.zprofile`                  |
 
 ### Tracked configs
 
-| Config            | Description                                                 |
-| ----------------- | ----------------------------------------------------------- |
-| .zprofile         | Login shell — brew shellenv, Homebrew env vars              |
-| .zshrc            | Interactive shell — vi-mode, plugins, aliases, pager wiring |
-| btop.conf         | System monitor — Everforest theme, vim keys                 |
-| ccstatusline      | Statusline for Claude Code sessions                         |
-| gh/config.yml     | GitHub CLI (hosts.yml gitignored)                           |
-| git/ignore        | Global gitignore patterns                                   |
-| homebrew          | Brewfile + brew.env + non-brew-apps index                   |
-| kitty.conf        | GPU terminal emulator                                       |
-| nvim/init.lua     | Neovim — minimal, lazy.nvim, 8 plugins                      |
-| page/init.lua     | Neovim-based pager for less/man/more                        |
-| starship.toml     | Starship prompt — Catppuccin Macchiato                      |
-| zed/settings.json | Zed GUI editor                                              |
+| Config                  | Description                                                 |
+| ----------------------- | ----------------------------------------------------------- |
+| zsh/.zprofile           | Login shell — brew shellenv, Homebrew env vars              |
+| zsh/.zshrc              | Interactive shell — vi-mode, plugins, aliases, pager wiring |
+| btop.conf               | System monitor — Everforest theme, vim keys                 |
+| ccstatusline            | Statusline for Claude Code sessions                         |
+| gh/config.yml           | GitHub CLI (hosts.yml gitignored)                           |
+| git/ignore              | Global gitignore patterns                                   |
+| homebrew                | Brewfile + brew.env + non-brew-apps index                   |
+| kitty.conf              | GPU terminal emulator                                       |
+| macmon.json             | Apple Silicon perf monitor — sparkline view, green, 1s interval |
+| nvim/init.lua           | Neovim — minimal, lazy.nvim, 17 plugins                     |
+| page/init.lua           | Neovim-based pager for less/man/more                        |
+| starship.toml           | Starship prompt — Catppuccin Macchiato                      |
+| zed/settings.json       | Zed GUI editor                                              |
 
 ### Retired configs 
 
-_Tracked for future triage_
+_Tracked for future triage, under `.config/retired/`_
 
-| Config      | Notes                                                                     |
-| ----------- | ------------------------------------------------------------------------- |
-| .bash_*     | Here be dragons. 2011-2020. Superseded by zsh. Kept for zsh-less servers. |
-| .dir_colors | 2017. Superseded by eza.                                                  |
-| .inputrc    | 2017. Readline config, still useful for bash-based tools.                 |
-| .tmux.conf  | TODO: revisit. 2017. Still relevant if tmux is used.                      |
+| Config                  | Notes                                                                     |
+| ----------------------- | ------------------------------------------------------------------------- |
+| retired/bash/.bash_*    | Here be dragons. 2011-2020. Superseded by zsh. Kept for zsh-less servers. |
+| retired/bash/.dir_colors | 2017. Superseded by eza.                                                 |
+| retired/bash/.inputrc   | 2017. Readline config, still useful for bash-based tools.                 |
+| retired/tmux/.tmux.conf | TODO: revisit. 2017. Still relevant if tmux is used.                      |
 
 ---
 
@@ -155,14 +151,41 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
 - [x] **3.2** Track ccstatusline config
 - [x] **3.3** Update pager config (via page)
 - [x] **3.4** Develop a brewfile to manage future mac migrations
-- [ ] **3.5** Replace downloaded apps and binaries with brew equivalents
-- [ ] **3.6** Import and symlink key ~/.claude settings (gitignoring the rest)
-- [ ] **3.7** Fix `page -p` PTY redirect (`ls > $(page -p)` fails -- neovim startup emits ANSI escape codes before the device path, corrupting the `$()` expansion)
+- [x] **3.5** Replace downloaded apps and binaries with brew equivalents (`brew --force` takeover complete)
+  - _`ovim` commented out — macOS permissions not sorted; TODO: revisit when fixed_
+  - _`docker` → `docker-desktop`: cask rename_
+- [x] **3.6** XDG centralization — audit `~/.config` and migrate configs safely
+  - `~/.config` symlinks to dotfiles `.config/` — all configs already XDG-resident
+  - zsh moved to `.config/zsh/`; `~/.zshrc` and `~/.zprofile` symlink there
+  - bash/tmux retired files moved to `.config/retired/`
+  - starship already at `~/.config/starship.toml` (XDG default, no move needed)
+  - Claude Code: `CLAUDE_CONFIG_DIR` too buggy to use; `~/.claude/` stays untracked
+  - `~/.claude/settings.json` not tracked — `env` section is a footgun for accidental API key commits; hooks may contain inline secrets. Future consideration: track a `settings-base.json` (structure/permissions only, no secrets) and manage `~/.claude/settings.json` manually.
+- [x] **3.7** Multi-agent support — `CLAUDE.md` (pointer) + `AGENTS.md` (full instructions)
+- [ ] **3.8** Vim system-wide — get mac-wide vim keybindings working (ovim or alternative)
+- [x] **3.9** Review and resolve all `TODO`/`FIXME` comments in tracked files
+  - `starship.toml` ×3: `# TODO: test` on `[conda]`, `[docker_context]`, `[package]` — removed (modules work passively)
+  - `.tmux.conf`: removed dead `# # FIXME` (double-commented, inert)
+  - `.tmux.conf`: removed `# TODO: figure out a way to enable V` (legacy syntax, retired config)
+  - `starship.toml`: `# TODO: REPLACE: morsel` — kept, tracked as 4.1
+  - `page/init.lua`: PTY redirect TODO — kept, tracked as 3.11 (parked)
+- [ ] **3.10** Neovim experiments
+  - [x] lazy.nvim vs vim.pack — keep lazy.nvim (no update mechanism in vim.pack)
+  - [x] mini.tabline — installed, working
+  - [x] fzf-lua — installed; telescope removed; `<C-p>` uses fzf-lua
+  - [x] buffer nav mappings — `<C-h>`/`<C-l>` prev/next, `<C-n>` new buffer
+  - [ ] Raycast cheatsheet — shell script to dump `<leader>?` mappings as markdown
+  - [ ] verify mini.comment is needed (Neovim ≥0.10 ships `gc` natively — may be redundant)
+- [ ] **3.12** Home dir dot-file audit — review `~/.*` entries (`.gitconfig`, `.lmstudio`, `.ollama`, `.ssh`, etc.); move configs to `~/.config/` where the tool supports XDG, leave or document the rest
+- [ ] ~~**3.11** Fix `page -p` PTY redirect~~ — SKIP: parked, superseded by phase 6 (neopager)
 
 ### Phase 4: morsel
 
 - [ ] **4.1** Replace starship Python morse code block with `morsel` CLI calls
 - [ ] **4.2** Polish
+- [ ] **4.3** Neovim plugin review — audit all mini.nvim plugins and popular alternatives individually; decide what to add, replace, or drop (mini.pairs, mini.ai, mini.icons, mini.animate, etc.)
+- [ ] **4.4** fzf-lua deep dive — map live_grep (`<C-t>` done), buffers, git_status, oldfiles, keymaps; explore zoxide integration for cross-project navigation
+- [ ] **4.5** Dir view — evaluate alternatives to netrw+`<C-b>`; preference is non-floating, fast, minimal; netrw may be the permanent answer if alternatives add complexity (skip mini.files — floating UI not preferred)
 
 ### Phase 5: aloha
 
@@ -189,3 +212,69 @@ TUI for shell dashboards. Can be used interactively or in one shot. Use cases in
 ### neopager
 
 A from-scratch pager built in Rust. Intended to replace `page` (which wraps neovim) with a standalone binary that has no neovim dependency but keeps the same UX contract: syntax highlighting, vi keys, and the ability to act as a drop-in for less/man/more. Alternatively, integrates with neovim in headless mode. Separate repo. See `working/NEOPAGER-PRD.md` for design notes.
+
+---
+
+## Appendix: mini.nvim plugin tracker
+
+> All plugins from the [nvim-mini](https://github.com/nvim-mini/mini.nvim) ecosystem. Decisions made here inform phase 4.3 (full audit).
+
+### Status legend
+
+`IN` = Installed | `SKIP` = Decided against | `RIVAL` = Using a better alternative | `REVIEW` = Not yet evaluated
+
+### Installed
+
+| Plugin            | Purpose                                    | Notes                                                                    |
+| ----------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
+| mini.animate      | Animate scroll, cursor, window resize      | No strong rivals at this scope; terminal-level animation (kitty) is an alternative |
+| mini.cmdline      | Command-line popup at cursor position      | vs noice.nvim — noice is heavy and frequently breaks; mini is the right call here |
+| mini.cursorword   | Highlight all instances of word at cursor  | vs vim-illuminate — illuminate adds LSP reference support; revisit if LSP added |
+| mini.indentscope  | Animate and highlight current indent scope | Complements ibl (static all-levels); indentscope = animated current scope only |
+| mini.jump         | Enhanced f/t motions with visual targets   | No compelling alternative at this scope                                  |
+| mini.starter      | Customisable start screen                  | vs dashboard-nvim (slicker, used by LazyVim) and alpha-nvim (most customisable); mini fits zero-config ethos |
+| mini.surround     | Operators for surrounding characters       | Replaces default `s`; sa/sd/sr for add/delete/replace                    |
+| mini.tabline      | Open buffers as a tab bar                  | No strong rival that stays passive                                       |
+| mini.trailspace   | Highlight trailing whitespace              | Passive by default — trim via `:lua MiniTrailspace.trim()`; consider autocmd on write |
+
+### Decided against (using rival)
+
+| Plugin          | Rival used                 | Reason                                                                   |
+| --------------- | -------------------------- | ------------------------------------------------------------------------ |
+| mini.comment    | Neovim 0.10 built-in `gc`  | Native `gc`/`gcc` operators make this redundant; removed                 |
+| mini.diff       | gitsigns.nvim              | gitsigns has more features, wider adoption, and hunk navigation          |
+| mini.pick       | fzf-lua                    | fzf-lua uses native fzf binary — faster, better preview, more familiar   |
+| mini.statusline | lualine.nvim               | lualine has richer component ecosystem and themes                        |
+
+### Not yet evaluated (phase 4.3)
+
+| Plugin          | Purpose                                    | Notes                                                                    |
+| --------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
+| mini.ai         | Extend built-in text objects               | High value — adds `a`/`i` for function args, brackets, custom patterns   |
+| mini.align      | Align text interactively                   | Low urgency; useful for table editing                                    |
+| mini.bracketed  | Jump to next/prev bracket-like targets     | May overlap with mini.jump; evaluate together                            |
+| mini.bufremove  | Delete buffer without closing window       | Useful when using splits; `<C-q>` currently does `bd` which closes window |
+| mini.clue       | Show key binding hints after delay         | vs which-key.nvim; lower priority given `<leader>?` already exists       |
+| mini.files      | File manager (floating window)             | SKIP — floating UI not preferred (per phase 4.5 decision)               |
+| mini.hipatterns | Highlight arbitrary text patterns          | Could replace custom highlight autocmds                                  |
+| mini.icons      | Unified icon provider                      | SKIP — adds visual noise; not needed for this setup                      |
+| mini.map        | Scrollbar / minimap in sign column         | Nice to have; low priority                                               |
+| mini.move       | Move selections and lines                  | Quality-of-life; evaluate alongside visual mode workflow                 |
+| mini.notify     | Notification popups                        | vs noice.nvim; mini is the lighter option                                |
+| mini.operators  | Additional operators (multiply, sort, etc) | Useful; evaluate with mini.ai as a pair                                  |
+| mini.pairs      | Auto-close brackets and quotes             | vs nvim-autopairs; evaluate — current setup has no auto-pairs at all     |
+| mini.sessions   | Session save and restore                   | Low priority; not a session-based workflow                               |
+| mini.snippets   | Snippet expansion                          | Low priority without LSP                                                 |
+| mini.splitjoin  | Split/join function arguments              | High value for code editing; evaluate                                    |
+| mini.visits     | Track and jump to recent files             | May overlap with fzf-lua oldfiles; evaluate                              |
+
+### Not applicable
+
+| Plugin    | Reason                                            |
+| --------- | ------------------------------------------------- |
+| mini.deps | We use lazy.nvim                                  |
+| mini.base16 / mini.colors / mini.hues | Colorscheme tooling; we use kanagawa |
+| mini.doc  | Documentation generator for plugin authors        |
+| mini.test | Testing framework for plugin authors              |
+| mini.fuzzy | Underlying fuzzy matching library for mini.pick  |
+| mini.extra | Extra sources/pickers for mini.pick              |

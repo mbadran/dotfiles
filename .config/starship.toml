@@ -204,20 +204,17 @@ format = "([ ·$status·( $common_meaning( $maybe_int))]($style))[( $signal_name
 
 ############################################################ context modules
 
-# TODO: test
 [conda]
 symbol = "  "
 style = "bg:blue fg:crust"
 format = "[ $symbol$environment ]($style)"
 ignore_base = false
 
-# TODO: test
 [docker_context]
 symbol = ""
 style = "bg:blue fg:crust"
 format = "[ $symbol ($context) ]($style)"
 
-# TODO: test
 [package]
 style = "bg:blue fg:crust"
 format = "[ $package ]($style)"

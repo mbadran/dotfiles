@@ -1,1 +1,105 @@
+# ~/.config/git/ignore — global gitignore for all repositories
+#
+# This file is read automatically by git (XDG default, no config needed).
+# Rules here apply to every repo on this machine.
+#
+# ─── overriding these rules per project ──────────────────────────────────────
+#
+# Option 1 — re-include in the project's .gitignore (committed, shared):
+#     Add `!<pattern>` to .gitignore, e.g. `!.env` to track a local .env
+#     Note: if a parent directory is ignored globally, negate the parent first,
+#     then negate the file — bare file negation inside an ignored dir won't work.
+#
+# Option 2 — re-include in the project's .git/info/exclude (local, not committed):
+#     Same `!<pattern>` syntax, affects only your local checkout of that repo.
+#     Useful when you don't want to touch the shared .gitignore.
+#
+# Option 3 — force-stage a specific file once:
+#     `git add -f <file>` stages a file regardless of ignore rules.
+#
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ----------------------------------------------------------------- macOS ♠ ---
+
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverrides
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# ---------------------------------------------------------------- editors ♠ ---
+
+# vim / neovim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# JetBrains (IntelliJ, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Zed
+.zed/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ----------------------------------------------------------------- Claude ♠ ---
+
+# local overrides — never commit
 **/.claude/settings.local.json
+
+# ----------------------------------------------------------------- system ♠ ---
+
+# Windows (if ever opening repos on Windows)
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ----------------------------------------------------------- language junk ♠ ---
+
+# Python
+*.pyc
+*.pyo
+__pycache__/
+*.egg-info/
+.eggs/
+dist/
+*.egg
+
+# Node
+.npm/
+.yarn-integrity
+
+# Java / Kotlin / Scala
+*.class
+*.jar
+
+# Rust
+# (not target/ — that's project-specific and covered by .gitignore)
+
+# ------------------------------------------------------- security & secrets ♠ ---
+
+# Local env files — typically project-specific but safe to ignore globally.
+# Use `!.env` in a project .gitignore if you deliberately track env files.
+.env.local
+.env.*.local
+*.pem
+*.p12
+*.key
