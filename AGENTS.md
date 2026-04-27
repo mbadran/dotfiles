@@ -2,18 +2,45 @@
 
 ## Session start
 
-Run at the start of every session, report findings before starting work:
+Run `scripts/agents/start.sh` first, then:
 
-1. **Drift check** — see [Drift management](#drift-management) below
-2. **Config scan** — `ls .config/` for untracked dirs; cross-reference `.gitignore` and `non-brew-apps.md`
-3. **TODO/FIXME scan** — see [TODO/FIXME hygiene](#todofixme-hygiene) below
+1. **Read memory** — load all files in `memory/MEMORY.md`
+2. **Read PRD** — scan phase 3 onward for open tasks; note parked items
+3. **Verify script output** — confirm drift, config scan, and TODO results look clean
+4. **Claude permissions** — review `.claude/settings.json` for approval gaps from last session
+5. **Present state** — give a concise project summary: phase, open tasks, parked items, any drift
+
+## Session end
+
+When the user says "let's wrap up" (or similar):
+
+1. **Update PRD.md** — tick completed tasks, note parked decisions
+2. **Update TESTING.md** — add checklists for any new configs
+3. **Update memory** — write/update `memory/project_dotfiles_state.md` with current phase and next steps
+4. **Claude permissions** — review `.claude/settings.json` for any new approval gaps
+5. **Run** `scripts/agents/end.sh` — final drift check and git status
+6. **Sign off** — "Sayonara mo san."
+
+> **On hooks:** Claude Code has no `SessionStart`/`SessionEnd` hooks. Available hooks (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `Notification`) fire per-tool or per-response — wrong granularity for session lifecycle. Scripts + these instructions are the right layer. Revisit if Claude Code adds session lifecycle hooks.
+
+## Shell alias workarounds
+
+`.zshrc` aliases several commands to interactive or replacement versions. Each Bash tool call spawns a fresh shell that re-sources `.zshrc`, so aliases cannot be cleared once globally.
+
+**Rule: begin every Bash tool call that touches aliased commands with:**
+```bash
+unalias -a 2>/dev/null; <rest of command>
+```
+
+This clears all aliases for that call. The scripts in `scripts/agents/` already do this. Prefer the Grep and Glob tools over `grep`/`find` — they bypass the shell entirely.
 
 ## Workflow
 
 - Manage tasks and focus within PRD.md; update it after relevant changes
-- Update README.md, TESTING.md, and brew artefacts after relevant changes
+- Update all key files in the table at the bottom of this file after relevant changes
 - Keep `.gitignore` and `non-brew-apps.md` current
 - One config = one commit
+- `working/` is a gitignored scratchpad for experiments and test fixtures only — no long-term docs or instructions; anything that needs to persist goes in a tracked file
 
 ## Commit style
 
@@ -111,11 +138,19 @@ with open('.config/starship.toml', 'w') as f:
 | `CLAUDE.md`                     | Thin pointer to AGENTS.md for Claude Code                     |
 | `TESTING.md`                    | Verification checklists — update after changes                |
 | `README.md`                     | Project overview — update stats after changes                 |
+| `memory/MEMORY.md`              | Memory index — read at session start                          |
+| `scripts/agents/start.sh`       | Session startup — run at session start, outputs drift/state   |
+| `scripts/agents/end.sh`         | Session wrapup — run after docs updated, prints final status  |
 | `.config/brew/Brewfile`         | Package manifest — maintain descriptions/sections             |
+| `.config/brew/brew.env`         | Homebrew env vars (HOMEBREW_BUNDLE_FILE etc.)                 |
 | `.config/brew/non-brew-apps.md` | Apps not managed by brew                                      |
+| `.config/brew/README.md`        | Brew package overview — update when Brewfile changes          |
+| `.config/git/config`            | Global git config (XDG — credential helper, user identity)    |
 | `.config/git/ignore`            | Global gitignore (XDG default, applies to all repos)          |
-| `.config/macmon.json`           | macmon perf monitor config                                    |
+| `.config/kitty/kitty.conf`      | GPU terminal emulator config                                  |
 | `.config/nvim/init.lua`         | Neovim config — plugins, mappings, options                    |
+| `.config/page/init.lua`         | Neovim-based pager config                                     |
+| `.config/starship.toml`         | Starship prompt — use Python for edits with PUA glyphs        |
 | `.config/zsh/.zshrc`            | Interactive shell config (symlinked from `~/.zshrc`)          |
 | `.config/zsh/.zprofile`         | Login shell config (symlinked from `~/.zprofile`)             |
 | `.claude/settings.json`         | Project Claude Code permissions — review each phase           |
