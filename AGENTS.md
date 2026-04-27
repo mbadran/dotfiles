@@ -2,24 +2,28 @@
 
 ## Session start
 
-Run `scripts/agents/start.sh` first, then:
+**Before responding to anything — including "go", "resume", or a task request — complete this checklist and output the table:**
 
-1. **Read memory** — load all files in `memory/MEMORY.md`
-2. **Read PRD** — scan phase 3 onward for open tasks; note parked items
-3. **Verify script output** — confirm drift, config scan, and TODO results look clean
-4. **Claude permissions** — review `.claude/settings.json` for approval gaps from last session
-5. **Present state** — give a concise project summary: phase, open tasks, parked items, any drift
+| #  | Task                               | Source    |
+|----|------------------------------------|-----------|
+| 1  | `bash scripts/agents/start.sh`     | start.sh  |
+| 2  | Verify start.sh output (brew, TODOs, git, memory, open tasks, permissions) | AGENTS.md |
+| 3  | Present project state summary: phase, open tasks, parked items, any drift | AGENTS.md |
+
+> `start.sh` now prints memory files, open PRD tasks, and the permissions allow list — no separate Read calls needed.
 
 ## Session end
 
-When the user says "let's wrap up" (or similar):
+When the user says "let's wrap up" (or similar), complete this checklist and output the table:
 
-1. **Update PRD.md** — tick completed tasks, note parked decisions
-2. **Update TESTING.md** — add checklists for any new configs
-3. **Update memory** — write/update `memory/project_dotfiles_state.md` with current phase and next steps
-4. **Claude permissions** — review `.claude/settings.json` for any new approval gaps
-5. **Run** `scripts/agents/end.sh` — final drift check and git status
-6. **Sign off** — "Sayonara mo san."
+| #  | Task                               | Source          |
+|----|------------------------------------|-----------------|
+| 1  | Update PRD.md — tick completed tasks, note parked decisions | AGENTS.md |
+| 2  | Update TESTING.md — add checklists for any new configs | AGENTS.md |
+| 3  | Update `memory/project_dotfiles_state.md` | AGENTS.md |
+| 4  | Review `.claude/settings.json` for any new approval gaps | AGENTS.md + end.sh |
+| 5  | `bash scripts/agents/end.sh` — session commits, open tasks, drift, push reminder | end.sh |
+| 6  | Sign off — "Sayonara mo san." | AGENTS.md |
 
 > **On hooks:** Claude Code has no `SessionStart`/`SessionEnd` hooks. Available hooks (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `Notification`) fire per-tool or per-response — wrong granularity for session lifecycle. Scripts + these instructions are the right layer. Revisit if Claude Code adds session lifecycle hooks.
 

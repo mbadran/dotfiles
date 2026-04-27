@@ -183,7 +183,7 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
   - [x] fzf-lua — installed; telescope removed; `<C-p>` uses fzf-lua
   - [x] buffer nav mappings — `<C-h>`/`<C-l>` prev/next, `<C-n>` new buffer
   - [x] verify mini.comment is needed (Neovim ≥0.10 ships `gc` natively — redundant)
-  - [ ] Raycast cheatsheet — shell script to dump `<leader>?` mappings as markdown
+  - [x] Raycast cheatsheet — `scripts/nvim/keymaps.sh` dumps `♠` mappings to `working/nvim-keymaps.md`; runs in `start.sh`
   - [ ] Neovim plugin review — audit all mini.nvim plugins and popular alternatives individually; decide what to add, replace, or drop (mini.pairs, mini.ai, mini.icons, mini.animate, etc.)
   - [ ] fzf-lua deep dive — map live_grep (`<C-t>` done), buffers, git_status, oldfiles, keymaps; explore zoxide integration for cross-project navigation
   - [ ] Dir view — evaluate alternatives to netrw+`<C-b>`; preference is non-floating, fast, minimal; netrw may be the permanent answer if alternatives add complexity (skip mini.files — floating UI not preferred)
