@@ -133,25 +133,25 @@ with open('.config/starship.toml', 'w') as f:
 
 | File                            | Role                                                          |
 | ------------------------------- | ------------------------------------------------------------- |
-| `PRD.md`                        | Living roadmap — update after relevant changes                |
-| `AGENTS.md`                     | This file — agent instructions (single source of truth)       |
-| `CLAUDE.md`                     | Thin pointer to AGENTS.md for Claude Code                     |
-| `TESTING.md`                    | Verification checklists — update after changes                |
-| `README.md`                     | Project overview — update stats after changes                 |
-| `memory/MEMORY.md`              | Memory index — read at session start                          |
-| `scripts/agents/start.sh`       | Session startup — run at session start, outputs drift/state   |
-| `scripts/agents/end.sh`         | Session wrapup — run after docs updated, prints final status  |
+| `.claude/settings.json`         | Project Claude Code permissions — review each phase           |
 | `.config/brew/Brewfile`         | Package manifest — maintain descriptions/sections             |
+| `.config/brew/README.md`        | Brew package overview — update when Brewfile changes          |
 | `.config/brew/brew.env`         | Homebrew env vars (HOMEBREW_BUNDLE_FILE etc.)                 |
 | `.config/brew/non-brew-apps.md` | Apps not managed by brew                                      |
-| `.config/brew/README.md`        | Brew package overview — update when Brewfile changes          |
 | `.config/git/config`            | Global git config (XDG — credential helper, user identity)    |
 | `.config/git/ignore`            | Global gitignore (XDG default, applies to all repos)          |
 | `.config/kitty/kitty.conf`      | GPU terminal emulator config                                  |
 | `.config/nvim/init.lua`         | Neovim config — plugins, mappings, options                    |
 | `.config/page/init.lua`         | Neovim-based pager config                                     |
 | `.config/starship.toml`         | Starship prompt — use Python for edits with PUA glyphs        |
-| `.config/zsh/.zshrc`            | Interactive shell config (symlinked from `~/.zshrc`)          |
 | `.config/zsh/.zprofile`         | Login shell config (symlinked from `~/.zprofile`)             |
-| `.claude/settings.json`         | Project Claude Code permissions — review each phase           |
+| `.config/zsh/.zshrc`            | Interactive shell config (symlinked from `~/.zshrc`)          |
 | `.gitignore`                    | Per-repo gitignore — keep current                             |
+| `AGENTS.md`                     | This file — agent instructions (single source of truth)       |
+| `CLAUDE.md`                     | Thin pointer to AGENTS.md for Claude Code                     |
+| `PRD.md`                        | Living roadmap — update after relevant changes                |
+| `README.md`                     | Project overview — update stats after changes                 |
+| `TESTING.md`                    | Verification checklists — update after changes                |
+| `memory/MEMORY.md`              | Memory index — read at session start                          |
+| `scripts/agents/end.sh`         | Session wrapup — run after docs updated, prints final status  |
+| `scripts/agents/start.sh`       | Session startup — run at session start, outputs drift/state   |

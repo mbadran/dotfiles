@@ -16,11 +16,15 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] `cd /tmp` -- git segments disappear cleanly
 - [ ] `starship explain` -- all modules recognised
 
-### context modules
+### docker context
 
-**[package]** — `cd working/test-starship/` — right prompt shows version from `package.json` (1.2.3). To test Cargo.toml detection: temporarily rename `package.json` and reopen tab.
+**[docker_context]** — requires a docker file in cwd (`only_with_files = true`). Test from any dir with a `Dockerfile`: `export DOCKER_HOST=test` — segment appears immediately. Clear: `unset DOCKER_HOST`.
 
-**[docker_context]** — active now (`desktop-linux` context ≠ `default`); right prompt shows docker segment. Toggle off: `docker context use default`. Toggle on: `docker context use desktop-linux`.
+### package
+
+**[package]** — `cd working/test-starship/` — right prompt shows version from `package.json` (1.2.3). To test Cargo.toml detection: temporarily rename `package.json` and add a `Cargo.toml` with `[package]\nversion = "0.4.2"`.
+
+### language modules
 
 **[conda]** — `export CONDA_DEFAULT_ENV=base` in current shell, then open new tab — right prompt shows conda segment. Clear: `unset CONDA_DEFAULT_ENV`.
 

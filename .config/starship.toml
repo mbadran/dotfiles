@@ -33,8 +33,8 @@ right_format = """
 [](mantle)\
 $custom\
 [](bg:mantle fg:blue)\
-$docker_context\
 $conda\
+$docker_context\
 $package\
 [](bg:blue fg:mauve)\
 $c\
@@ -202,27 +202,10 @@ signal_symbol = "⚡︎"                    # suspending process (matches jobs s
 map_symbol = true
 format = "([ ·$status·( $common_meaning( $maybe_int))]($style))[( $signal_name( ·$signal_number·))]($style bold fg:white)[ $symbol ]($style)"
 
-############################################################ context modules
-
-[conda]
-symbol = "  "
-style = "bg:blue fg:crust"
-format = "[ $symbol$environment ]($style)"
-ignore_base = false
-
-[docker_context]
-symbol = ""
-style = "bg:blue fg:crust"
-format = "[ $symbol ($context) ]($style)"
-
-[package]
-style = "bg:blue fg:crust"
-format = "[ $package ]($style)"
-
 ############################################################### language modules
 
 [c]
-symbol = ""
+symbol = "󰙱"
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
@@ -247,7 +230,7 @@ style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 [nodejs]
-symbol = ""
+symbol = "󰎙"                                # original: 
 style = "bg:mauve fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
@@ -259,11 +242,37 @@ format = "[ $symbol ($version) ]($style)"
 [python]
 symbol = ""
 style = "bg:mauve fg:crust"
-format = "[ $symbol ($version) (#$virtualenv) ]($style)"
+format = "[ $symbol ($version)( #$virtualenv) ]($style)"
 
 [rust]
 symbol = ""
 style = "bg:mauve fg:crust"
+format = "[ $symbol ($version) ]($style)"
+
+
+################################################################ everything else
+
+# eg. environments, packages, contexts
+
+# https://starship.rs/config/#conda
+# https://docs.conda.io/en/latest/
+[conda]
+symbol = ""
+style = "bg:blue fg:crust"
+format = "[ $symbol ($environment) ]($style)"
+ignore_base = false
+
+# https://starship.rs/config/#docker-context
+# https://docs.docker.com/engine/manage-resources/contexts/
+[docker_context]
+symbol = ""
+style = "bg:blue fg:crust"
+format = "[ $symbol ($context) ]($style)"
+
+# https://starship.rs/config/#package-version
+[package]
+symbol = ""
+style = "bg:blue fg:crust"
 format = "[ $symbol ($version) ]($style)"
 
 ################################################################# custom modules
