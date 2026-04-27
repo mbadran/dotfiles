@@ -79,6 +79,9 @@
       "Bash(rg:*)",
       "Bash(dust:*)",
 
+      "Bash(bash:*)",
+      "Bash(chmod:*)",
+      "Bash(mkdir:*)",
       "Bash(python3:*)",
       "Bash(jq:*)",
       "Bash(npm info:*)",
