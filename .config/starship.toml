@@ -189,7 +189,7 @@ format = "[ $user  ]($style)"
 description = "The terminal program in the environment"
 variable = "TERM_PROGRAM"
 style = "bg:overlay2 fg:white"
-format = "[ $env_value  ]($style)"
+format = "[ $env_value ]($style)"
 
 [status]
 disabled = false
