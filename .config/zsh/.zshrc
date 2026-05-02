@@ -58,6 +58,16 @@ setopt PUSHD_IGNORE_DUPS
 # treat /, ., - as word boundaries for ctrl-w / ctrl-left
 WORDCHARS=''
 
+# job + glob niceties
+setopt LONG_LIST_JOBS                   # full PID + state on `jobs`
+setopt EXTENDED_GLOB                    # *(.x), **/, ^pattern, ~pattern globs
+setopt NUMERIC_GLOB_SORT                # natural sort: file2 before file10
+
+# vi normal mode: press `v` to edit current command in $EDITOR (nvim)
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'v' edit-command-line
+
 # improve history
 HISTFILE=$ZSH_HISTORY
 HISTSIZE=10000
@@ -69,6 +79,8 @@ setopt HIST_IGNORE_SPACE                # leading space hides command from histo
 setopt HIST_REDUCE_BLANKS               # trim whitespace
 setopt HIST_VERIFY                      # !history expansion shows before running
 setopt HIST_FIND_NO_DUPS                # skip duplicates when searching
+setopt HIST_SAVE_NO_DUPS                # don't write duplicates to histfile
+setopt HIST_EXPIRE_DUPS_FIRST           # when trimming history, evict dupes first
 
 # search history backwards with ctrl-r (like bash)
 bindkey '^r' history-incremental-search-backward
@@ -103,6 +115,13 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 
 # arrow-key menu for completions
 zstyle ':completion:*' menu select
+
+# auto-detect newly installed binaries (no manual `rehash` after brew install)
+zstyle ':completion:*' rehash true
+
+# group completions by category, with bold headers
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%B%d%b'
 
 #################################################################### zsh plugins
 
