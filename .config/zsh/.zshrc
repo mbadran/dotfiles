@@ -1,69 +1,118 @@
-################################################################### path updates
+###################################### xdg base dirs (scope: shell & subprocess)
 
-export PATH="$PATH:$HOME/.local/bin"
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
-###################################################################### profiling
+export XDG_BIN_HOME="$HOME/.local/bin"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 
-# measures total zsh startup time + per-function breakdown (via zprof).
-# flip to 1, open a new shell, flip back to 0. logs are gitignored.
+# ensure the dirs exist
+mkdir -p "$XDG_BIN_HOME" "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_STATE_HOME"
 
-ZSH_PROFILE=0                                   # 1 to enable, 0 to disable
-ZSH_LOG_DIR="$HOME/.config/logs"
+############################## zsh base dirs (immutable/protected, scope: shell)
 
-if (( ZSH_PROFILE )); then
-  zmodload zsh/zprof                            # per-function call profiler
-  zmodload zsh/datetime                         # high-precision $EPOCHREALTIME
+readonly ZCOMPCACHE="$XDG_CACHE_HOME/zsh/.zcompcache"  # completion cache file
+readonly ZCOMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump"    # completion dump file
+readonly ZSH_HISTORY="$XDG_DATA_HOME/zsh/history"      # zsh history file
+readonly ZSH_LOG_DIR="$XDG_DATA_HOME/zsh/logs"         # zsh profiling logs
+
+# ensure the zsh subdirs exist
+mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_DATA_HOME/zsh"
+
+########################################################## zsh profiling (start)
+
+# uses zprof to measure total zsh startup time with breakdown per-function
+# to run, turn profiling on and run a sub shell, then check $ZSH_LOG_DIR
+# `$ ZSH_PROFILING=1 zsh`
+
+ZSH_PROFILING=${ZSH_PROFILING:-0}
+
+if (( ZSH_PROFILING )); then
+  zmodload zsh/zprof                    # per-function call profiler
+  zmodload zsh/datetime                 # high-precision $EPOCHREALTIME
   _zsh_start=$EPOCHREALTIME
 fi
 
+################################################################### path updates
+
+typeset -U path fpath                 # prevent duplicate entries
+path=("$XDG_BIN_HOME" $path)          # include xdg bin in path
+
 ################################################################### zsh settings
-
-# cache brew prefix (called many times below — avoid repeated subprocess forks)
-_brew_prefix=$(brew --prefix)
-
-# enable brew completions
-# https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh
-if type brew &>/dev/null; then
-  FPATH=${_brew_prefix}/share/zsh/site-functions:$FPATH
-fi
-
-# enable default completions (cached — rebuilt once per day)
-autoload -Uz compinit
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then compinit; else compinit -C; fi
-
-# enable case-insensitive completions
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-# history
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-setopt SHARE_HISTORY                    # share across sessions
-setopt HIST_IGNORE_ALL_DUPS             # no duplicates
-setopt HIST_REDUCE_BLANKS               # trim whitespace
-
-# search history backwards with ctrl-r (like bash)
-bindkey '^r' history-incremental-search-backward
 
 # remove the 1-character gap on the right of the prompt
 export ZLE_RPROMPT_INDENT=0
 
-#################################################################### zsh plugins
+# allow # comments in interactive shells (paste-friendly)
+setopt INTERACTIVE_COMMENTS
 
-# enable vi-mode
-source ${_brew_prefix}/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+# typo correction prompt (remove if it gets annoying)
+setopt CORRECT
+
+# every cd pushes onto the dir stack; `cd -<n>` to jump back
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+
+# treat /, ., - as word boundaries for ctrl-w / ctrl-left
+WORDCHARS=''
+
+# improve history
+HISTFILE=$ZSH_HISTORY
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY                    # share across sessions
+setopt EXTENDED_HISTORY                 # store timestamp + duration
+setopt HIST_IGNORE_ALL_DUPS             # no duplicates
+setopt HIST_IGNORE_SPACE                # leading space hides command from history
+setopt HIST_REDUCE_BLANKS               # trim whitespace
+setopt HIST_VERIFY                      # !history expansion shows before running
+setopt HIST_FIND_NO_DUPS                # skip duplicates when searching
+
+# search history backwards with ctrl-r (like bash)
+bindkey '^r' history-incremental-search-backward
+
+################################################################ zsh completions
+
+# enable brew completions
+# https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh
+if type brew &>/dev/null; then
+  fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+fi
 
 # activate additional completions
-fpath=(${_brew_prefix}/share/zsh-completions $fpath)
+fpath=($HOMEBREW_PREFIX/share/zsh-completions $fpath)
 
-# activate syntax highlighting
-source ${_brew_prefix}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# enable completions (lazy loaded from cache, when needed)
+autoload -Uz compinit
 
-# activate auto suggestions
-source ${_brew_prefix}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# rebuild completion cache every day
+if [[ -n "$ZCOMPDUMP"(#qN.mh+24) ]]; then
+  compinit -d "$ZCOMPDUMP"
+else
+  compinit -C -d "$ZCOMPDUMP"
+fi
 
-# activate history search
-source ${_brew_prefix}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+# use completion by default
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$ZCOMPCACHE"
+
+# enable case-insensitive completions
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# arrow-key menu for completions
+zstyle ':completion:*' menu select
+
+#################################################################### zsh plugins
+
+# antidote — sources plugins listed in .zsh_plugins.txt via a generated bundle
+# manifest: $ZDOTDIR/.zsh_plugins.txt   (tracked)
+# bundle:   $ZDOTDIR/.zsh_plugins.zsh   (gitignored, regenerated when manifest changes)
+source $HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh
+antidote load
+
+# bindings for zsh-history-substring-search (loaded via antidote)
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
@@ -71,7 +120,7 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 ######################################################################### logout
 
-# login/logout: handled by .zlogin / .zlogout / exit TUI (WIP)
+# TODO: login/logout: handled by .zlogin / .zlogout / exit TUI (WIP)
 # see working/zshrc-exit-ideas.txt for design notes
 
 ################################################################### tui upgrades
@@ -159,7 +208,7 @@ eval "$(starship init zsh)"
 
 ### lmstudio ###################################################################
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/mb/.lmstudio/bin"
+path=("$HOME/.lmstudio/bin" $path)
 # End of LM Studio CLI section
 
 ### claude #####################################################################
@@ -183,17 +232,17 @@ alias qqwing='docker run --rm -i qqwing'
 # replace cd with zoxide (must init after all plugins and config)
 eval "$(zoxide init zsh --cmd cd)"
 
-################################################################ profiling (end)
+############################################################ zsh profiling (end)
 
 # note: this block must stay below all other config — it captures total startup
 # time. apps that auto-append config (eg. lmstudio) will land below this, so
 # move them above manually after they're added.
 
-if (( ZSH_PROFILE )); then
+if (( ZSH_PROFILING )); then
   _zsh_end=$EPOCHREALTIME
   _zsh_elapsed=$(( (_zsh_end - _zsh_start) * 1000 ))
   mkdir -p "$ZSH_LOG_DIR"
-  _logfile="${ZSH_LOG_DIR}/zsh-profile_$(date +%Y%m%d-%H%M%S).log"
+  _logfile="${ZSH_LOG_DIR}/zsh-profiling_$(date +%Y%m%d-%H%M%S).log"
   {
     echo "=== zsh startup profile ==="
     echo "date:    $(date -Iseconds)"

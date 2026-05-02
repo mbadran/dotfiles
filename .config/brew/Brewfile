@@ -20,14 +20,11 @@ tap "vecartier/tap"
 
 # ------------------------------------------------------------------ shell ♠ ---
 
+brew "antidote"                        # zsh plugin manager — sources `.zsh_plugins.txt`
 brew "fzf"                             # fuzzy finder
 brew "starship"                        # cross-shell prompt
 brew "zoxide"                          # smarter cd with frecency ranking
-brew "zsh-autosuggestions"             # fish-style command suggestions
-brew "zsh-completions"                 # additional completion definitions
-brew "zsh-history-substring-search"    # fish-style history search
-brew "zsh-syntax-highlighting"         # fish-style syntax highlighting
-brew "zsh-vi-mode"                     # vi mode for zsh
+brew "zsh-completions"                 # additional completion definitions (static fpath)
 
 # --------------------------------------------------------- files & search ♠ ---
 
@@ -51,6 +48,7 @@ brew "pandoc"     # universal markup format converter
 
 brew "gh"               # GitHub CLI
 brew "git-delta"        # syntax-highlighting pager for git and diff output
+brew "git-lfs"          # large file storage for git
 brew "netcat"           # utility for managing network connections
 brew "tree-sitter-cli"  # parser generator tool and CLI
 brew "yarn"             # JavaScript package manager

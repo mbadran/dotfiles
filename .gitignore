@@ -10,6 +10,10 @@ working/
 .config/htop/
 .config/nvim/.netrwhist
 .config/nvim/lazy-lock.json
+.config/zsh/.zsh_plugins.zsh
+.config/zsh/.zcompcache/
+.config/zsh/.zcompdump*
+.config/zsh/.zsh_history
 
 # zed transient data
 .config/zed/conversations/

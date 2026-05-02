@@ -1,0 +1,10 @@
+jeffreytse/zsh-vi-mode
+zdharma-continuum/fast-syntax-highlighting
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+Aloxaf/fzf-tab
+romkatv/zsh-defer
+wfxr/forgit
+MichaelAquilina/zsh-you-should-use
+ohmyzsh/ohmyzsh path:plugins/extract
+jimhester/per-directory-history
