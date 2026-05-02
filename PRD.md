@@ -1,5 +1,5 @@
 # dotfiles PRD
-> Living document. Last updated: 2026-04-25.
+> Living document. Last updated: 2026-05-03.
 
 ## Vision
 
@@ -188,6 +188,16 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
   - [ ] fzf-lua deep dive — map live_grep (`<C-t>` done), buffers, git_status, oldfiles, keymaps; explore zoxide integration for cross-project navigation
   - [ ] Dir view — evaluate alternatives to netrw+`<C-b>`; preference is non-floating, fast, minimal; netrw may be the permanent answer if alternatives add complexity (skip mini.files — floating UI not preferred)
 - [-] ~~**3.12** Fix `page -p` PTY redirect~~ — SKIP: parked, superseded by phase 6 (neopager)
+- [ ] **3.13** Zshrc review — drop dead-commented PATH/lmstudio lines, audit for missing modern niceties, sanity check
+- [ ] **3.14** Switch zsh plugin sourcing to `antidote` (try in branch first; static-bundle mode for zero perf cost)
+- [ ] **3.15** Migrate `~/.claude` config into dotfiles at `.config/claude/` (separate from project-local `.claude/`)
+  - Symlink `~/.claude/settings.json` from tracked file
+  - Build a base/global config sourced into project-local Claude settings to avoid repeating permissions/hooks per project
+  - Move `~/.claude/*.bak*` and `*.orig` to `working/claude-backups-YYYYMMDD/`, then delete
+  - `.gitignore` runtime state: `history.jsonl`, `sessions/`, `cache/`, `projects/`, `shell-snapshots/`, `file-history/`, `todos/`, `backups/`, `cc-beeper/`, `paste-cache/`, `plans/`, `plugins/`, `scheduled-tasks/`, `session-env/`, `statsig/`, `telemetry/`, `tasks/`, `mcp-needs-auth-cache.json`, `security_warnings_state_*.json`
+- [ ] **3.16** Claude Code hooks — wire `start.sh`/`end.sh` into `SessionStart`/`SessionEnd` (Claude Code added these — AGENTS.md note is now wrong); review other useful hooks
+- [ ] **3.17** Ghostty trial — track `.config/ghostty/`, kitty parity check, decide on replacement
+- [ ] **3.18** git-lfs — add to Brewfile (filter block now in `git/config`)
 
 ### Phase 4: morsel
 
