@@ -53,6 +53,7 @@ dotfiles/
 | gh       | GitHub CLI      | `.config/gh/config.yml`                                        |
 | git      | Version control | `.config/git/ignore`                                           |
 | homebrew | Package manager | `.config/brew/Brewfile`, `.config/brew/brew.env`               |
+| ghostty  | Terminal (trial)| `.config/ghostty/config`                                       |
 | kitty    | Terminal        | `.config/kitty/kitty.conf`, `.config/kitty/current-theme.conf` |
 | macmon   | Perf monitor    | `.config/macmon.json`                                          |
 | nvim     | Editor          | `.config/nvim/init.lua`                                        |
@@ -75,6 +76,7 @@ dotfiles/
 | macmon.json             | Apple Silicon perf monitor — sparkline view, green, 1s interval |
 | nvim/init.lua           | Neovim — minimal, lazy.nvim, 17 plugins                     |
 | page/init.lua           | Neovim-based pager for less/man/more                        |
+| ghostty/config          | Ghostty terminal — IosevkaTerm 18pt, Catppuccin Macchiato   |
 | starship.toml           | Starship prompt — Catppuccin Macchiato                      |
 | zed/settings.json       | Zed GUI editor                                              |
 
@@ -196,8 +198,8 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
   - Move `~/.claude/*.bak*` and `*.orig` to `working/claude-backups-YYYYMMDD/`, then delete
   - `.gitignore` runtime state: `history.jsonl`, `sessions/`, `cache/`, `projects/`, `shell-snapshots/`, `file-history/`, `todos/`, `backups/`, `cc-beeper/`, `paste-cache/`, `plans/`, `plugins/`, `scheduled-tasks/`, `session-env/`, `statsig/`, `telemetry/`, `tasks/`, `mcp-needs-auth-cache.json`, `security_warnings_state_*.json`
 - [ ] **3.16** Claude Code hooks — wire `start.sh`/`end.sh` into `SessionStart`/`SessionEnd` (Claude Code added these — AGENTS.md note is now wrong); review other useful hooks
-- [ ] **3.17** Ghostty trial — track `.config/ghostty/`, kitty parity check, decide on replacement
-- [ ] **3.18** git-lfs — add to Brewfile (filter block now in `git/config`)
+- [x] **3.17** Ghostty trial — `.config/ghostty/config` tracked; font + theme parity with kitty; remote-control socket gap noted (no ghostty equivalent yet — keep kitty if that workflow gets kicked off)
+- [x] **3.18** git-lfs — added to Brewfile under dev tools
 
 ### Phase 4: morsel
 

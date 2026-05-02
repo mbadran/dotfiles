@@ -144,6 +144,7 @@ with open('.config/starship.toml', 'w') as f:
 | `.config/brew/non-brew-apps.md` | Apps not managed by brew                                      |
 | `.config/git/config`            | Global git config (XDG — credential helper, user identity)    |
 | `.config/git/ignore`            | Global gitignore (XDG default, applies to all repos)          |
+| `.config/ghostty/config`        | Ghostty terminal config (trial alongside kitty)               |
 | `.config/kitty/kitty.conf`      | GPU terminal emulator config                                  |
 | `.config/nvim/init.lua`         | Neovim config — plugins, mappings, options                    |
 | `.config/page/init.lua`         | Neovim-based pager config                                     |
