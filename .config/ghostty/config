@@ -1,0 +1,11 @@
+# ghostty config — minimal, mirrors kitty parity where possible
+# full reference: https://ghostty.org/docs/config/reference
+
+font-family = IosevkaTerm Nerd Font Mono
+font-size = 18
+
+theme = catppuccin-macchiato
+
+# parity gaps vs kitty (deliberate, noted for review)
+# - allow_remote_control + listen_on (kitty.sock for stream deck)
+#   ghostty has no equivalent socket API yet; if kicked off, keep kitty for that flow
