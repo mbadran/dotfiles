@@ -192,12 +192,15 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
 - [-] ~~**3.12** Fix `page -p` PTY redirect~~ — SKIP: parked, superseded by phase 6 (neopager)
 - [ ] **3.13** Zshrc review — drop dead-commented PATH/lmstudio lines, audit for missing modern niceties, sanity check
 - [ ] **3.14** Switch zsh plugin sourcing to `antidote` (try in branch first; static-bundle mode for zero perf cost)
-- [ ] **3.15** Migrate `~/.claude` config into dotfiles at `.config/claude/` (separate from project-local `.claude/`)
-  - Symlink `~/.claude/settings.json` from tracked file
-  - Build a base/global config sourced into project-local Claude settings to avoid repeating permissions/hooks per project
-  - Move `~/.claude/*.bak*` and `*.orig` to `working/claude-backups-YYYYMMDD/`, then delete
-  - `.gitignore` runtime state: `history.jsonl`, `sessions/`, `cache/`, `projects/`, `shell-snapshots/`, `file-history/`, `todos/`, `backups/`, `cc-beeper/`, `paste-cache/`, `plans/`, `plugins/`, `scheduled-tasks/`, `session-env/`, `statsig/`, `telemetry/`, `tasks/`, `mcp-needs-auth-cache.json`, `security_warnings_state_*.json`
-- [ ] **3.16** Claude Code hooks — wire `start.sh`/`end.sh` into `SessionStart`/`SessionEnd` (Claude Code added these — AGENTS.md note is now wrong); review other useful hooks
+- [x] **3.15** Migrate `~/.claude` config into dotfiles at `.config/claude/`
+  - Tracked global at `.config/claude/settings.json`; conservative perms (read-only + safe utilities allow, all destructive ops ask)
+  - `~/.claude/settings.json` is a relative symlink → `../.config/claude/settings.json` (chains through `~/.config`)
+  - `~/.claude/settings.local.json` is host-local (untracked) — holds cc-beeper hooks (mac-only)
+  - Project-local `.claude/settings.json` slimmed to dotfiles-specific overrides (allow git commit/add, brew read, cp/mv)
+  - Speedoku's project-local `.claude/settings.local.json` should later get the project-specific perms (cypress, expo, etc.) that were previously in global
+  - Backups quarantined under `working/claude-backups-20260504/`
+- [x] **3.16** Claude Code hooks — `SessionStart`/`SessionEnd` wired globally at `~/.config/claude/scripts/`; auto-invoke `scripts/agents/start.sh`/`end.sh` if present in the project. Cross-project: project recap, memory bootstrap (count + recent files), memory hygiene (decay candidates), drift summary on close. Stays under 3s per spec.
+- [ ] **3.19** Add `mem0` MCP server for cross-project semantic memory — defer until clear-headed session; can layer Graphiti/Letta later if needed
 - [x] **3.17** Ghostty trial — `.config/ghostty/config` tracked; font + theme parity with kitty; remote-control socket gap noted (no ghostty equivalent yet — keep kitty if that workflow gets kicked off)
 - [x] **3.18** git-lfs — added to Brewfile under dev tools
 

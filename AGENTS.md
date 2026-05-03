@@ -25,7 +25,7 @@ When the user says "let's wrap up" (or similar), complete this checklist and out
 | 5  | `bash scripts/agents/end.sh` — session commits, open tasks, drift, push reminder | end.sh |
 | 6  | Sign off — "Sayonara mo san." | AGENTS.md |
 
-> **On hooks:** Claude Code has no `SessionStart`/`SessionEnd` hooks. Available hooks (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `Notification`) fire per-tool or per-response — wrong granularity for session lifecycle. Scripts + these instructions are the right layer. Revisit if Claude Code adds session lifecycle hooks.
+> **On hooks:** `SessionStart` and `SessionEnd` exist in Claude Code now. The global hooks at `~/.config/claude/scripts/session-{start,end}.sh` automatically invoke this repo's `scripts/agents/start.sh` and `end.sh` if executable. The "type wrap up so Claude runs the end checklist" pattern remains — the hook does mechanical drift summary, but the LLM-side recap (what was done, what's next) still needs the user to signal end-of-session.
 
 ## Shell alias workarounds
 
@@ -138,6 +138,8 @@ with open('.config/starship.toml', 'w') as f:
 | File                            | Role                                                          |
 | ------------------------------- | ------------------------------------------------------------- |
 | `.claude/settings.json`         | Project Claude Code permissions — review each phase           |
+| `.config/claude/settings.json`  | User-global Claude Code config (symlinked from `~/.claude/settings.json`) |
+| `.config/claude/scripts/`       | Global SessionStart/End hook scripts (run for every project)  |
 | `.config/brew/Brewfile`         | Package manifest — maintain descriptions/sections             |
 | `.config/brew/README.md`        | Brew package overview — update when Brewfile changes          |
 | `.config/brew/brew.env`         | Homebrew env vars (HOMEBREW_BUNDLE_FILE etc.)                 |

@@ -1,23 +1,14 @@
 {
+  "_comment": "PROJECT-local Claude Code settings for the dotfiles repo. Merges with the user-global settings at ~/.config/claude/settings.json. Override the global 'ask' for ops we trust ourselves to do in this repo (git add, commit, etc.). Push remains in ask globally — safety net.",
   "permissions": {
     "allow": [
-
-      "Bash(git status)",
-      "Bash(git status:*)",
-      "Bash(git diff)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(git show:*)",
-      "Bash(git ls-files:*)",
       "Bash(git add:*)",
+      "Bash(git commit)",
+      "Bash(git commit:*)",
       "Bash(git rm:*)",
       "Bash(git mv:*)",
-      "Bash(git commit:*)",
-      "Bash(git -c:*)",
-      "Bash(git branch:*)",
-      "Bash(git remote:*)",
-      "Bash(git stash:*)",
-      "Bash(git config:*)",
+      "Bash(git checkout:*)",
+      "Bash(git restore:*)",
 
       "Bash(brew info:*)",
       "Bash(brew list:*)",
@@ -28,76 +19,8 @@
       "Bash(brew tap:*)",
       "Bash(brew tap-info:*)",
 
-      "Bash(ls:*)",
-      "Bash(cat:*)",
-      "Bash(head:*)",
-      "Bash(tail:*)",
-      "Bash(wc:*)",
-      "Bash(file:*)",
-      "Bash(stat:*)",
-      "Bash(du:*)",
-      "Bash(df:*)",
-      "Bash(tree:*)",
-      "Bash(comm:*)",
       "Bash(cp:*)",
-
-      "Bash(grep:*)",
-      "Bash(sort:*)",
-      "Bash(uniq:*)",
-      "Bash(cut:*)",
-      "Bash(tr:*)",
-      "Bash(awk:*)",
-      "Bash(sed:*)",
-      "Bash(echo:*)",
-      "Bash(printf:*)",
-      "Bash(diff:*)",
-
-      "Bash(pwd)",
-      "Bash(which:*)",
-      "Bash(type:*)",
-      "Bash(env)",
-      "Bash(printenv:*)",
-      "Bash(date:*)",
-      "Bash(uname:*)",
-      "Bash(id)",
-      "Bash(whoami)",
-      "Bash(ps:*)",
-
-      "Bash(xxd:*)",
-      "Bash(strings:*)",
-      "Bash(base64:*)",
-      "Bash(md5:*)",
-      "Bash(shasum:*)",
-
-      "Bash(sw_vers:*)",
-      "Bash(defaults read:*)",
-      "Bash(plutil:*)",
-
-      "Bash(eza:*)",
-      "Bash(bat:*)",
-      "Bash(fd:*)",
-      "Bash(rg:*)",
-      "Bash(dust:*)",
-
-      "Bash(bash:*)",
-      "Bash(chmod:*)",
-      "Bash(mkdir:*)",
-      "Bash(python3:*)",
-      "Bash(jq:*)",
-      "Bash(npm info:*)",
-      "Bash(npx:*)",
-
-      "WebFetch(domain:*)"
-
-    ],
-    "ask": [
-      "Bash(git push)",
-      "Bash(git push:*)"
-    ],
-    "additionalDirectories": [
-      "~/.config",
-      "~/.claude",
-      "/opt/homebrew"
+      "Bash(mv:*)"
     ]
   }
 }
