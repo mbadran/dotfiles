@@ -1,5 +1,6 @@
 ############################## zsh base dirs (immutable/protected, scope: shell)
-# (XDG_*_HOME exports live in .zshenv so non-interactive zsh sees them too)
+
+# ($XDG_*_HOME exports live in .zshenv so non-interactive zsh sees them too)
 
 readonly ZCOMPCACHE="$XDG_CACHE_HOME/zsh/.zcompcache"  # completion cache file
 readonly ZCOMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump"    # completion dump file
