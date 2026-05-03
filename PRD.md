@@ -216,6 +216,11 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
 - [ ] **6.1** Replace `page` + neovim pager with `neopager`
 - [ ] **6.2** Polish
 
+### Phase 7: pangram
+
+- [ ] **7.1** Build `pangram` Rust CLI (separate repo)
+- [ ] **7.2** Polish — wire any dotfile integration that emerges
+
 ---
 
 ## Planned TUI tools
@@ -231,6 +236,18 @@ TUI for shell dashboards. Can be used interactively or in one shot. Use cases in
 ### neopager
 
 A from-scratch pager built in Rust. Intended to replace `page` (which wraps neovim) with a standalone binary that has no neovim dependency but keeps the same UX contract: syntax highlighting, vi keys, and the ability to act as a drop-in for less/man/more. Alternatively, integrates with neovim in headless mode. Separate repo. See `working/NEOPAGER-PRD.md` for design notes.
+
+### pangram
+
+A Rust CLI for working with pangrams ("the quick brown fox..."). Modes:
+
+- `pangram render <font>` — render the pangram in any installed font (sample sheet for typography work)
+- `pangram type` — typing-practice mode, WPM + accuracy, picks a pangram by language/length
+- `pangram info <id|"text">` — metadata: length, origin, popularity, language, era, use cases, explanation
+- `pangram list` — browse pangram collection, filter by language / character set / length
+- `pangram random` — random pangram for prompt blocks or shell startup messages
+
+Drawing inspiration from the npm `pangram` and `is-pangram` packages (mostly: collections + validation), then extending: typography preview, typing practice, and metadata-rich exploration. Separate repo. Design notes to land in `working/PANGRAM-PRD.md` when work starts.
 
 ---
 
