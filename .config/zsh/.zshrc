@@ -1,17 +1,5 @@
-###################################### xdg base dirs (scope: shell & subprocess)
-
-# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-
-export XDG_BIN_HOME="$HOME/.local/bin"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
-
-# ensure the dirs exist
-mkdir -p "$XDG_BIN_HOME" "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_STATE_HOME"
-
 ############################## zsh base dirs (immutable/protected, scope: shell)
+# (XDG_*_HOME exports live in .zshenv so non-interactive zsh sees them too)
 
 readonly ZCOMPCACHE="$XDG_CACHE_HOME/zsh/.zcompcache"  # completion cache file
 readonly ZCOMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump"    # completion dump file
