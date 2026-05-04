@@ -31,11 +31,33 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 ## zsh
 
 - [ ] Open a new terminal tab -- clean startup, no errors
-- [ ] Symlinks resolve: `readlink ~/.zshrc` → `~/.config/zsh/.zshrc`, `readlink ~/.zprofile` → `~/.config/zsh/.zprofile`
+- [ ] `readlink ~/.zshenv` → `.config/zsh/.zshenv` (relative symlink, chains via `~/.config`)
+- [ ] `echo $ZDOTDIR` → `~/.config/zsh`
+- [ ] `echo $XDG_DATA_HOME` → `~/.local/share`, `$XDG_CACHE_HOME` → `~/.cache`
+- [ ] `echo $HISTFILE` → `~/.local/share/zsh/history` (NOT `~/.config/zsh/.zsh_history`)
+- [ ] `echo $SHELL_SESSION_DIR` → `~/.local/share/zsh/sessions`
+- [ ] No stale state: `ls ~/.config/zsh/.zsh_history` and `~/.config/zsh/.zsh_sessions` both empty
 - [ ] Test core aliases: `ls`, `ll`, `cat`, `grep`, `find`, `top`, `vim`, `cd`, `tree`
-- [ ] Test vim mode: `Esc`, then `k`/`j` for history
+- [ ] Test vim mode: `Esc`, then `k`/`j` for history; `v` to edit current command in nvim
 - [ ] Test fzf: `Ctrl-R` (history), `Ctrl-T` (files)
-- [ ] Test tab completion with partial command
+- [ ] Test fzf-tab: type `git ` and press tab — fzf-driven menu appears
+- [ ] Test tab completion with partial command — grouped by category, bold headers
+- [ ] Test new history opts: prefix command with space → not saved to history
+- [ ] Antidote bundle present: `ls ~/.config/zsh/.zsh_plugins.zsh` (gitignored, regenerated as needed)
+
+## ghostty
+
+- [ ] `ghostty` opens — IosevkaTerm 18pt, Catppuccin Macchiato theme
+- [ ] No remote-control socket parity yet (kitty still required for Stream Deck)
+
+## claude code
+
+- [ ] `readlink ~/.claude/settings.json` → `../.config/claude/settings.json`
+- [ ] `~/.claude/settings.local.json` exists (untracked, host-local cc-beeper hooks)
+- [ ] Open a Claude session in any project — SessionStart hook prints recap (branch, drift, memory, decay candidates)
+- [ ] Open Claude in dotfiles repo — local `scripts/agents/start.sh` invoked at the bottom of the recap
+- [ ] On session close — SessionEnd hook prints drift summary + push reminder, then runs local end.sh if present
+- [ ] Permissions test: `git push` prompts even in dotfiles (project allows commit/add but not push — global ask wins)
 
 ## profiling
 
