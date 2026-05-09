@@ -25,6 +25,9 @@ working/
 .config/op/
 .config/pulse/
 
+# brew sync host-local state (snapshot of last-seen installed set)
+.config/brew/.installed.lock
+
 # app-managed configs (not handcrafted)
 .config/qBittorrent/
 .config/raycast/
@@ -32,3 +35,37 @@ working/
 # claude -- settings.json tracked; everything else ignored
 .claude/*
 !.claude/settings.json
+
+# bulky / runtime app data dragged in by the home → .config consolidation
+# pattern: ignore wholesale, allow back any specific handcrafted config files
+
+# 11G of models + extensions + 109k entries — kills zed/git/starship
+.config/lmstudio/*
+!.config/lmstudio/settings.json
+!.config/lmstudio/mcp.json
+
+# docker desktop runtime: binaries, build state, cli plugins
+.config/docker/
+
+# cagent: only contains runtime markers + user uuid
+.config/cagent/
+
+# claudebar: track only settings.json
+.config/claudebar/*
+!.config/claudebar/settings.json
+
+# llmfit: only contains a hf model cache
+.config/llmfit/
+
+# purple: track only handcrafted preferences; ignore logs, history, runtime
+# (note: purple takes over ~/.ssh/config — that lives outside this repo and
+# must NEVER be tracked here — if it ever lands inside .config/, ignore it)
+.config/purple/*
+!.config/purple/preferences
+
+# splashboard: track toml configs, ignore cache/logs
+.config/splashboard/cache/
+.config/splashboard/logs/
+
+# auto-backup files (zellij, splashboard, etc. drop *.bak alongside live config)
+*.bak
