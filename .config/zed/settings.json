@@ -31,14 +31,40 @@
   },
   "base_keymap": "VSCode",
   "agent": {
+    "favorite_models": [
+      {
+        "provider": "anthropic",
+        "model": "claude-sonnet-4-6-latest",
+        "enable_thinking": true,
+        "effort": "high"
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-opus-4-7-latest",
+        "enable_thinking": true,
+        "effort": "high"
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-opus-4-6-latest",
+        "enable_thinking": true,
+        "effort": "high"
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-haiku-4-5-latest",
+        "enable_thinking": false
+      }
+    ],
     "dock": "left",
     "default_profile": "ask",
     "default_model": {
-      "provider": "lmstudio",
-      "model": "qwen/qwen3-14b",
+      "enable_thinking": false,
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-latest",
     },
     "model_parameters": [],
-    "play_sound_when_agent_done": true,
+    "play_sound_when_agent_done": "always",
   },
   "vim_mode": true,
   "ui_font_size": 16,
