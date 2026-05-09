@@ -32,7 +32,6 @@ dotfiles/
     brew/               # homebrew: Brewfile, brew.env, non-brew-apps.md
     retired/
       bash/             # legacy bash configs (2011-2020)
-      tmux/             # legacy tmux config (2017)
     zsh/                # zsh configs (~/.zshrc and ~/.zprofile symlink here)
   working/              # scratchpad for experiments and extracted code (gitignored)
   logs/                 # profiling and debug logs (gitignored)
@@ -89,7 +88,6 @@ _Tracked for future triage, under `.config/retired/`_
 | retired/bash/.bash_*    | Here be dragons. 2011-2020. Superseded by zsh. Kept for zsh-less servers. |
 | retired/bash/.dir_colors | 2017. Superseded by eza.                                                 |
 | retired/bash/.inputrc   | 2017. Readline config, still useful for bash-based tools.                 |
-| retired/tmux/.tmux.conf | TODO: revisit. 2017. Still relevant if tmux is used.                      |
 
 ---
 
@@ -159,7 +157,7 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
 - [x] **3.6** XDG centralization — audit `~/.config` and migrate configs safely
   - `~/.config` symlinks to dotfiles `.config/` — all configs already XDG-resident
   - zsh moved to `.config/zsh/`; `~/.zshrc` and `~/.zprofile` symlink there
-  - bash/tmux retired files moved to `.config/retired/`
+  - bash retired files moved to `.config/retired/` (tmux retired files removed entirely in 3.20)
   - starship already at `~/.config/starship.toml` (XDG default, no move needed)
   - Claude Code: `CLAUDE_CONFIG_DIR` too buggy to use; `~/.claude/` stays untracked
   - `~/.claude/settings.json` not tracked — `env` section is a footgun for accidental API key commits; hooks may contain inline secrets. Future consideration: track a `settings-base.json` (structure/permissions only, no secrets) and manage `~/.claude/settings.json` manually.
@@ -203,7 +201,7 @@ Set `ZSH_PROFILE=1` in `.zshrc`, open a new shell. See `working/zsh-profiling-gu
 - [ ] **3.19** Add `mem0` MCP server for cross-project semantic memory — defer until clear-headed session; can layer Graphiti/Letta later if needed
 - [x] **3.17** Ghostty trial — `.config/ghostty/config` tracked; font + theme parity with kitty; remote-control socket gap noted (no ghostty equivalent yet — keep kitty if that workflow gets kicked off)
 - [x] **3.18** git-lfs — added to Brewfile under dev tools
-- [ ] **3.20** Migrate from tmux to zellij — install + adopt config, port any tmux keybindings/sessions, remove tmux from system if no longer used; tracked in Brewfile
+- [x] **3.20** Migrate from tmux to zellij — zellij installed via brew sync (forward drift caught it); default `config.kdl` tracked at `.config/zellij/`, will customise gradually. Removed `.config/retired/tmux/` entirely. tmux not installed on system.
 - [ ] **3.21** Merge dotfiles `scripts/agents/{start,end}.sh` content into the user-wide hooks at `.config/claude/scripts/session-{start,end}.sh` — currently project hook is invoked from global hook; consider whether checklist + drift logic should live globally with project-conditional branches, or if the current "global recap → project script" two-tier split is right
 - [ ] **3.22** Skills audit on AGENTS.md — review which sections are truly agent instructions vs project-specific standards or oft-repeated user instructions that belong as Claude Code skills (e.g. starship PUA edits, commit style, session start/end checklists). Migrate candidates to user-level skills, leave the rest in AGENTS.md
 - [ ] **3.23** GitHub least-privilege token — create a fine-grained PAT (not classic) scoped to selected repos with read metadata + read/write issues + read/write PRs. Store in 1Password; source via `op read` into `GH_TOKEN`/`GITHUB_TOKEN` in zshenv (or a host-local env file). Unblocks: splashboard project dashboard (currently fails on missing GH_TOKEN), and `gh issue/pr` from within projects. Replaces any classic PAT with broader scope.
