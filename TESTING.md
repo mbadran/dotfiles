@@ -90,11 +90,46 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 
 ## homebrew
 
-- [ ] `brew bundle check` -- no missing packages
 - [ ] `source ~/.config/brew/brew.env` -- sets `HOMEBREW_BUNDLE_FILE` correctly
 - [ ] `echo $HOMEBREW_BUNDLE_FILE` -- points to `.config/brew/Brewfile`
-- [ ] `brew bundle check --verbose` -- all entries satisfied
 - [ ] New terminal tab -- `brew` available (shellenv sourced from .zprofile)
+- [ ] `python3 scripts/brew/sync.py` -- prints "Brewfile in sync" (or applied drift output) without errors
+- [ ] After `brew install <pkg>`: next session start (or manual sync run) auto-appends `<pkg>` to the `uncategorized` Brewfile section with description from `brew info`
+- [ ] After `brew uninstall <pkg>`: next session sync removes `<pkg>` from Brewfile (gated by `.config/brew/.installed.lock` so first-clone runs don't wipe)
+- [ ] Commented entries (e.g. `# cask "ovim"`) are reported as "skipped (commented in Brewfile)" and left alone
+
+## btop
+
+- [ ] `btop` -- opens with theme background visible (not transparent/16-colour TTY mode)
+- [ ] `force_tty = false` -- keeps full-colour theme rendering; `theme_background = true` -- shows the theme's main_bg
+- [ ] After theme change via UI: btop rewrites the file with verbose `#*` doc comments + cellar-versioned theme path. Expected — don't fight it.
+
+## zellij
+
+- [ ] `zellij` -- opens with default config (no errors, status bar at top)
+- [ ] `Ctrl-q` quits cleanly
+- [ ] Default keymap modes work (`Ctrl-p` panes, `Ctrl-t` tabs, etc.)
+- [ ] `~/.config/zellij/config.kdl` is the live config (no override surprise from `~/.zellij/config.kdl`)
+
+## lm studio (XDG relocation)
+
+- [ ] `ls -la ~/.config/lmstudio/` -- shows symlinks for `models`, `extensions`, `bin`, `.internal`, `server-logs`, `conversations`, `hub`, `working-directories`, `user-files`, `config-presets`, `credentials`, `projects` -- all pointing to `~/.local/share/lmstudio/<name>`
+- [ ] `ls -la ~/.local/share/lmstudio/` -- the heavy data lives here (~11G)
+- [ ] `du -sh ~/Documents/projects/dotfiles/.config/lmstudio` -- 8K (just `settings.json` + `mcp.json` + 12 symlinks)
+- [ ] LM Studio app opens, sees its models, can chat -- proves symlinks are resolving correctly
+- [ ] If LM Studio ever recreates one of the heavy dirs as a real dir (not symlink): symlink got unlinked; redo the move for that dir + investigate
+
+## splashboard
+
+- [ ] `cd ~` -- splashboard renders with home dashboard layout
+- [ ] `cd` into a project dir -- splashboard renders project layout (commits, PRs, issues)
+- [ ] If `GH_TOKEN` is unset: splashboard surfaces a clear "missing token" error (PRD 3.23)
+- [ ] `~/.config/splashboard/cache/` is gitignored (lots of `<source>-<hash>.json` files; safe to delete, regenerates)
+
+## claudebar
+
+- [ ] `claudebar` runs as menu-bar app -- shows Claude Code session usage
+- [ ] `~/.config/claudebar/settings.json` is the live config (only file tracked from this dir)
 
 ## neovim
 
