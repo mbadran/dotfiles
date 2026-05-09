@@ -1,20 +1,27 @@
-############################## zsh base dirs (immutable/protected, scope: shell)
+################################################################## zsh base dirs
 
-# ($XDG_*_HOME exports live in .zshenv so non-interactive zsh sees them too)
+# env var scope: interactive zsh shells (w/o subprocesses). immutable once set.
+#
+# note that $XDG_*_HOME env vars are set system-wide via .zshenv
 
 readonly ZCOMPCACHE="$XDG_CACHE_HOME/zsh/.zcompcache"  # completion cache file
 readonly ZCOMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump"    # completion dump file
 readonly ZSH_HISTORY="$XDG_DATA_HOME/zsh/history"      # zsh history file
-readonly ZSH_LOG_DIR="$XDG_DATA_HOME/zsh/logs"         # zsh profiling logs
+readonly ZSH_PROFILING_LOGS="$XDG_DATA_HOME/zsh/logs"  # zsh profiling logs
 
-# ensure the zsh subdirs exist
+# ensure the zsh dirs exist
 mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_DATA_HOME/zsh"
 
 ########################################################## zsh profiling (start)
 
-# uses zprof to measure total zsh startup time with breakdown per-function
-# to run, turn profiling on and run a sub shell, then check $ZSH_LOG_DIR
-# `$ ZSH_PROFILING=1 zsh`
+# profile zsh by measuring the total startup time, including breakdowns per
+# function
+#
+# run this command to turn on profiling temporarily:
+#
+#   $ ZSH_PROFILING=1 zsh
+#
+# then check profling logs in $ZSH_PROFILING_LOGS
 
 ZSH_PROFILING=${ZSH_PROFILING:-0}
 
@@ -82,10 +89,13 @@ if type brew &>/dev/null; then
   fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 fi
 
-# activate additional completions
+# enable docker completions (dir is created lazily by docker; guard for absence)
+[[ -d $HOME/.docker/completions ]] && fpath=($HOME/.docker/completions $fpath)
+
+# enable additional completions
 fpath=($HOMEBREW_PREFIX/share/zsh-completions $fpath)
 
-# enable completions (lazy loaded from cache, when needed)
+# lazy load completions from cache (when needed)
 autoload -Uz compinit
 
 # rebuild completion cache every day
@@ -209,18 +219,20 @@ eval "$(fzf --zsh)"
 # replace default prompt with starship
 eval "$(starship init zsh)"
 
+# add a splashboard (terminal dashboard) for new shells and project dirs
+eval "$(splashboard init zsh)"
+
+# replace cd with zoxide (must init after all plugins and config)
+eval "$(zoxide init zsh --cmd cd)"
+
 ############################################################# app customisations
 
-# NOTE: apps often auto-append config to the end of .zshrc.
-# after installing a new app, move its config above profiling (end).
-
-### lmstudio ###################################################################
-# Added by LM Studio CLI (lms)
-path=("$HOME/.lmstudio/bin" $path)
-# End of LM Studio CLI section
+# note: apps often auto-append their configs to the bottom of this file. if that
+# happens, manually move the configs to this section so it doesn't affect zsh
+# profiling.
 
 ### claude #####################################################################
-# auto update doesn't work with the homebrew cask
+# claude cli's auto update doesn't work with the homebrew cask
 export DISABLE_AUTOUPDATER=1
 
 ### claude code statusline #####################################################
@@ -235,22 +247,20 @@ alias cyls='npm run test:list --silent'
 ### qqwing #####################################################################
 alias qqwing='docker run --rm -i qqwing'
 
-### zoxide #####################################################################
-
-# replace cd with zoxide (must init after all plugins and config)
-eval "$(zoxide init zsh --cmd cd)"
-
 ############################################################ zsh profiling (end)
 
-# note: this block must stay below all other config — it captures total startup
-# time. apps that auto-append config (eg. lmstudio) will land below this, so
-# move them above manually after they're added.
+# note: this block must stay below all other configs so it can capture the total
+# startup time. if an app auto-appends its config below this, manually move it
+# above (to the 'app customisations' section).
 
 if (( ZSH_PROFILING )); then
   _zsh_end=$EPOCHREALTIME
   _zsh_elapsed=$(( (_zsh_end - _zsh_start) * 1000 ))
-  mkdir -p "$ZSH_LOG_DIR"
-  _logfile="${ZSH_LOG_DIR}/zsh-profiling_$(date +%Y%m%d-%H%M%S).log"
+
+  # ensure the zsh log dir exists
+  mkdir -p "$ZSH_PROFILING_LOGS"
+
+  _logfile="${ZSH_PROFILING_LOGS}/zsh-profiling_$(date +%Y%m%d-%H%M%S).log"
   {
     echo "=== zsh startup profile ==="
     echo "date:    $(date -Iseconds)"
@@ -260,6 +270,7 @@ if (( ZSH_PROFILING )); then
     echo ""
     zprof
   } > "$_logfile"
+
   echo "\n─────────────────────────────────────────"
   printf "  Profiled zsh in %.0fms → %s\n" "$_zsh_elapsed" "$_logfile"
   echo "─────────────────────────────────────────"
