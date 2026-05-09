@@ -17,6 +17,9 @@
 tap "arthur-ficial/tap"
 tap "tonisives/tap"
 tap "vecartier/tap"
+tap "oiwn/tap"
+tap "thomas-mauran/tap"
+tap "unhappychoice/tap"
 
 # ------------------------------------------------------------------ shell ♠ ---
 
@@ -165,3 +168,13 @@ cask "elgato-stream-deck"  # Stream Deck configuration software
 # ----------------------------------------------------------------- gaming ♠ ---
 
 # cask "steam"  # gaming platform
+
+# ------------------------------------------------------ uncategorized ♠ ---
+brew "oiwn/tap/tarts"                 # Terminal Arts - Screen savers and visual effects for terminal
+brew "stockfish"                      # Strong open-source chess engine
+brew "thomas-mauran/tap/chess-tui"    # Play chess in your terminal 🦀
+brew "unhappychoice/tap/splashboard"  # Customizable terminal splash screen with plugin-based data sources
+brew "xdg-ninja"                      # Check your $HOME for unwanted files and directories
+brew "zellij"                         # Pluggable terminal workspace, with terminal multiplexer as the base feature
+cask "ghostty"  # Terminal emulator that uses platform-native UI and GPU acceleration
+cask "github"   # Desktop client for GitHub repositories

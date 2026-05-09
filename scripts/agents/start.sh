@@ -10,7 +10,9 @@ cd "$REPO"
 MEMORY_DIR="$HOME/.claude/projects/-Users-mb-Documents-projects-dotfiles/memory"
 
 echo "══ brew drift ══════════════════════════════════════════════════"
-brew bundle check --verbose 2>&1 || true
+brew bundle install --quiet 2>&1 | tail -5 || true
+echo
+python3 "$REPO/scripts/brew/sync.py" 2>&1 || true
 
 echo ""
 echo "══ config scan ═════════════════════════════════════════════════"

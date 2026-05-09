@@ -70,26 +70,20 @@ Check for config and package drift at session start and at each phase polish ste
 **Config drift:**
 Check project root and `.config/` for untracked dirs. If new configs exist that are neither tracked nor referenced in `non-brew-apps.md`, either track them or add with a note to that file and `.gitignore`. If tracked configs are absent on the system, install them or remove their references.
 
-**Brew drift:**
-```
-brew bundle check --verbose          # verify all Brewfile deps are installed
-brew bundle cleanup                  # primary: installed packages NOT in Brewfile
-brew leaves --installed-on-request   # wider net: all manually installed formulae
-```
+**Brew drift — automated.** `scripts/brew/sync.py` runs from `start.sh` every session and keeps the Brewfile mirroring `brew leaves` ∪ `brew list --cask`:
 
-For a cross-check against the Brewfile:
-```python
-python3 -c "
-import re, subprocess
-with open('.config/brew/Brewfile') as f:
-    tracked = set(re.findall(r'brew .([^\"]+).', f.read()))
-leaves = set(subprocess.check_output(['brew','leaves','--installed-on-request']).decode().split())
-print('untracked:', sorted(leaves - tracked))
-"
-```
+- Forward drift (manually installed → not in Brewfile): appended to an `uncategorized` section at the bottom, with the description from `brew info`. Recategorise manually when convenient.
+- Reverse drift (in Brewfile → no longer installed): the line is removed, gated by the host-local state file `.config/brew/.installed.lock` so a fresh-clone machine doesn't get its Brewfile wiped before first `brew bundle install`.
+- Tap entries for new tap-prefixed formulae are auto-added; existing tap lines are never auto-removed.
+- Lines commented out (e.g. `# cask "ovim"`) are treated as deliberate exclusions and left alone in either direction.
 
-- Skip packages shown as "Installed (as dependency)" in `brew info` — auto-pulled deps
-- Present untracked installs and prompt user: add to Brewfile (with description + section) or document in `non-brew-apps.md`
+`start.sh` runs `brew bundle install` first (no-op when in sync, populates fresh machines), then `sync.py` to capture any post-install drift.
+
+For ad-hoc inspection:
+```
+brew leaves --installed-on-request   # all manually installed formulae
+brew list --cask                     # all installed casks
+```
 
 ## Phase polish checklist
 
