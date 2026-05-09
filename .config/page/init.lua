@@ -23,6 +23,12 @@ the following patterns configure unique neovim buffers for each pager type:
 | FileType man        | man        | man pages ($MANPAGER)   | man curl        |
 +---------------------+------------+-------------------------+-----------------+
 
+TODO:
+
+- need a big statusbar
+- statusbar customisations: height, size, colour, icons, symbols, etc
+- need to bundle/handle nerd font icons natively
+
 ]]
 
 ----------------------------------------------------------- global options ♠ ---
@@ -87,9 +93,9 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- page embeds these into the buffer name shown in the statusline
 
-vim.g.page_icon_pipe     = '↦'
-vim.g.page_icon_redirect = '↣'
-vim.g.page_icon_instance = '#'
+vim.g.page_icon_pipe     = '󱡍'  -- ⋮
+vim.g.page_icon_redirect = '󰟥'  -- ↣
+vim.g.page_icon_instance = '󰶧'  -- ∞, #, 󰸍, , 󰶧, 󰶪, 󰸎, 
 
 --- ♠ statusline config --------------------------------------------------------
 
@@ -102,12 +108,12 @@ vim.g.page_icon_instance = '#'
 --   instance      : {instancename}"{icon}"{PAGE_BUFFER_NAME}
 --   file/man://   : plain path or man://prog(N) URI
 --
--- PageStatus() format: 📟 <name> · <type icon> <type> · <caller> · [flags]
---   pipe     📟 git log · ⋮ pipe · less · [RO]
+-- PageStatus() format: 📟 <name> · <type_icon> <type> · <app_icon> <caller> · [flags]
+--   pipe     📟 git log · 󱡍 pipe · less · [RO]
 --   instance 📟 testing · ∞ instance · page -i · [RO]
 --   redirect 📟 ? · ⇢ redirect · $(page -p)
 --   direct   📟 .zshrc · ◌ direct · less
---   man      📟 curl · ℹ man · [RO]
+--   man      📟 curl · 📖 man · [RO]
 --
 -- PAGE_PIPE_CMD (set by preexec in .zshrc): full typed command, eg. "git log | less"
 -- used to extract the content source (before |) and pager caller (last segment)
@@ -143,32 +149,46 @@ _G.PageStatus            = function()
 
     -- man:// URI (from man() shell function)
     local manpage = name:match('^man://(.*)')
-    if manpage then return join('📟 ' .. manpage, 'ℹ man') end
+    -- TODO: centralise the default pager icon (and make it changeable)
+    if manpage then return join('📟', '📖 man', manpage) end
 
     -- instance: {instancename}"{icon}"{PAGE_BUFFER_NAME} — name is before first quote
     local inst = name:match('^(.+)".-".+$')
-    if inst then return join('📟 ' .. inst, '∞ instance', 'page -i') end
+    -- if inst then return join('📟', '# ' .. inst, icon, ' instance', 'page -i') end
+    -- TODO: this is broken, icon isn't appearing
+    if inst then return join('📟', '# ' .. inst, icon, '$ ' .. 'page -i') end
 
     -- pipe/redirect: {PAGE_BUFFER_NAME}"{icon}"
     local cmd_prefix, icon = name:match('^(.-)"(.-)"$')
-    if icon == '↦' then
+    if icon == '󱡍' then
         local has_pipe = full_cmd:find('|', 1, true)
         local source   = has_pipe
             and vim.trim(full_cmd:match('^(.-)%s*|') or '')
             or (cmd_prefix ~= '' and cmd_prefix ~= 'page') and cmd_prefix
             or nil
         local pager    = get_pager(full_cmd)
-        return join('📟 ' .. (source or '?'), '⋮ pipe', pager ~= '' and pager or nil)
+        -- TODO: clean up this logic
+        return join('x📟 ' .. (source or '?'), icon, ' pipe', pager ~= '' and (' ' .. pager) or nil)
     end
-    if icon == '↣' then
+    if icon == '󰟥' then
         local source = (cmd_prefix ~= '' and cmd_prefix ~= 'page') and cmd_prefix or nil
-        return join('📟 ' .. (source or '?'), '⇢ redirect', '$(page -p)')
+        return join('n📟 ' .. (source or '?'), icon, ' redirect', '$(page -p)')
     end
 
-    -- plain file (PageOpenFile: less, more, page file)
+    -- otherwise, this is a plain file (PageOpenFile: less, more, page file)
+    -- TODO: this gets set while the above conditiosn get processed, so the statusbar glitches
+    -- TODO: filename through pipes get weird chars at the end: `"\u{f184d}"`
     local filename = vim.fn.fnamemodify(name, ':t')
     local pager    = get_pager(full_cmd)
-    return join('📟 ' .. filename, '◌ direct', pager ~= '' and pager or nil)
+    -- if a file was opened directly, we don't need to tell that to the user
+    -- (they know because they opened it), and it could also be confusing if we do
+    -- return join('📟 ' .. filename, '◌ direct', pager ~= '' and join(' ', pager) or nil)
+    -- TODO: clean up this logic
+    -- TODO: we're no longer picking up the pipe condition above - fix. also, the matching on icon symbols as a boolean flag is dumb.
+    -- TODO: is it time to rewrite this whole thing?
+    -- return join('📟 ' .. filename, pager ~= '' and ('󱛔  󰣖  󰒔 󰢻 󱤵 󱤶 󰢻  ' .. pager) or nil)
+    -- return join('m📟 ', '  󰈔 ' .. filename, pager ~= '' and (' ' .. pager) or nil)
+    return join('📟', ' ' .. filename, pager ~= '' and (' ' .. pager) or nil)
 end
 
 vim.opt.statusline       =
