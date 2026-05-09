@@ -47,8 +47,11 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 
 ## ghostty
 
-- [ ] `ghostty` opens — IosevkaTerm 18pt, Catppuccin Macchiato theme
+- [ ] `ghostty +validate-config` returns no errors and no output (run after every config edit and after `brew upgrade ghostty`)
+- [ ] `ghostty +show-config | grep -E '^(theme|font-family|font-size|background)'` resolves expected values (theme name = canonical bundled name, e.g. `Catppuccin Macchiato` not kebab-case; font family resolves to a real face per `+list-fonts`)
+- [ ] `ghostty` opens — IosevkaTerm NFM 20pt, Catppuccin Macchiato theme
 - [ ] No remote-control socket parity yet (kitty still required for Stream Deck)
+- [ ] Note: ghostty's vocabulary diverges from kitty's (theme casing, font face naming). Don't translate values blindly — validate on each side.
 
 ## claude code
 
