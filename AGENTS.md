@@ -4,11 +4,11 @@
 
 **Before responding to anything — including "go", "resume", or a task request — complete this checklist and output the table:**
 
-| #  | Task                               | Source    |
-|----|------------------------------------|-----------|
-| 1  | `bash scripts/agents/start.sh`     | start.sh  |
-| 2  | Verify start.sh output (brew, TODOs, git, memory, open tasks, permissions) | AGENTS.md |
-| 3  | Present project state summary: phase, open tasks, parked items, any drift | AGENTS.md |
+| #  | Task                                                                          | Source    |
+|----|-------------------------------------------------------------------------------|-----------|
+| 1  | `bash scripts/hooks/session/start.sh`                                         | start.sh  |
+| 2  | Verify start.sh output (brew, TODOs, git, memory, open tasks, permissions)    | AGENTS.md |
+| 3  | Present project state summary: phase, open tasks, parked items, any drift     | AGENTS.md |
 
 > `start.sh` now prints memory files, open PRD tasks, and the permissions allow list — no separate Read calls needed.
 
@@ -16,16 +16,16 @@
 
 When the user says "let's wrap up" (or similar), complete this checklist and output the table:
 
-| #  | Task                               | Source          |
-|----|------------------------------------|-----------------|
-| 1  | Update PRD.md — tick completed tasks, note parked decisions | AGENTS.md |
-| 2  | Update TESTING.md — add checklists for any new configs | AGENTS.md |
-| 3  | Update `memory/project_dotfiles_state.md` | AGENTS.md |
-| 4  | Review `.claude/settings.json` for any new approval gaps | AGENTS.md + end.sh |
-| 5  | `bash scripts/agents/end.sh` — session commits, open tasks, drift, push reminder | end.sh |
-| 6  | Sign off — "Sayonara mo san." | AGENTS.md |
+| #  | Task                                                                                    | Source             |
+|----|-----------------------------------------------------------------------------------------|--------------------|
+| 1  | Update PRD.md — tick completed tasks, note parked decisions                             | AGENTS.md          |
+| 2  | Update TESTING.md — add checklists for any new configs                                  | AGENTS.md          |
+| 3  | Update `memory/project_dotfiles_state.md`                                               | AGENTS.md          |
+| 4  | Review `.claude/settings.json` for any new approval gaps                                | AGENTS.md + end.sh |
+| 5  | `bash scripts/hooks/session/end.sh` — session commits, open tasks, drift, push reminder | end.sh             |
+| 6  | Sign off — "Sayonara, Mo San."                                                          | AGENTS.md          |
 
-> **On hooks:** `SessionStart` and `SessionEnd` exist in Claude Code now. The global hooks at `~/.config/claude/scripts/session-{start,end}.sh` automatically invoke this repo's `scripts/agents/start.sh` and `end.sh` if executable. The "type wrap up so Claude runs the end checklist" pattern remains — the hook does mechanical drift summary, but the LLM-side recap (what was done, what's next) still needs the user to signal end-of-session.
+> **On hooks:** `SessionStart` and `SessionEnd` are wired in `~/.claude/settings.json` to run `~/.config/claude/hooks/session/{start,end}.sh`. Those global hooks invoke this repo's `scripts/hooks/session/{start,end}.sh` if executable. The "type wrap up so Claude runs the end checklist" pattern remains — the hook does mechanical drift summary, but the LLM-side recap (what was done, what's next) still needs the user to signal end-of-session.
 
 ## Shell alias workarounds
 
@@ -36,7 +36,7 @@ When the user says "let's wrap up" (or similar), complete this checklist and out
 unalias -a 2>/dev/null; <rest of command>
 ```
 
-This clears all aliases for that call. The scripts in `scripts/agents/` already do this. Prefer the Grep and Glob tools over `grep`/`find` — they bypass the shell entirely.
+This clears all aliases for that call. The scripts in `scripts/hooks/session/` already do this. Prefer the Grep and Glob tools over `grep`/`find` — they bypass the shell entirely.
 
 ## Workflow
 
@@ -48,20 +48,15 @@ This clears all aliases for that call. The scripts in `scripts/agents/` already 
 
 ## Commit style
 
-- Lowercase sentence, no file prefix
-- Good: `fix starship read_only style, swap PUA glyph`
-- Bad: `starship: fix read_only`
-- No co-author line
+When about to `git commit` in this repo, load the `committing-dotfiles-mo` skill from `.claude/skills/` — covers message style, scope, pre-commit hygiene, and push restraint.
 
 ## Editing style
 
-- Surgical one-at-a-time changes — never rewrite a whole file unless explicitly asked
-- Don't refactor unless focus explicitly switches to that task
-- No speculative cleanup, extra features, or "while I'm here" changes
+See `~/.claude/AGENTS.md` "Editing discipline" — those rules apply universally and aren't dotfiles-specific.
 
 ## Tables
 
-Column-aligned cells padded to widest value per column, outer `|` borders, separator rows matching column width. Readable as plain text. Horizontal scrolling is fine; never hard-wrap cell content.
+When writing or editing any Markdown table, load the `formatting-mo` skill (user-wide) — covers table alignment, section header style, prose wrap, and trailing whitespace.
 
 ## Drift management
 
@@ -115,44 +110,33 @@ At each phase polish step, review `.claude/settings.json` for gaps:
 
 ## Starship toml
 
-The Write and Edit tools strip Powerline/PUA glyphs from format strings. Use Python for any line in `starship.toml` that contains such characters:
-
-```bash
-python3 -c "
-with open('.config/starship.toml', 'r') as f:
-    content = f.read()
-content = content.replace('OLD', 'NEW')
-with open('.config/starship.toml', 'w') as f:
-    f.write(content)
-"
-```
+When editing `.config/starship.toml` — especially the `format` / `right_format` blocks — load the `starship-powerline-glyph-edit` skill from `.claude/skills/`.
 
 ## Key files
 
-| File                            | Role                                                          |
-| ------------------------------- | ------------------------------------------------------------- |
-| `.claude/settings.json`         | Project Claude Code permissions — review each phase           |
+| File                            | Role                                                                      |
+| ------------------------------- | ------------------------------------------------------------------------- |
+| `.claude/settings.json`         | Project Claude Code permissions — review each phase                       |
+| `.config/brew/Brewfile`         | Package manifest — maintain descriptions/sections                         |
+| `.config/brew/README.md`        | Brew package overview — update when Brewfile changes                      |
+| `.config/brew/brew.env`         | Homebrew env vars (HOMEBREW_BUNDLE_FILE etc.)                             |
+| `.config/brew/non-brew-apps.md` | Apps not managed by brew                                                  |
+| `.config/claude/hooks/session/` | Global SessionStart/End hook scripts (run for every project)              |
 | `.config/claude/settings.json`  | User-global Claude Code config (symlinked from `~/.claude/settings.json`) |
-| `.config/claude/scripts/`       | Global SessionStart/End hook scripts (run for every project)  |
-| `.config/brew/Brewfile`         | Package manifest — maintain descriptions/sections             |
-| `.config/brew/README.md`        | Brew package overview — update when Brewfile changes          |
-| `.config/brew/brew.env`         | Homebrew env vars (HOMEBREW_BUNDLE_FILE etc.)                 |
-| `.config/brew/non-brew-apps.md` | Apps not managed by brew                                      |
-| `.config/git/config`            | Global git config (XDG — credential helper, user identity)    |
-| `.config/git/ignore`            | Global gitignore (XDG default, applies to all repos)          |
-| `.config/ghostty/config`        | Ghostty terminal config (trial alongside kitty)               |
-| `.config/kitty/kitty.conf`      | GPU terminal emulator config                                  |
-| `.config/nvim/init.lua`         | Neovim config — plugins, mappings, options                    |
-| `.config/page/init.lua`         | Neovim-based pager config                                     |
-| `.config/starship.toml`         | Starship prompt — use Python for edits with PUA glyphs        |
-| `.config/zsh/.zprofile`         | Login shell config (symlinked from `~/.zprofile`)             |
-| `.config/zsh/.zshrc`            | Interactive shell config (symlinked from `~/.zshrc`)          |
-| `.gitignore`                    | Per-repo gitignore — keep current                             |
-| `AGENTS.md`                     | This file — agent instructions (single source of truth)       |
-| `CLAUDE.md`                     | Thin pointer to AGENTS.md for Claude Code                     |
-| `PRD.md`                        | Living roadmap — update after relevant changes                |
-| `README.md`                     | Project overview — update stats after changes                 |
-| `TESTING.md`                    | Verification checklists — update after changes                |
-| `memory/MEMORY.md`              | Memory index — read at session start                          |
-| `scripts/agents/end.sh`         | Session wrapup — run after docs updated, prints final status  |
-| `scripts/agents/start.sh`       | Session startup — run at session start, outputs drift/state   |
+| `.config/ghostty/config`        | Ghostty terminal config                                                   |
+| `.config/git/config`            | Global git config (XDG — credential helper, user identity)                |
+| `.config/git/ignore`            | Global gitignore (XDG default, applies to all repos)                      |
+| `.config/nvim/init.lua`         | Neovim config — plugins, mappings, options                                |
+| `.config/page/init.lua`         | Neovim-based pager config                                                 |
+| `.config/starship.toml`         | Starship prompt — use Python for edits with PUA glyphs                    |
+| `.config/zsh/.zprofile`         | Login shell config (symlinked from `~/.zprofile`)                         |
+| `.config/zsh/.zshrc`            | Interactive shell config (symlinked from `~/.zshrc`)                      |
+| `.gitignore`                    | Per-repo gitignore — keep current                                         |
+| `AGENTS.md`                     | This file — agent instructions (single source of truth)                   |
+| `CLAUDE.md`                     | Thin pointer to AGENTS.md for Claude Code                                 |
+| `PRD.md`                        | Living roadmap — update after relevant changes                            |
+| `README.md`                     | Project overview — update stats after changes                             |
+| `TESTING.md`                    | Verification checklists — update after changes                            |
+| `memory/MEMORY.md`              | Memory index — read at session start                                      |
+| `scripts/hooks/session/end.sh`         | Session wrapup — run after docs updated, prints final status              |
+| `scripts/hooks/session/start.sh`       | Session startup — run at session start, outputs drift/state               |

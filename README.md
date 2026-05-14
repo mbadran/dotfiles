@@ -30,7 +30,9 @@ curated cli/tui configs and replacements. some things may be useful.
 
 ## what's in here
 
-`$TERMINAL` — kitty. minimal config. remote control enabled for stream deck.
+`$TERMINAL` — ghostty. minimal config inspired by kitty. kitty kept under
+`.config/kitty/` as fallback for stream deck remote control (no ghostty
+equivalent yet — see PRD 3.17).
 
 `$SHELL` — zsh with vi-mode, syntax highlighting, autosuggestions, and history
 search. compinit cached daily. startup profiled on demand.

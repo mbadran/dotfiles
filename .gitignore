@@ -32,9 +32,10 @@ working/
 .config/qBittorrent/
 .config/raycast/
 
-# claude -- settings.json tracked; everything else ignored
+# claude -- track settings.json and skills/; ignore everything else (settings.local.json, agents/, etc.)
 .claude/*
 !.claude/settings.json
+!.claude/skills/
 
 # bulky / runtime app data dragged in by the home → .config consolidation
 # pattern: ignore wholesale, allow back any specific handcrafted config files

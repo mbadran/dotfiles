@@ -58,7 +58,7 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] `readlink ~/.claude/settings.json` → `../.config/claude/settings.json`
 - [ ] `~/.claude/settings.local.json` exists (untracked, host-local cc-beeper hooks)
 - [ ] Open a Claude session in any project — SessionStart hook prints recap (branch, drift, memory, decay candidates)
-- [ ] Open Claude in dotfiles repo — local `scripts/agents/start.sh` invoked at the bottom of the recap
+- [ ] Open Claude in dotfiles repo — local `scripts/hooks/session/start.sh` invoked at the bottom of the recap
 - [ ] On session close — SessionEnd hook prints drift summary + push reminder, then runs local end.sh if present
 - [ ] Permissions test: `git push` prompts even in dotfiles (project allows commit/add but not push — global ask wins)
 
@@ -81,12 +81,6 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 
 - [ ] `ccsl` -- runs without error, prints usage or version
 - [ ] Claude Code statusline renders correctly in the terminal
-
-## kitty
-
-- [ ] Open kitty -- no errors or warnings in startup
-- [ ] Remote control socket active: `ls /tmp/kitty.sock` -- file exists
-- [ ] Remote control works: `kitty @ --to unix:/tmp/kitty.sock ls` -- returns window list
 
 ## homebrew
 
@@ -111,13 +105,12 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] Default keymap modes work (`Ctrl-p` panes, `Ctrl-t` tabs, etc.)
 - [ ] `~/.config/zellij/config.kdl` is the live config (no override surprise from `~/.zellij/config.kdl`)
 
-## lm studio (XDG relocation)
+## lm studio
 
-- [ ] `ls -la ~/.config/lmstudio/` -- shows symlinks for `models`, `extensions`, `bin`, `.internal`, `server-logs`, `conversations`, `hub`, `working-directories`, `user-files`, `config-presets`, `credentials`, `projects` -- all pointing to `~/.local/share/lmstudio/<name>`
-- [ ] `ls -la ~/.local/share/lmstudio/` -- the heavy data lives here (~11G)
-- [ ] `du -sh ~/Documents/projects/dotfiles/.config/lmstudio` -- 8K (just `settings.json` + `mcp.json` + 12 symlinks)
-- [ ] LM Studio app opens, sees its models, can chat -- proves symlinks are resolving correctly
-- [ ] If LM Studio ever recreates one of the heavy dirs as a real dir (not symlink): symlink got unlinked; redo the move for that dir + investigate
+- [ ] `ls -la ~/.config/lmstudio/` -- key dirs are symlinks pointing to `~/.local/share/lmstudio/<name>` (XDG relocation per PRD 3.24 keeps heavy data out of the dotfiles repo)
+- [ ] `du -sh ~/Documents/projects/dotfiles/.config/lmstudio` -- stays small (just `settings.json` + `mcp.json` + symlinks); if it grows, a symlink got replaced with a real dir
+- [ ] LM Studio app opens, sees its models, can chat -- proves symlinks resolve
+- [ ] If LM Studio recreates a symlinked dir as a real dir: redo the move for that dir
 
 ## splashboard
 
