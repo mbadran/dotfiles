@@ -88,6 +88,7 @@
       "Bash(git add:*)",
       "Bash(git commit)",
       "Bash(git commit:*)",
+      "Bash(splashboard:*)",
       "Skill(update-config)",
       "mcp__plugin_github_github__list_*",
       "mcp__plugin_github_github__get_*",
