@@ -141,6 +141,13 @@ bindkey -M vicmd 'j' history-substring-search-down
 # TODO: login/logout: handled by .zlogin / .zlogout / exit TUI (WIP)
 # see working/zshrc-exit-ideas.txt for design notes
 
+################################################################ local overrides
+
+# host-local zsh config — not tracked. holds anything that shouldn't ship in
+# the public repo (env-exported credentials, machine-specific paths, secret
+# references). loaded here so any downstream tool config can rely on its env.
+[[ -f ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
+
 ################################################################### tui upgrades
 
 ### replacements ###############################################################
@@ -195,22 +202,10 @@ eval "$(starship init zsh)"
 eval "$(fzf --zsh)"
 
 # add a splashboard (terminal dashboard) for new shells and project dirs
-# requires a github token
-splashboard() {
-    case "$1" in
-        init|--version|-v|--help|-h|"")
-            command splashboard "$@"
-            ;;
-        *)
-            local token
-            token=$(op read 'op://Private/github-pat-tools_splashboard_ro/token') || {
-                print -u2 "splashboard: failed to read token from 1Password"
-                return 1
-            }
-            GITHUB_TOKEN=$token command splashboard "$@"
-            ;;
-    esac
-}
+# (splashboard's `init zsh` uses `command splashboard` for both first-render
+# and the chpwd hook — `command` bypasses shell functions, so a wrapper can't
+# inject the PAT. token is eager-seeded in `.zshrc.local`, which is sourced
+# below; Touch ID hit per new tab is the accepted trade-off)
 eval "$(splashboard init zsh)"
 
 # add a file/stream follow in neovim/page (like tail -f)
