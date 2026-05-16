@@ -1,9 +1,9 @@
 ---
-name: committing-dotfiles-mo
+name: mb-dotfiles-committing
 description: Use when about to run `git commit` in the dotfiles repo, when drafting a commit message for this repo, or when staging files for commit. Also use when noticing commented-out experimental code in tracked files just before commit. Symptoms include drafting a `prefix:` style message, drafting a Co-Authored-By line, staging changes that span more than one config, or seeing commented-out experimental snippets in the diff.
 ---
 
-# committing-dotfiles-mo
+# mb-dotfiles-committing
 
 ## Overview
 

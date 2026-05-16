@@ -3,7 +3,6 @@
     "allow": [
       "WebSearch",
       "WebFetch(domain:*)",
-
       "Bash(git status)",
       "Bash(git status:*)",
       "Bash(git diff)",
@@ -34,7 +33,6 @@
       "Bash(git tag -l*)",
       "Bash(git tag --list*)",
       "Bash(git worktree list*)",
-
       "Bash(ls:*)",
       "Bash(cat:*)",
       "Bash(head:*)",
@@ -46,7 +44,6 @@
       "Bash(df:*)",
       "Bash(tree:*)",
       "Bash(comm:*)",
-
       "Bash(grep:*)",
       "Bash(sort:*)",
       "Bash(uniq:*)",
@@ -57,7 +54,6 @@
       "Bash(echo:*)",
       "Bash(printf:*)",
       "Bash(diff:*)",
-
       "Bash(pwd)",
       "Bash(which:*)",
       "Bash(type:*)",
@@ -72,37 +68,31 @@
       "Bash(sw_vers:*)",
       "Bash(defaults read:*)",
       "Bash(plutil:*)",
-
       "Bash(xxd:*)",
       "Bash(strings:*)",
       "Bash(base64:*)",
       "Bash(md5:*)",
       "Bash(shasum:*)",
-
       "Bash(eza:*)",
       "Bash(bat:*)",
       "Bash(fd:*)",
       "Bash(rg:*)",
       "Bash(dust:*)",
       "Bash(jq:*)",
-
       "Bash(mkdir:*)",
       "Bash(chmod:*)",
       "Bash(bash:*)",
       "Bash(python3:*)",
-
-      "Bash(gh issue list*)",
-      "Bash(gh issue view*)",
-      "Bash(gh pr list*)",
-      "Bash(gh pr view*)",
-      "Bash(gh pr checks*)",
-      "Bash(gh api*)",
-      "Bash(gh repo view*)",
-      "Bash(gh label list*)",
-      "Bash(gh project list*)",
-      "Bash(gh project view*)",
-
-      "Skill(update-config)"
+      "Bash(brew *)",
+      "Skill(update-config)",
+      "mcp__plugin_github_github__list_*",
+      "mcp__plugin_github_github__get_*",
+      "mcp__plugin_github_github__search_*"
+    ],
+    "deny": [
+      "Bash(gh)",
+      "Bash(gh *)",
+      "Bash(gh:*)"
     ],
     "ask": [
       "Bash(git add:*)",
@@ -134,51 +124,28 @@
       "Bash(git clean:*)",
       "Bash(git stash drop*)",
       "Bash(git stash clear*)",
-
       "Bash(rm:*)",
       "Bash(cp:*)",
       "Bash(mv:*)",
-
       "Bash(brew install:*)",
       "Bash(brew uninstall:*)",
       "Bash(brew upgrade:*)",
       "Bash(brew untap:*)",
-
       "Bash(npm install:*)",
       "Bash(npm i:*)",
       "Bash(npm uninstall:*)",
       "Bash(npm un:*)",
       "Bash(npm publish:*)",
       "Bash(npx:*)",
-      "Bash(node:*)",
-
-      "Bash(gh issue create*)",
-      "Bash(gh issue close*)",
-      "Bash(gh issue edit*)",
-      "Bash(gh issue delete*)",
-      "Bash(gh pr create*)",
-      "Bash(gh pr close*)",
-      "Bash(gh pr merge*)",
-      "Bash(gh pr edit*)",
-      "Bash(gh repo create*)",
-      "Bash(gh repo delete*)"
+      "Bash(node:*)"
     ],
-    "deny": [],
     "additionalDirectories": [
       "~/.config",
       "~/.claude",
       "/opt/homebrew"
     ]
   },
-  "effortLevel": "xhigh",
-  "theme": "dark-daltonized",
   "model": "opus",
-  "editorMode": "vim",
-  "statusLine": {
-    "type": "command",
-    "command": "npx -y ccstatusline@latest",
-    "padding": 0
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -226,6 +193,11 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  },
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
@@ -236,6 +208,18 @@
     "typescript-lsp@claude-plugins-official": true,
     "github@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
-  }
+    "frontend-design@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "session-report@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "remember@claude-plugins-official": true
+  },
+  "effortLevel": "xhigh",
+  "theme": "dark-daltonized",
+  "editorMode": "vim"
 }

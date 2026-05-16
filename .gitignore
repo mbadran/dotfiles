@@ -14,6 +14,13 @@ working/
 .config/zsh/.zcompcache/
 .config/zsh/.zcompdump*
 .config/zsh/.zsh_history
+.config/zsh/.zsh_sessions/
+
+# vercel claude-code plugin: runtime markers only (dau-stamp, first-use-stamp)
+.config/vercel-plugin/
+
+# remember claude-code plugin: runtime data (memory, logs, tmp)
+.remember/
 
 # zed transient data
 .config/zed/conversations/

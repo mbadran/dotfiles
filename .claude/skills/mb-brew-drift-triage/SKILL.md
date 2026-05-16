@@ -1,9 +1,9 @@
 ---
-name: brew-drift-triage
+name: mb-brew-drift-triage
 description: Use when `scripts/brew/sync.py` has appended one or more items to the `uncategorized` section of the Brewfile and the user wants them triaged. Also use when the user says "triage drift" or "what about the new brew items" or asks why something landed in uncategorized. The output is one decision per item — keep+categorize, remove, or leave with a note — backed by `brew info` / `brew uses` / install-time evidence.
 ---
 
-# brew-drift-triage
+# mb-brew-drift-triage
 
 ## Overview
 

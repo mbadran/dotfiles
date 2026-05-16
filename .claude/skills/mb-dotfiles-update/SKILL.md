@@ -1,9 +1,9 @@
 ---
-name: dotfiles-update
+name: mb-dotfiles-update
 description: Use when wrapping up a change in the dotfiles repo, after any tool swap (e.g. tmux to zellij, kitty to ghostty), when README stats may have drifted (plugin/formulae/alias counts), or before any commit that affects user-visible behavior. Symptoms include forgetting README.md, leaving a removed tool referenced in docs, or stale `$TERMINAL`/`$SHELL`/`$EDITOR` claims.
 ---
 
-# dotfiles-update
+# mb-dotfiles-update
 
 ## Overview
 

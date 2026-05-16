@@ -1,9 +1,9 @@
 ---
-name: formatting-mo
+name: mb-formatting
 description: Use when editing Markdown (`.md`), zsh config (`.zshrc`/`.zshenv`/`.zprofile`), Lua config (`init.lua`), or any tracked human-read documentation. Triggers on writing section header comments, building/editing Markdown tables, writing prose paragraphs in docs, or seeing trailing whitespace. Symptoms include misaligned table columns, inconsistent header decoration within one file, prose paragraphs that don't wrap, or trailing spaces at end of lines.
 ---
 
-# formatting-mo
+# mb-formatting
 
 ## Overview
 

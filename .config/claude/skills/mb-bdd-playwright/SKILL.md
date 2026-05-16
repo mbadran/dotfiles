@@ -1,9 +1,9 @@
 ---
-name: playwright-bdd-mo
+name: mb-bdd-playwright
 description: Use when writing or editing Playwright E2E test files (typically `*.spec.ts` under `tests/`, `e2e/`, or `playwright/`), or when porting Cypress tests to Playwright. Also use when editing Cypress test files in projects that follow Mo's BDD dialect (speedoku). Symptoms include drafting a `test(...)` block without Gherkin comments, using CSS/class selectors for assertions instead of `data-*` attributes, missing the file-level user story header, or skipping the success log at scenario end.
 ---
 
-# playwright-bdd-mo
+# mb-bdd-playwright
 
 ## Overview
 

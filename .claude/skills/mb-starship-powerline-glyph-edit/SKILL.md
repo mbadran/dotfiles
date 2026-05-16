@@ -1,9 +1,9 @@
 ---
-name: starship-powerline-glyph-edit
+name: mb-starship-powerline-glyph-edit
 description: Use when editing `.config/starship.toml`, especially the `format = """..."""` or `right_format = """..."""` blocks, or when starship prompt glyphs render as missing/blank/replacement characters after an edit. Symptoms include broken pill/chevron transitions, missing rounded caps on the prompt, or a prompt that suddenly looks "flat".
 ---
 
-# starship-powerline-glyph-edit
+# mb-starship-powerline-glyph-edit
 
 ## Overview
 
