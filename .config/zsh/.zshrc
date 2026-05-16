@@ -143,10 +143,7 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 ################################################################### tui upgrades
 
-# avoid mistakes
-alias rm="rm -i"
-alias cp="cp -i"
-alias mv="mv -i"
+### replacements ###############################################################
 
 # replace ls with eza
 alias ls=eza
@@ -163,33 +160,9 @@ export PAGER='page -W -q -P'
 export MANPAGER='page -W -t man'
 export PAGE_REDIRECTION_PROTECT=0  # always spawn fresh; disable redirect-into-existing-instance check
 
-# replace more and less
+# replace 'more' and 'less' with page (more and less)
 more() { page -W -O -- "$@" }   # cat mode: inline if fits, skip neovim; function (not alias) to avoid -O consuming filename as its optional arg
 alias less='page -W'            # file viewer (no -P: avoids PTY redirect mode)
-
-# man with proper section handling (enables man://prog(N) URI navigation)
-man() {
-    local section="${@[-2]}"
-    local program="${@[-1]}"
-    page -W "man://$program${section:+($section)}"
-}
-
-# follow a file or stream (like tail -f but in neovim)
-alias logf='page -W -f'
-
-# name pager buffers after the command that produced them (zsh)
-# also set the terminal window title to the running command
-preexec() {
-    local words=(${1%%[|>]*})    # strip from first | or > then word-split
-    export PAGE_BUFFER_NAME="${words[1,2]}"
-    export PAGE_PIPE_CMD="${1}"  # full typed command (used by page statusline)
-    printf "\e]0;%s\e\\" "${1}"  # set title to full command (reset by precmd)
-}
-
-# reset terminal title to current directory after each command
-precmd() {
-    print -Pn "\e]0;%~\e\\"
-}
 
 # replace du with dust
 alias du=dust
@@ -212,15 +185,64 @@ alias vim=nvim
 # replace diff with delta
 alias diff=delta
 
-# use fuzzy search
-# (sets up fzf key bindings and fuzzy completion)
-eval "$(fzf --zsh)"
-
 # replace default prompt with starship
 eval "$(starship init zsh)"
 
+### additions ##################################################################
+
+# add fuzzy search
+# (sets up fzf key bindings and fuzzy completion)
+eval "$(fzf --zsh)"
+
 # add a splashboard (terminal dashboard) for new shells and project dirs
+# requires a github token
+splashboard() {
+    case "$1" in
+        init|--version|-v|--help|-h|"")
+            command splashboard "$@"
+            ;;
+        *)
+            local token
+            token=$(op read 'op://Private/github-pat-tools_splashboard_ro/token') || {
+                print -u2 "splashboard: failed to read token from 1Password"
+                return 1
+            }
+            GITHUB_TOKEN=$token command splashboard "$@"
+            ;;
+    esac
+}
 eval "$(splashboard init zsh)"
+
+# add a file/stream follow in neovim/page (like tail -f)
+alias logf='page -W -f'
+
+### tweaks #####################################################################
+
+# confirm destructive commands to prevent mistakes
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+# handle sections in man (enables man://prog(N) URI navigation)
+man() {
+    local section="${@[-2]}"
+    local program="${@[-1]}"
+    page -W "man://$program${section:+($section)}"
+}
+
+# reset terminal title to current dir after each command
+precmd() {
+    print -Pn "\e]0;%~\e\\"
+}
+
+# name pager buffers after the command that produced them (usually zsh)
+# also set the terminal window title to the running command
+preexec() {
+    local words=(${1%%[|>]*})    # strip from first | or > then word-split
+    export PAGE_BUFFER_NAME="${words[1,2]}"
+    export PAGE_PIPE_CMD="${1}"  # full typed command (used by page statusline)
+    printf "\e]0;%s\e\\" "${1}"  # set title to full command (reset by precmd)
+}
 
 # replace cd with zoxide (must init after all plugins and config)
 eval "$(zoxide init zsh --cmd cd)"
