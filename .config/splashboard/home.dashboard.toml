@@ -62,9 +62,14 @@ render = { type = "grid_table", layout = "rows", column_align = ["left", "left"]
 
 # System — os / host / uptime / load / cpu / memory as a 6-row Entries table so
 # it matches the world-clock column height.
+# (note: splashboard split the old monolithic `system` fetcher into
+# `system_monitor_*` per-stat fetchers in a recent version. `system_monitor_host`
+# is the closest single-fetcher replacement; if cpu/memory/disk are missing,
+# split into multiple widgets using `system_monitor_cpu`, `system_monitor_memory`,
+# `system_monitor_disk` — see `splashboard catalog | grep system_monitor`)
 [[widget]]
 id = "system"
-fetcher = "system"
+fetcher = "system_monitor_host"
 render = { type = "grid_table", layout = "rows", column_align = ["left", "left"] }
 
 # Gauge labels padded to 5 characters so the bars line up vertically across rows.
