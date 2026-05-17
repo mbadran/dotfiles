@@ -44,6 +44,7 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] Test tab completion with partial command — grouped by category, bold headers
 - [ ] Test new history opts: prefix command with space → not saved to history
 - [ ] Antidote bundle present: `ls ~/.config/zsh/.zsh_plugins.zsh` (gitignored, regenerated as needed)
+- [ ] `.zshrc.local` sourced if present: drop a line in `~/.config/zsh/.zshrc.local` (gitignored) like `export ZSHRC_LOCAL_OK=1`; open a new tab; `echo $ZSHRC_LOCAL_OK` → `1`. Absence of the file is silent (no error).
 
 ## ghostty
 
@@ -61,6 +62,8 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 - [ ] Open Claude in dotfiles repo — local `scripts/hooks/session/start.sh` invoked at the bottom of the recap
 - [ ] On session close — SessionEnd hook prints drift summary + push reminder, then runs local end.sh if present
 - [ ] Permissions test: `git push` prompts even in dotfiles (project allows commit/add but not push — global ask wins)
+- [ ] Permissions test: `git add` / `git commit` no longer prompt at user-wide level (moved from `ask` to `allow`)
+- [ ] `.remember` plugin: in any new project, open a Claude session — no `SessionStart:startup hook error … hook-errors.log: No such file or directory`; `ls $PWD/.remember/logs/` exists (created by user-wide SessionStart hook before the plugin's hook fires)
 
 ## profiling
 
