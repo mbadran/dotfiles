@@ -67,6 +67,32 @@ multiply the prompts. Rule: use the tool's own path/working-dir flag.
 For **destructive** ops (rm, `git reset --hard`, force push, dropping a branch)
 confirm with the user first, regardless of whether permission settings allow.
 
+## Permission scoping & precedence
+
+Rules from all scopes (user `~/.config/claude/settings.json` + project
+`<repo>/.claude/settings*.json`) **merge**, then resolve by precedence:
+**`deny` > `ask` > `allow`**. A user-scope `ask` therefore *overrides* a
+project-scope `allow` for the same tool — a global "ask" opinion silently
+blocks a project that tried to pre-allow it. To let a project self-govern a
+tool, the user scope must hold **no** rule for it.
+
+Applying that rule to the two GitHub surfaces:
+
+- **GitHub MCP — reads allowed user-wide, writes governed per-project.** User
+  scope **allows** the read-only surface (`list_*`, `get_*`, `search_*`, and the
+  `*_read` tools) — reads are safe everywhere. For **write/mutating** tools it
+  holds **no** `allow`/`ask`/`deny`, staying silent on purpose: precedence is
+  `deny > ask > allow`, so a user-scope `ask` would *override* a project's
+  `allow` and block a write the project meant to permit. With user scope silent,
+  each repo opts into exactly the write tools it needs via its own
+  `.claude/settings.local.json` (typically `allow` create/update, `ask` for push
+  and destructive ops). If a gh MCP write blocks, fix it in the *project's*
+  settings, never user scope.
+- **git CLI (`git ...` via Bash): governed at user scope.** Only `git add` and
+  `git commit` are pre-allowed. Everything touching a remote (`git push`) or
+  destructive (`reset --hard`, `clean`, branch deletes, history rewrites) stays
+  `ask`/`deny`. **Remote git goes through the GitHub MCP, not `git push`.**
+
 ## Credentials and secrets
 
 Any secret (API token, PAT, cloud creds) is **not allowed in the persistent
@@ -186,8 +212,8 @@ a skill, not in working context.
 
 | Skill                | Trigger                                                                                                                                  |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `mb-formatting`      | Editing Markdown tables, section headers, prose paragraphs, trailing ws                                                                  |
-| `mb-bdd-playwright`  | Writing/editing Playwright (`*.spec.ts`) or Cypress (`*.cy.ts`) E2E tests in Mo's Gherkin-flavored dialect, or porting Cypress→Playwright |
+| `mb-styleguide`      | Mo's style preferences: Markdown tables/headers/prose/trailing-ws, coding style, and config-file comments (terse, no waffle)             |
+| `mb-bdd-tdd`         | Writing/editing Playwright (`*.spec.ts`) or Cypress (`*.cy.ts`) E2E tests in Mo's Gherkin-flavored dialect, or porting Cypress→Playwright |
 
 Project-specific skills live in `<repo>/.claude/skills/` and load only when
 working in that repo.
