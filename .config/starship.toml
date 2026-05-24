@@ -174,7 +174,7 @@ show_milliseconds = false
 min_time = 30000
 show_notifications = true
 style = "bg:surface1 fg:subtext0"
-format = "[ $duration 󱦟 ]($style)"
+format = "[ $duration  ]($style)"
 
 [hostname]
 style = "bg:surface2 fg:peach"
