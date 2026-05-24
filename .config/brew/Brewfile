@@ -45,6 +45,7 @@ brew "neovim"     # extensible vim-fork
 brew "nvimpager"  # neovim as pager for man pages, diffs, etc.
 brew "page"       # lightweight neovim pager
 brew "glow"       # render markdown in the terminal
+brew "leaf-md"    # terminal Markdown previewer with GUI-like rendering
 brew "pandoc"     # universal markup format converter
 
 # -------------------------------------------------------------- dev tools ♠ ---
@@ -53,6 +54,7 @@ brew "gh"               # GitHub CLI
 brew "git-delta"        # syntax-highlighting pager for git and diff output
 brew "git-lfs"          # large file storage for git
 brew "netcat"           # utility for managing network connections
+brew "node"             # JavaScript runtime (dep: Claude Code, Vercel CLI, ccstatusline)
 brew "tree-sitter-cli"  # parser generator tool and CLI
 brew "yarn"             # JavaScript package manager
 
