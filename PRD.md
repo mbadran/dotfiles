@@ -219,6 +219,7 @@ longer-term AI memory, additional tool customization. Phase 3 closed.
 - [ ] **4.16** Clean up and publish my starship theme — **NEXT SESSION (paired with 4.15).** Open question to resolve first: what actually constitutes a publishable starship "theme/preset"? Is it a separate repo, or just our `starship.toml` offered upstream to the starship project as a preset PR? Research how starship presets are packaged/contributed, then decide the delivery shape.
 - [x] **4.17** Version control my host-wide /etc/zshenv — **DONE.** The host-wide file *is* the tracked `.config/zsh/.zshenv` (sets XDG base dirs + `ZDOTDIR` before any zsh loads); `/etc/zshenv` is a root-owned symlink to it. Reproduce on a new machine with `sudo ln -s ~/.config/zsh/.zshenv /etc/zshenv` (the file header also documents the per-user `~/.zshenv` alternative).
 - [x] **4.18** User-skill cleanup — renamed `mb-formatting` → `mb-styleguide` (expanded with coding-style + config-comment "no waffle" rules) and `mb-bdd-playwright` → `mb-bdd-tdd`; references updated across AGENTS.md and PRD.
+- [ ] **4.19** Move `~/Documents/projects/` → `~/projects/` — unnecessary typing and path depth. Steps: move the dir, update any hardcoded refs (zshrc, aliases, AGENTS.md, splashboard config, op env files, shell history is fine). Verify Claude Code project paths (stored under `~/.claude/projects/` encoded from abs path) — may need to re-open projects once to re-index. Low risk, do in one shot.
 
 ### Phase 5: Local automation hub (n8n on Randori)
 
