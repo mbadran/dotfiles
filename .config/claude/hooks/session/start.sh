@@ -7,9 +7,10 @@
 #   2. memory bootstrap  — surface project memory (count + recent files)
 #   3. memory hygiene    — flag memory files older than 30 days as decay candidates
 #   4. memory content    — dump full contents of files listed in MEMORY.md
-#   5. todo/fixme scan   — scan cwd for outstanding markers
-#   6. local routine     — invoke <repo>/scripts/hooks/session/start.sh if executable
-#   7. permissions list  — print project .claude/settings.json allow entries
+#   5. open tasks        — PRD/roadmap unchecked items + open GitHub issues (where available)
+#   6. todo/fixme scan   — scan cwd for outstanding markers
+#   7. local routine     — invoke <repo>/hooks/session/start.sh if executable
+#   8. permissions list  — print project .claude/settings.json allow entries
 #
 # Notes:
 #   - $CLAUDE_PROJECT_DIR is set by Claude Code; falls back to pwd.
@@ -71,7 +72,33 @@ if [ -d "$mem_dir" ]; then
     fi
 fi
 
-# 5. todo/fixme scan (only in git repos; common source extensions)
+# 5. open tasks — PRD/roadmap unchecked items + open GitHub issues (generic across repos)
+if git -C "$cwd" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    task_doc=""
+    for cand in PRD.md ROADMAP.md TODO.md docs/PRD.md docs/ROADMAP.md; do
+        [ -f "$cwd/$cand" ] && { task_doc="$cwd/$cand"; break; }
+    done
+    open_tasks=""
+    [ -n "$task_doc" ] && open_tasks=$(grep -nE '^[[:space:]]*- \[ \]' "$task_doc" 2>/dev/null | head -15)
+    gh_issues=""
+    if command -v gh >/dev/null 2>&1; then
+        gh_issues=$(cd "$cwd" && gh issue list --state open --limit 8 2>/dev/null || true)
+    fi
+    if [ -n "$open_tasks" ] || [ -n "$gh_issues" ]; then
+        echo
+        echo "── open tasks ──"
+        if [ -n "$open_tasks" ]; then
+            echo "unchecked in ${task_doc/#$cwd\//}:"
+            echo "$open_tasks" | sed 's/^/  /'
+        fi
+        if [ -n "$gh_issues" ]; then
+            echo "open GitHub issues (top 8):"
+            echo "$gh_issues" | sed 's/^/  /'
+        fi
+    fi
+fi
+
+# 6. todo/fixme scan (only in git repos; common source extensions)
 if git -C "$cwd" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     echo
     echo "── todo/fixme ──"
@@ -91,14 +118,15 @@ if git -C "$cwd" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     fi
 fi
 
-# 6. project-local start routine (only if present and executable)
-if [ -x "$cwd/scripts/hooks/session/start.sh" ]; then
+# 7. project-local start routine — runs AFTER the global phases above.
+#    Convention: <repo>/hooks/session/start.sh (only if present and executable).
+if [ -x "$cwd/hooks/session/start.sh" ]; then
     echo
-    echo "── project: scripts/hooks/session/start.sh ──"
-    bash "$cwd/scripts/hooks/session/start.sh" 2>&1 || true
+    echo "── project: hooks/session/start.sh ──"
+    bash "$cwd/hooks/session/start.sh" 2>&1 || true
 fi
 
-# 7. project permissions allow list
+# 8. project permissions allow list
 if [ -f "$cwd/.claude/settings.json" ]; then
     echo
     echo "── permissions (allow list) ──"

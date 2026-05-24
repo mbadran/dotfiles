@@ -31,11 +31,12 @@ if git -C "$cwd" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     fi
 fi
 
-# 2. project-local end routine
-if [ -x "$cwd/scripts/hooks/session/end.sh" ]; then
+# 2. project-local end routine — runs AFTER the global phases above.
+#    Convention: <repo>/hooks/session/end.sh (only if present and executable).
+if [ -x "$cwd/hooks/session/end.sh" ]; then
     echo
-    echo "── project: scripts/hooks/session/end.sh ──"
-    bash "$cwd/scripts/hooks/session/end.sh" 2>&1 || true
+    echo "── project: hooks/session/end.sh ──"
+    bash "$cwd/hooks/session/end.sh" 2>&1 || true
 fi
 
 # 3. push reminder (only when ahead of upstream)
