@@ -1,24 +1,11 @@
 {
-  "_comment": "PROJECT-local Claude Code settings for the dotfiles repo. Merges with the user-global settings at ~/.config/claude/settings.json. Override the global 'ask' for ops we trust ourselves to do in this repo (git add, commit, etc.). Push remains in ask globally — safety net.",
+  "_comment": "PROJECT-local Claude Code settings for the dotfiles repo. Merges with user-global settings at ~/.config/claude/settings.json (precedence across scopes: deny > ask > allow). Only TRUE overrides live here. Anything already allowed globally (git add/commit, brew *) is omitted as redundant. We promote a few common write/admin ops out of the global 'ask' because we trust them in this repo. The most destructive ops (rm, git reset/clean/push --force, etc.) deliberately stay in the global 'ask' net and are NOT promoted here.",
   "permissions": {
     "allow": [
-      "Bash(git add:*)",
-      "Bash(git commit)",
-      "Bash(git commit:*)",
       "Bash(git rm:*)",
       "Bash(git mv:*)",
       "Bash(git checkout:*)",
       "Bash(git restore:*)",
-
-      "Bash(brew info:*)",
-      "Bash(brew list:*)",
-      "Bash(brew leaves:*)",
-      "Bash(brew search:*)",
-      "Bash(brew bundle)",
-      "Bash(brew bundle:*)",
-      "Bash(brew tap:*)",
-      "Bash(brew tap-info:*)",
-
       "Bash(cp:*)",
       "Bash(mv:*)"
     ]
