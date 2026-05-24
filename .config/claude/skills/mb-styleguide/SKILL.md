@@ -1,13 +1,13 @@
 ---
-name: mb-formatting
-description: Use when editing Markdown (`.md`), zsh config (`.zshrc`/`.zshenv`/`.zprofile`), Lua config (`init.lua`), or any tracked human-read documentation. Triggers on writing section header comments, building/editing Markdown tables, writing prose paragraphs in docs, or seeing trailing whitespace. Symptoms include misaligned table columns, inconsistent header decoration within one file, prose paragraphs that don't wrap, or trailing spaces at end of lines.
+name: mb-styleguide
+description: Use when editing any tracked file in Mo's style — Markdown (`.md`), zsh/lua config, docs, or code. Covers Markdown tables, section header comments, prose wrap, trailing whitespace, AND Mo's comment + coding-style preferences (terse, no waffle, no commented-out code, minimal and intentional). Symptoms include misaligned tables, inconsistent headers, unwrapped prose, trailing whitespace, verbose/casual comments, commented-out experiments, or over-engineered code.
 ---
 
-# mb-formatting
+# mb-styleguide
 
 ## Overview
 
-Mo's personal editorial style for tracked files. Four concerns: section headers, Markdown tables, prose wrap, trailing whitespace.
+Mo's personal style for tracked files — editorial and coding. Concerns: section headers, Markdown tables, prose wrap, trailing whitespace, comments, and coding-style preferences.
 
 ## Section headers in code files
 
@@ -77,6 +77,27 @@ grep -nE ' +$' <file>
 
 Empty output = clean.
 
+## Comments (config and code)
+
+Terse and load-bearing. Applies to every tracked file — zsh, toml, lua, and code.
+
+- 1–2 lines max. No multi-paragraph blocks, no casual narration, no "waffle".
+- Explain **why**, not **what** — the code/identifier already says what. Capture
+  hidden constraints, invariants, or workarounds; skip the obvious.
+- Never leave commented-out code or abandoned experiments. Delete it; git remembers.
+- No chatty tone, no "added for X" / task / PR references that rot over time.
+
+## Coding style
+
+Minimal and intentional — the dotfiles ethos applied to code:
+
+- Every line earns its keep. Prefer editing existing files over adding new ones.
+- No over-engineering: no premature abstraction, no speculative flags/fallbacks,
+  no handling for states that can't happen. Three similar lines beat a forced abstraction.
+- Surgical edits — change what the task needs; don't refactor adjacent code uninvited.
+- Production-ready only: no half-finished code, no commented-out experiments in
+  tracked files (those belong in `working/`).
+
 ## Common mistakes
 
 - Mixing H1 and H2 styles within a single section (use H1 for the top of a section, H2 for everything nested under it)
@@ -98,3 +119,5 @@ Empty output = clean.
 | Memory files | No wrap (single-line bullets) |
 | Trailing whitespace | Strip always |
 | Nvim `♠` | Preserve — it's functional |
+| Comments | Terse (1–2 lines), why-not-what, no commented-out code |
+| Coding style | Minimal/intentional, no over-engineering, surgical edits |
