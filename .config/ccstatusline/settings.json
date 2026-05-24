@@ -3,20 +3,34 @@
   "lines": [
     [
       {
+        "id": "2111a98d-c1bb-4930-9c91-0ef5810e19ab",
+        "type": "custom-text",
+        "backgroundColor": "bgWhite",
+        "customText": " ",
+        "merge": "no-padding"
+      },
+      {
         "id": "b3459290-da63-45fc-95a8-c832cb027d01",
         "type": "session-clock",
         "backgroundColor": "bgBrightBlue",
         "rawValue": true
       },
       {
+        "id": "53001c69-28ff-4225-b62f-0086aadaf0cd",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightYellow",
+        "customText": "󰍟 ",
+        "merge": "no-padding"
+      },
+      {
         "id": "d11496a1-5ec9-4705-8e73-e251c2890694",
         "type": "current-working-dir",
         "backgroundColor": "bgBrightGreen",
         "rawValue": true,
+        "merge": true,
         "metadata": {
           "fishStyle": "true"
-        },
-        "merge": true
+        }
       },
       {
         "id": "525a9ba1-7b21-4484-9fcc-1d1b72fec312",
@@ -81,19 +95,19 @@
         "type": "git-ahead-behind",
         "backgroundColor": "bgCyan",
         "rawValue": true,
+        "merge": true,
         "metadata": {
           "hideNoGit": "true"
-        },
-        "merge": true
+        }
       },
       {
         "id": "cd6cf927-7874-4963-9bde-7a602ddeb522",
         "type": "git-conflicts",
         "backgroundColor": "bgBrightGreen",
+        "rawValue": false,
         "metadata": {
           "hideNoGit": "true"
-        },
-        "rawValue": false
+        }
       },
       {
         "id": "dfa44232-fea3-41e6-9a47-6a5854f5df07",
@@ -123,6 +137,13 @@
     ],
     [
       {
+        "id": "06ecca06-3e49-4fd5-a717-6ae12fbdc9d5",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightMagenta",
+        "customText": "󰕯 ",
+        "merge": "no-padding"
+      },
+      {
         "id": "233f02d9-7c91-4ddc-835b-c24f2f728813",
         "type": "reset-timer",
         "backgroundColor": "bgBrightWhite",
@@ -132,61 +153,54 @@
         }
       },
       {
+        "id": "814fa8c0-ae82-4ff6-ac07-61ee83290d5f",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightMagenta",
+        "customText": " ",
+        "merge": "no-padding"
+      },
+      {
         "id": "592c95f7-9eb6-41ba-9936-f4516ffa96b3",
         "type": "session-usage",
         "backgroundColor": "bgBrightCyan",
         "rawValue": true,
         "metadata": {
-          "display": "progress-short",
+          "display": "slider",
           "invert": "true"
         }
       },
       {
-        "id": "757c5f89-e0fd-4707-a0b2-4164331bc26f",
-        "type": "context-percentage-usable",
-        "backgroundColor": "bgRed",
-        "rawValue": true,
-        "merge": "no-padding",
-        "metadata": {
-          "inverse": "true"
-        }
-      },
-      {
-        "id": "7662b718-af0d-4914-a23d-6fdaa2cfd5df",
+        "id": "681356bd-9e8d-4600-91f5-c36e241d4b02",
         "type": "custom-text",
         "backgroundColor": "bgBrightBlack",
-        "customText": " of ",
+        "customText": " ",
         "merge": "no-padding"
       },
       {
-        "id": "be446ac0-c71f-4388-b3b9-66d2cba2522c",
-        "type": "context-length",
-        "backgroundColor": "bgBrightWhite",
+        "id": "4af5a355-9e3e-4eda-bff3-e48f3d8a8e9a",
+        "type": "context-percentage-usable",
+        "backgroundColor": "bgMagenta",
         "rawValue": true,
-        "merge": "no-padding"
-      },
-      {
-        "id": "97d91533-5111-4b7e-a4f4-e5f20b06ea75",
-        "type": "custom-text",
-        "backgroundColor": "bgBrightMagenta",
-        "customText": " (",
-        "merge": "no-padding"
-      },
-      {
-        "id": "19d8e8a7-8af4-46e2-bff4-3bc74119573d",
-        "type": "context-percentage",
-        "backgroundColor": "bgBrightGreen",
-        "rawValue": true,
-        "merge": "no-padding",
         "metadata": {
-          "inverse": "true"
+          "inverse": "true",
+          "display": "slider"
         }
       },
       {
-        "id": "a9e170a4-6476-425d-8c05-0bded7426147",
+        "id": "c3c3bbab-64d5-4595-8b93-ad289e1efa65",
+        "type": "compaction-counter",
+        "backgroundColor": "bgBrightYellow",
+        "metadata": {
+          "nerdFont": "true",
+          "hideZero": "true"
+        }
+      },
+      {
+        "id": "d39fd331-f8ba-4638-b963-d7bf40a6d5bb",
         "type": "custom-text",
-        "backgroundColor": "bgCyan",
-        "customText": ")"
+        "backgroundColor": "bgBrightRed",
+        "customText": "󰓅 ",
+        "merge": "no-padding"
       },
       {
         "id": "d5565303-bd10-4109-a051-284989cb7cc8",
@@ -209,20 +223,54 @@
         "rawValue": true
       },
       {
+        "id": "bb398c98-1211-4a3d-9756-a5b08489166d",
+        "type": "custom-text",
+        "backgroundColor": "bgRed",
+        "customText": " ",
+        "merge": "no-padding"
+      },
+      {
         "id": "b0f71776-3997-4160-9bb3-df5aa8281cbf",
         "type": "tokens-input",
         "backgroundColor": "bgWhite",
         "rawValue": true,
-        "merge": true
+        "merge": "no-padding"
+      },
+      {
+        "id": "5b9181ff-51cd-4267-a01c-691eb4758586",
+        "type": "custom-text",
+        "backgroundColor": "bgYellow",
+        "customText": " · ",
+        "merge": "no-padding"
       },
       {
         "id": "a678fd27-66f3-4a35-83f0-0fe384c98998",
         "type": "tokens-output",
         "backgroundColor": "bgMagenta",
         "rawValue": true
+      },
+      {
+        "id": "040e24be-b499-41a1-be6a-45680cf467b5",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightBlue",
+        "customText": " ",
+        "merge": "no-padding"
+      },
+      {
+        "id": "89e0d2cf-9a38-4f7d-8775-33379f96d294",
+        "type": "session-cost",
+        "backgroundColor": "bgBrightRed",
+        "rawValue": true
       }
     ],
     [
+      {
+        "id": "564d780d-1a56-41e5-881b-c5721993f561",
+        "type": "custom-text",
+        "backgroundColor": "bgGreen",
+        "customText": "󰕶 ",
+        "merge": "no-padding"
+      },
       {
         "id": "1694a7f4-65d4-49fa-bc7b-23bb5a3bf02f",
         "type": "weekly-reset-timer",
@@ -233,20 +281,29 @@
         }
       },
       {
+        "id": "153a65ed-d37c-429b-be49-c6dbf47f36b0",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightCyan",
+        "customText": " ",
+        "merge": "no-padding"
+      },
+      {
         "id": "49f21901-ba58-4ff3-a7eb-fa2d502f4019",
         "type": "weekly-usage",
         "backgroundColor": "bgGreen",
         "rawValue": true,
         "metadata": {
-          "display": "progress-short",
+          "display": "slider",
           "invert": "true"
         }
       },
       {
-        "id": "86f4deb8-f351-4f44-9328-322cb8846cb9",
-        "type": "session-cost",
+        "id": "gh-pat-check",
+        "type": "custom-command",
         "backgroundColor": "bgBrightBlack",
-        "rawValue": true
+        "commandPath": "[ -n \"$GITHUB_PERSONAL_ACCESS_TOKEN\" ] && printf '' || printf '' && printf ' MCP:GH'",
+        "preserveColors": false,
+        "timeout": 1000
       },
       {
         "id": "3bdf2bfe-f91e-4bb9-9943-f1f693d8d219",
@@ -254,15 +311,29 @@
         "backgroundColor": "bgRed",
         "rawValue": true,
         "metadata": {
-          "mode": "current",
+          "mode": "list",
           "hideWhenEmpty": "true"
         }
+      },
+      {
+        "id": "3234c475-8e22-4980-82da-1213bcdbb66f",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightBlack",
+        "customText": "󰜐 ",
+        "merge": "no-padding"
       },
       {
         "id": "cf6221ee-d237-4652-a47c-baab43d8242f",
         "type": "thinking-effort",
         "backgroundColor": "bgBrightRed",
         "rawValue": true
+      },
+      {
+        "id": "9f296607-02bf-4a1f-829d-e9abca581eb5",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightCyan",
+        "customText": "󰧑 ",
+        "merge": "no-padding"
       },
       {
         "id": "3ca4dad0-29a3-45f3-931c-e89d35666c2d",
@@ -278,6 +349,7 @@
   "defaultPadding": " ",
   "inheritSeparatorColors": false,
   "globalBold": false,
+  "gitCacheTtlSeconds": 5,
   "minimalistMode": false,
   "powerline": {
     "enabled": true,
