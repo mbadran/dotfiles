@@ -74,6 +74,7 @@ dotfiles/
 | page/init.lua           | Neovim-based pager for less/man/more                            |
 | starship.toml           | Starship prompt — Catppuccin Macchiato                          |
 | zed/settings.json       | Zed GUI editor                                                  |
+| zsh/.zshenv             | System-wide env — XDG base dirs + ZDOTDIR; `/etc/zshenv` symlinks here |
 | zsh/.zprofile           | Login shell — brew shellenv, Homebrew env vars                  |
 | zsh/.zshrc              | Interactive shell — vi-mode, plugins, aliases, pager wiring     |
 
@@ -216,7 +217,7 @@ longer-term AI memory, additional tool customization. Phase 3 closed.
 - [ ] **4.14** Migrate off Workona — paid Chrome workspace manager; want a free alternative or a browser-native equivalent. Options to evaluate: Arc spaces, native Chrome profiles + tab groups, Vivaldi sessions, Floccus + bookmark folders, or roll our own with a lightweight extension. Constraint: must preserve per-project tab sets that survive restart and switch context with one shortcut. Goal: same daily ergonomics, no subscription.
 - [ ] **4.15** Starship cross-line integration — **NEXT SESSION (low-hanging fruit, do first).** Current prompt's two lines feel like two prompts. Make them visually continuous like the fish-prompt-style starship configs out there (connector glyph from line 1 → line 2, shared palette, no double-cap). Reference: the fish starship config repo mentioned in conversation. Use `mb-starship-powerline-glyph-edit` skill when touching glyphs.
 - [ ] **4.16** Clean up and publish my starship theme — **NEXT SESSION (paired with 4.15).** Open question to resolve first: what actually constitutes a publishable starship "theme/preset"? Is it a separate repo, or just our `starship.toml` offered upstream to the starship project as a preset PR? Research how starship presets are packaged/contributed, then decide the delivery shape.
-- [ ] **4.17** Version control my host-wide /etc/zshenv (for reference on other machines)
+- [x] **4.17** Version control my host-wide /etc/zshenv — **DONE.** The host-wide file *is* the tracked `.config/zsh/.zshenv` (sets XDG base dirs + `ZDOTDIR` before any zsh loads); `/etc/zshenv` is a root-owned symlink to it. Reproduce on a new machine with `sudo ln -s ~/.config/zsh/.zshenv /etc/zshenv` (the file header also documents the per-user `~/.zshenv` alternative).
 - [x] **4.18** User-skill cleanup — renamed `mb-formatting` → `mb-styleguide` (expanded with coding-style + config-comment "no waffle" rules) and `mb-bdd-playwright` → `mb-bdd-tdd`; references updated across AGENTS.md and PRD.
 
 ### Phase 5: Local automation hub (n8n on Randori)
