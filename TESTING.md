@@ -119,7 +119,8 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 
 - [ ] `cd ~` -- splashboard renders with home dashboard layout
 - [ ] `cd` into a project dir -- splashboard renders project layout (commits, PRs, issues)
-- [ ] If `GH_TOKEN` is unset: splashboard surfaces a clear "missing token" error (PRD 3.23)
+- [ ] Project dashboard GitHub widgets (stars/PRs/issues/languages) populate -- token from gitignored `~/.splashboard/secrets.toml` (`GITHUB_TOKEN = "..."`), exported to env at startup, not from the shell
+- [ ] First entry to a repo is slow (cold cache: ~8 GitHub calls + 5s wait); subsequent loads fast (warm cache, long TTLs)
 - [ ] `~/.config/splashboard/cache/` is gitignored (lots of `<source>-<hash>.json` files; safe to delete, regenerates)
 
 ## claudebar
@@ -148,6 +149,13 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 ## macmon
 
 - [ ] `macmon` -- TUI opens with sparkline view, green color, 1s refresh
+
+## github auth (host-local)
+
+- [ ] Open a new terminal -- NO 1Password/Touch ID prompt (no eager `op read` at shell init)
+- [ ] `alias cccs` -- shows the single-quoted form (`op read` deferred to invocation, not definition)
+- [ ] Run `cccs` -- triggers ONE Touch ID, launches Claude with the speedoku PAT in its process env only
+- [ ] In a project: github MCP reads work silently (user-scope allow); a github MCP write prompts unless the repo's `.claude/settings.local.json` allows it (writes governed per-project)
 
 ## git
 
