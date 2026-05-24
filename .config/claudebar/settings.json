@@ -1,5 +1,6 @@
 {
   "app" : {
+    "menuBarPercentageEnabled" : true,
     "themeMode" : "cli",
     "userHasChosenTheme" : true
   }
