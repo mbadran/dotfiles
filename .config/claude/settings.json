@@ -2,7 +2,7 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "WebFetch(domain:*)",
+      "WebFetch",
       "Bash(git status)",
       "Bash(git status:*)",
       "Bash(git diff)",
@@ -23,7 +23,6 @@
       "Bash(git stash show*)",
       "Bash(git config:*)",
       "Bash(git -c:*)",
-      "Bash(git -C *)",
       "Bash(git check-ignore:*)",
       "Bash(git fetch:*)",
       "Bash(git pull --ff-only*)",
@@ -92,7 +91,9 @@
       "Skill(update-config)",
       "mcp__plugin_github_github__list_*",
       "mcp__plugin_github_github__get_*",
-      "mcp__plugin_github_github__search_*"
+      "mcp__plugin_github_github__search_*",
+      "mcp__plugin_github_github__issue_read",
+      "mcp__plugin_github_github__pull_request_read"
     ],
     "deny": [
       "Bash(gh)",
@@ -186,6 +187,15 @@
             "command": "npx -y ccstatusline@latest --hook"
           }
         ]
+      },
+      {
+        "_tag": "ccstatusline-managed",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx -y ccstatusline@latest --hook"
+          }
+        ]
       }
     ],
     "PreToolUse": [
@@ -197,6 +207,16 @@
             "command": "npx -y ccstatusline@latest --hook"
           }
         ]
+      },
+      {
+        "_tag": "ccstatusline-managed",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx -y ccstatusline@latest --hook"
+          }
+        ],
+        "matcher": "Skill"
       }
     ]
   },
@@ -224,7 +244,11 @@
     "claude-code-setup@claude-plugins-official": true,
     "vercel@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "remember@claude-plugins-official": true
+    "remember@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "expo@claude-plugins-official": true
   },
   "effortLevel": "xhigh",
   "theme": "dark-daltonized",
