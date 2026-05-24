@@ -39,6 +39,7 @@ working/
 # app-managed configs (not handcrafted)
 .config/qBittorrent/
 .config/raycast/
+.config/raycast-x/
 
 # claude -- track settings.json and skills/; ignore everything else (settings.local.json, agents/, etc.)
 .claude/*
