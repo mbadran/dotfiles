@@ -107,10 +107,37 @@ rg "TODO|FIXME" --glob "*.{md,lua,toml,zsh,conf,json,sh,env}" -n
 
 ## Claude permissions review
 
-At each phase polish step, review `.claude/settings.json` for gaps:
-- Any command that prompted for approval during the phase should be added to `allow` with a wildcard
-- Goal: zero approval prompts for read-only and routine operations
-- Keep `ask` for destructive operations (push, force reset, rm)
+This repo's `.claude/settings.json` is **project scope**. It composes with
+user-scope (`~/.config/claude/settings.json`) per the tier model documented
+in `~/.config/claude/AGENTS.md` "Permission tiering at user scope". Read
+that section before touching either file — wrong-tiering is the silent
+failure mode.
+
+User-scope already does the heavy lifting:
+- `deny` — absolute backstops (`rm -rf /` family, supply-chain pipes,
+  force-push to `main`/`master`, `mkfs`, etc.). Cannot be overridden here.
+- `ask` — genuinely irreversible (`git clean`, `git stash drop`/`clear`,
+  `git filter-branch`/`filter-repo`, `git reflog expire`, `npm publish`).
+  Always prompts, regardless of any project rule.
+- silent — recoverable destructive ops (`git rm`, `git restore`,
+  `git reset --hard`, branch/tag deletes, `git checkout`, `git rebase`,
+  `cp`/`mv`/`rm`, `npm install`/`uninstall`, `npx`, `brew install`/`upgrade`).
+  Falls through to default prompt **unless this project pre-`allow`s them**.
+
+At each phase polish step, review `.claude/settings.json`:
+- Any **read-only** or **routine** op that prompted during the phase →
+  add to `allow` (the standard "no-friction" goal).
+- Any **recoverable destructive** op (above list) you want to run unattended
+  in this trusted repo → add to project-scope `allow`. Do NOT push it back
+  up to user scope — that would let every project skip the prompt.
+- Any **op that's currently silent at user scope and the right move is to
+  prompt here** → add to project-scope `ask`. (Example today: `git push` —
+  user scope is silent, project gates it.)
+- Never add to user-scope `ask` from here — `ask` at user scope blocks every
+  project's `allow` for the same tool.
+
+Goal: zero approval prompts for routine ops; explicit project `ask` only on
+ops that genuinely warrant a per-run confirmation in this repo.
 
 ## Starship toml
 

@@ -88,13 +88,70 @@ Applying that rule to the two GitHub surfaces:
   `.claude/settings.local.json` (typically `allow` create/update, `ask` for push
   and destructive ops). If a gh MCP write blocks, fix it in the *project's*
   settings, never user scope.
-- **git CLI (`git ...` via Bash): governed at user scope.** Only `git add` and
-  `git commit` are pre-allowed. `git push` is **`ask`-gated at project scope** —
-  each repo's `.claude/settings.json` holds the push rules (not user scope, so
-  the project can self-govern). Destructive ops (`reset --hard`, `clean`, branch
-  deletes, history rewrites) remain `ask` at user scope.
+- **git CLI (`git ...` via Bash): tiered per the model below.** `git add` and
+  `git commit` are user-scope `allow` (high-frequency, safe). `git push` is
+  silent at user scope, gated at project scope so each repo self-governs.
+  Recoverable destructive ops (`reset --hard`, `restore`, `rm`, `mv`, branch
+  deletes, `checkout`, `rebase`) are silent at user scope so trusted projects
+  can `allow` them. Genuinely irreversible ops (`git clean`, `stash clear`/`drop`,
+  `filter-branch`/`filter-repo`, `reflog expire`) stay user-scope `ask`.
+  Force-push to `main`/`master` and `--delete` of those refs sit at user `deny`.
   **Never use `mcp__plugin_github_github__push_files`** — it creates orphaned
   commits that diverge from local history; it is denied at user scope.
+
+## Permission tiering at user scope
+
+The cleanest way to use the precedence above is to deliberately choose which
+tier each rule belongs in. Wrong-tiering at user scope is the silent failure
+mode: a user-scope `ask` on a recoverable op blocks every project that tried
+to pre-`allow` it; a missing user-scope `deny` on a catastrophic op leaves
+the project free to opt in (or a prompt-injected tool call free to ask).
+
+Four tiers, in order from most to least restrictive:
+
+| Tier             | What lives here                                   | Effect                                                          |
+| ---------------- | ------------------------------------------------- | --------------------------------------------------------------- |
+| **user `deny`**  | Never, anywhere — no legitimate use case          | Blocked everywhere. Absolute backstop, not overridable downstream |
+| **user `ask`**   | Genuinely irreversible — confirm even in trusted repos | Always prompts. Use sparingly; reserve for ops with no recovery path |
+| **user silent** | Recoverable destructive — `git rm`, `reset --hard`, `cp`/`mv`/`rm`, deps | Falls through to default prompt; project `allow` can opt in to silent run |
+| **project `allow`** | Per-repo opt-ins for trusted, high-delegation repos | Runs unattended in that repo only                              |
+
+**The recoverable/irreversible test for each rule:** if the op were run by
+accident, could the work be brought back from reflog, stash, backup, or a
+re-fetch — within minutes, no contact with anyone else? If yes, it's
+recoverable → user silent. If no (truly gone, or already public — published
+package, force-pushed history visible to others), it's irreversible → user
+`ask`. If it has no recovery path *and* no legitimate use case anywhere
+(`rm -rf /`, `mkfs`, force-push to `main`), it's `deny`.
+
+**Categories that belong at user `deny`** (the absolute backstops):
+
+- Filesystem destruction: `rm -rf /`, `rm -rf /*`, `rm -rf ~`, `rm -rf ~/*`,
+  `rm -rf $HOME*`, `rm -rf /etc*`, `rm -rf /usr*`, `rm -rf /System*`,
+  `sudo rm -rf:*`
+- Raw disk / filesystem overwrite: `mkfs:*`, `dd of=/dev/*`, `dd if=* of=/dev/*`
+- Supply-chain pipes (prompt-injection vector): `curl * | sh*`/`bash*`/`zsh*`,
+  `curl * | sudo *`, `wget * | sh*`/`bash*`/`zsh*`
+- Force-push or delete of protected refs (`main`, `master`): `git push * --force* main:*`
+  and equivalent flag orderings (`-f` short form, `--force` before remote,
+  `--delete main`, colon-form `:main` delete)
+- GitHub MCP write tools that bypass git history: `mcp__plugin_github_github__push_files`
+- Whatever destructive `gh` CLI might attempt — `gh` is fully denied; use git
+  + GitHub MCP instead
+
+**`sudo` itself is NOT denied** — it has legitimate uses (e.g. installing
+`/etc/zshenv`). Only `sudo` combined with catastrophic ops (`sudo rm -rf:*`,
+`curl ... | sudo *`) sits in deny.
+
+**`--force-with-lease` to `main`/`master` is denied alongside `--force`** —
+it's the *safer* force-push, but on a default branch it's still rewriting
+shared history; not an acceptable unattended op anywhere.
+
+**When a recoverable op stalls on the default prompt and you want it silent
+in a trusted repo, the fix is a *project* `allow`, not a user-scope change.**
+The whole point of leaving recoverable ops silent at user scope is to let
+projects self-govern. Pushing them back up to user-scope `allow` would
+expose every project to the same delegation.
 
 ## Credentials and secrets
 

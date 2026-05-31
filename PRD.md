@@ -220,36 +220,7 @@ longer-term AI memory, additional tool customization. Phase 3 closed.
 - [x] **4.17** Version control my host-wide /etc/zshenv — **DONE.** The host-wide file *is* the tracked `.config/zsh/.zshenv` (sets XDG base dirs + `ZDOTDIR` before any zsh loads); `/etc/zshenv` is a root-owned symlink to it. Reproduce on a new machine with `sudo ln -s ~/.config/zsh/.zshenv /etc/zshenv` (the file header also documents the per-user `~/.zshenv` alternative).
 - [x] **4.18** User-skill cleanup — renamed `mb-formatting` → `mb-styleguide` (expanded with coding-style + config-comment "no waffle" rules) and `mb-bdd-playwright` → `mb-bdd-tdd`; references updated across AGENTS.md and PRD.
 - [ ] **4.19** Move `~/Documents/projects/` → `~/projects/` — unnecessary typing and path depth. Steps: move the dir, update any hardcoded refs (zshrc, aliases, AGENTS.md, splashboard config, op env files, shell history is fine). Verify Claude Code project paths (stored under `~/.claude/projects/` encoded from abs path) — may need to re-open projects once to re-index. Low risk, do in one shot.
-- [ ] **4.20** Update claude settings in user/project to follow the advice below. **Partial progress (this checkpoint):** `git push` moved from user `ask` to project `ask`; `mcp__plugin_github_github__push_files` added to user `deny`. **Remaining:** strip recoverable ops out of user `ask` so they fall through to the default prompt (`git rm`, `git restore`, `git reset`/`reset --hard`, `git rebase`, `git checkout`, `git mv`, branch deletes, `cp`/`mv`/`rm`, `npm`/`node`); keep only genuinely irreversible ops at user `ask` (`git clean`, `git stash clear`/`drop`, history rewrites); add absolute backstops at user `deny` (`git push --force* main`, `rm -rf ~`). Treat as a focused session — full audit, not piecemeal.
-
-```
- (b) Reverse least-privilege at user scope is asking for trouble, for three compounding reasons:
-
-    1. It fails unsafe. Least-privilege fails closed (a stall — annoying but harmless). Allow-by-default fails open: any project you haven't gotten around to writing a
-    deny-list for inherits the permissive defaults, and a destructive op runs silently, with no prompt. The blast radius is "every project," and the failure is invisible
-    until after the damage.
-    2. Deny-lists are unbounded; allow-lists are bounded. With allow-per-project you enumerate the handful of things you want. With deny-per-project you have to
-    anticipate everything bad — and keep each project's list current as new dangerous ops (or new phrasings) appear. You will miss one.
-    3. Deny-lists are leaky against rephrasing. Permission matching is pattern-based. A narrow deny on git rm doesn't stop rm, find … -delete, or a script that does the
-    same thing. An allow-list doesn't have this hole — anything not explicitly allowed still prompts.
-
-    The structure that actually gives you what you want — per-project delegation without global permissiveness — exploits one distinction: an explicit user ask is sticky
-    (unoverridable downstream), but the implicit default prompt (when no rule matches) is overridable by a project allow. So tier your user scope:
-
-    - user deny — never, anywhere: rm -rf ~, force-push to main, anything touching secrets. Absolute backstop.
-    - user ask — always confirm regardless of project: genuinely irreversible ops (force-push, history rewrites, db drop). Reserve this for things you'd want to confirm
-    even in your most-trusted repo.
-    - user: say nothing about the merely-destructive-but-recoverable ops (git rm, git restore, git reset --hard on a feature branch). They fall through to the default
-    prompt — safe everywhere by default.
-    - project allow — opt these in for the high-delegation repos. Because user scope is silent on them (not ask), the project allow wins and they run unattended.
-
-    That keeps fail-safe defaults globally, makes the delegation convenience an explicit per-project opt-in, and avoids ever maintaining a deny-list. The fix to your
-    stalling problem isn't "allow globally" — it's "stop pinning the recoverable ops to user-scope ask so a project is free to allow them." git rm in particular doesn't
-    belong in user ask at all; it's recoverable and a textbook tier-3/4 candidate.
-
-    (Regarding the gh-MCP push question in your message header — same logic applies: if you want a trusted project to push via the MCP tool unattended, the win is to not
-    have a user-scope ask on that tool, then allow it in that project; not to allow it everywhere and claw it back.)
-```
+- [x] **4.20** Update claude settings in user/project to follow the advice below. **DONE.** User-scope `ask` stripped down to 7 genuinely-irreversible ops (`git clean`, `git stash clear`/`drop`, `git filter-branch`/`filter-repo`, `git reflog expire`, `npm publish`); recoverable destructive ops fall through to the default prompt (project `allow` can opt in). User-scope `deny` expanded to 37 absolute backstops covering filesystem destruction (`rm -rf /` family, `sudo rm -rf:*`), raw disk overwrite (`mkfs`, `dd of=/dev/*`), supply-chain pipes (`curl/wget | sh/bash/zsh`, `curl | sudo`), force-push and `--delete` of `main`/`master` (covering `--force`, `--force-with-lease`, `-f`, both flag orderings, colon-form delete), plus the existing `gh:*` and `push_files` MCP block. Four-tier model (user `deny` / user `ask` / user silent / project `allow`) and the recoverable/irreversible test are documented in `~/.config/claude/AGENTS.md` "Permission tiering at user scope". This project's `AGENTS.md` "Claude permissions review" points to that section and tells future sessions when to add project `allow`/`ask` vs. when to leave well alone.
 
 ### Phase 5: Local automation hub (n8n on Randori)
 
