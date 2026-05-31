@@ -7,7 +7,11 @@ description: Use when about to run `git commit` in the dotfiles repo, when draft
 
 ## Overview
 
-Mo's personal commit discipline for the dotfiles repo. Four rules, applied in order: message style → scope → pre-commit hygiene → push restraint.
+Dotfiles-specific overlay on top of the user-scope `mb-committing` skill. **Load `mb-committing` first**, then apply the overrides below. Where these rules conflict with `mb-committing`, this file wins — dotfiles is the exception repo.
+
+**Base rules from `mb-committing` that still apply:** no Co-Authored-By, push restraint (never push without explicit instruction).
+
+**Overrides from this file:** message style (natural language, not conventional commits), scope discipline, pre-commit hygiene.
 
 ## Message style
 

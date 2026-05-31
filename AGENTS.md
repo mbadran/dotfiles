@@ -48,7 +48,11 @@ This clears all aliases for that call. The scripts in `scripts/hooks/session/` a
 
 ## Commit style
 
-When about to `git commit` in this repo, load the `mb-dotfiles-committing` skill from `.claude/skills/` — covers message style, scope, pre-commit hygiene, and push restraint.
+When about to `git commit` in this repo:
+1. Load the user-scope `mb-committing` skill (base rules: push restraint, no Co-Authored-By)
+2. Then load `mb-dotfiles-committing` from `.claude/skills/` — overrides message style to natural-language sentences (not conventional commits), adds scope and pre-commit hygiene rules
+
+The dotfiles repo intentionally does **not** use Conventional Commits. `mb-dotfiles-committing` wins on any style conflict.
 
 ## Editing style
 

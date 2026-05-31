@@ -168,7 +168,14 @@ action before it executes.
 
 - **Never push without explicit user instruction.** Commit freely, then stop. Wait for the user to say "push" (or equivalent).
 - **No `Co-Authored-By:` lines** in commits unless explicitly requested.
-- For project-specific commit message style and pre-commit hygiene, see the project's AGENTS.md and any project skills (e.g. `committing-<project>-mo`).
+- **Commit style:** load the `mb-committing` skill before committing. Default is Conventional Commits (`type(scope): description`). Exception: the dotfiles repo uses its own natural-language style — load `mb-dotfiles-committing` there instead.
+- For project-specific pre-commit hygiene, see the project's AGENTS.md.
+
+## Communication shorthands
+
+| Word | Meaning |
+|---|---|
+| `roger` | "I agree, good plan, carry on" — proceed without further confirmation |
 
 ## Editing discipline
 
@@ -217,6 +224,7 @@ a skill, not in working context.
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `mb-styleguide`      | Mo's style preferences: Markdown tables/headers/prose/trailing-ws, coding style, and config-file comments (terse, no waffle)             |
 | `mb-bdd-tdd`         | Writing/editing Playwright (`*.spec.ts`) or Cypress (`*.cy.ts`) E2E tests in Mo's Gherkin-flavored dialect, or porting Cypress→Playwright |
+| `mb-committing`      | About to run `git commit` in any repo. Default: Conventional Commits. Exception: dotfiles repo loads `mb-dotfiles-committing` instead.   |
 
 Project-specific skills live in `<repo>/.claude/skills/` and load only when
 working in that repo.
