@@ -216,10 +216,40 @@ longer-term AI memory, additional tool customization. Phase 3 closed.
 - [-] ~~**4.13** `remember` plugin SessionStart hook chicken-and-egg~~ — SKIP: local workaround (mkdir-p SessionStart hook + gitignored `.remember/`) fully neutralises the error here, so it no longer affects this setup. Filing the upstream PR at `Digital-Process-Tools/claude-remember` isn't worth the effort for a cosmetic first-run stderr message; dropped.
 - [ ] **4.14** Migrate off Workona — paid Chrome workspace manager; want a free alternative or a browser-native equivalent. Options to evaluate: Arc spaces, native Chrome profiles + tab groups, Vivaldi sessions, Floccus + bookmark folders, or roll our own with a lightweight extension. Constraint: must preserve per-project tab sets that survive restart and switch context with one shortcut. Goal: same daily ergonomics, no subscription.
 - [x] **4.15** Starship cross-line integration — **DONE.** Added tide-style `╭─`/`╰─` connectors (overlay0) making the two lines visually continuous. Also: floating transparent OS logo at far right, surface0 rounded pill cap before it, trailing space padding on time segment.
-- [ ] **4.16** Clean up and publish my starship theme — **NEXT SESSION (paired with 4.15).** Open question to resolve first: what actually constitutes a publishable starship "theme/preset"? Is it a separate repo, or just our `starship.toml` offered upstream to the starship project as a preset PR? Research how starship presets are packaged/contributed, then decide the delivery shape.
+- [-] ~~**4.16** Clean up and publish my starship theme~~ — SUPERSEDED by Phase 6 (Barista). The open question — separate repo vs. upstream preset PR — got answered: contribute as an upstream community preset. Full delivery plan lives in Phase 6.
 - [x] **4.17** Version control my host-wide /etc/zshenv — **DONE.** The host-wide file *is* the tracked `.config/zsh/.zshenv` (sets XDG base dirs + `ZDOTDIR` before any zsh loads); `/etc/zshenv` is a root-owned symlink to it. Reproduce on a new machine with `sudo ln -s ~/.config/zsh/.zshenv /etc/zshenv` (the file header also documents the per-user `~/.zshenv` alternative).
 - [x] **4.18** User-skill cleanup — renamed `mb-formatting` → `mb-styleguide` (expanded with coding-style + config-comment "no waffle" rules) and `mb-bdd-playwright` → `mb-bdd-tdd`; references updated across AGENTS.md and PRD.
 - [ ] **4.19** Move `~/Documents/projects/` → `~/projects/` — unnecessary typing and path depth. Steps: move the dir, update any hardcoded refs (zshrc, aliases, AGENTS.md, splashboard config, op env files, shell history is fine). Verify Claude Code project paths (stored under `~/.claude/projects/` encoded from abs path) — may need to re-open projects once to re-index. Low risk, do in one shot.
+- [ ] **4.20** Update claude settings in user/project to follow the advice below. **Partial progress (this checkpoint):** `git push` moved from user `ask` to project `ask`; `mcp__plugin_github_github__push_files` added to user `deny`. **Remaining:** strip recoverable ops out of user `ask` so they fall through to the default prompt (`git rm`, `git restore`, `git reset`/`reset --hard`, `git rebase`, `git checkout`, `git mv`, branch deletes, `cp`/`mv`/`rm`, `npm`/`node`); keep only genuinely irreversible ops at user `ask` (`git clean`, `git stash clear`/`drop`, history rewrites); add absolute backstops at user `deny` (`git push --force* main`, `rm -rf ~`). Treat as a focused session — full audit, not piecemeal.
+
+```
+ (b) Reverse least-privilege at user scope is asking for trouble, for three compounding reasons:
+
+    1. It fails unsafe. Least-privilege fails closed (a stall — annoying but harmless). Allow-by-default fails open: any project you haven't gotten around to writing a
+    deny-list for inherits the permissive defaults, and a destructive op runs silently, with no prompt. The blast radius is "every project," and the failure is invisible
+    until after the damage.
+    2. Deny-lists are unbounded; allow-lists are bounded. With allow-per-project you enumerate the handful of things you want. With deny-per-project you have to
+    anticipate everything bad — and keep each project's list current as new dangerous ops (or new phrasings) appear. You will miss one.
+    3. Deny-lists are leaky against rephrasing. Permission matching is pattern-based. A narrow deny on git rm doesn't stop rm, find … -delete, or a script that does the
+    same thing. An allow-list doesn't have this hole — anything not explicitly allowed still prompts.
+
+    The structure that actually gives you what you want — per-project delegation without global permissiveness — exploits one distinction: an explicit user ask is sticky
+    (unoverridable downstream), but the implicit default prompt (when no rule matches) is overridable by a project allow. So tier your user scope:
+
+    - user deny — never, anywhere: rm -rf ~, force-push to main, anything touching secrets. Absolute backstop.
+    - user ask — always confirm regardless of project: genuinely irreversible ops (force-push, history rewrites, db drop). Reserve this for things you'd want to confirm
+    even in your most-trusted repo.
+    - user: say nothing about the merely-destructive-but-recoverable ops (git rm, git restore, git reset --hard on a feature branch). They fall through to the default
+    prompt — safe everywhere by default.
+    - project allow — opt these in for the high-delegation repos. Because user scope is silent on them (not ask), the project allow wins and they run unattended.
+
+    That keeps fail-safe defaults globally, makes the delegation convenience an explicit per-project opt-in, and avoids ever maintaining a deny-list. The fix to your
+    stalling problem isn't "allow globally" — it's "stop pinning the recoverable ops to user-scope ask so a project is free to allow them." git rm in particular doesn't
+    belong in user ask at all; it's recoverable and a textbook tier-3/4 candidate.
+
+    (Regarding the gh-MCP push question in your message header — same logic applies: if you want a trusted project to push via the MCP tool unattended, the win is to not
+    have a user-scope ask on that tool, then allow it in that project; not to allow it everywhere and claw it back.)
+```
 
 ### Phase 5: Local automation hub (n8n on Randori)
 
@@ -236,31 +266,41 @@ longer-term AI memory, additional tool customization. Phase 3 closed.
 - [ ] **5.5** Evaluate macOS Shortcuts app vs n8n for scheduled work — Shortcuts is lighter, OS-native, no Docker daemon, automatic on login/wake. Limitations: no real container, weaker logging, opaque failure modes. Trial scope: re-implement the hourly brew workflow (5.2) as a Shortcut and run both in parallel for a week. Decision: if Shortcuts is reliable enough, retire n8n plans (5.1, 5.6) before they're built; otherwise stick with n8n. Risk: Shortcuts can break across macOS updates.
 - [ ] **5.6** Park phase — n8n hub exists, brew is on autopilot, project-entry verifies it. Move on. Future automations append as new sub-tasks here.
 
-### Phase 6: morsel
+### Phase 6: Barista — publish starship theme
 
-- [ ] **6.1** Replace starship Python morse code block with `morsel` CLI calls
-- [ ] **6.2** Polish
+> Clean up and publish the Barista Catppuccin Macchiato starship theme as a community preset PR to the upstream `starship/starship` repo. Two blockers before starting: (1) needs internal testing on a new host (Franken) to validate SSH, hostname, and other segments not battle-tested on Randori, (2) needs headspace for writing a decent README and engaging with upstream review. Park until both blockers clear.
 
-### Phase 7: aloha
+- [ ] **6.1** Clean up `starship.toml` for publication — remove `custom.anchor` morse placeholder (replace with a generic varying-output example or drop entirely), strip morsel design notes, tighten comments to public-facing quality
+- [ ] **6.2** Test all four Catppuccin palette variants (mocha, latte, frappe, macchiato) — screenshot each, confirm no rendering regressions
+- [ ] **6.3** Test on Franken — SSH segment, hostname, user segment, error state, multi-language segments (node, python, rust)
+- [ ] **6.4** Write README — name ("Barista"), screenshot(s), install instructions (`starship preset <name> | tee ~/.config/starship.toml`-style), palette note
+- [ ] **6.5** Fork `starship/starship`, add theme as a preset, open PR — self-host as fallback if not merged
 
-- [ ] **7.1** Replace zsh login/logout message with `aloha` CLI calls
+### Phase 7: morsel
+
+- [ ] **7.1** Replace starship Python morse code block with `morsel` CLI calls
 - [ ] **7.2** Polish
 
-### Phase 8: neopager
+### Phase 8: aloha
 
-- [ ] **8.1** Replace `page` + neovim pager with `neopager`
+- [ ] **8.1** Replace zsh login/logout message with `aloha` CLI calls
 - [ ] **8.2** Polish
 
-### Phase 9: pangram
+### Phase 9: neopager
 
-- [ ] **9.1** Build `pangram` Rust CLI (separate repo)
-- [ ] **9.2** Polish — wire any dotfile integration that emerges
+- [ ] **9.1** Replace `page` + neovim pager with `neopager`
+- [ ] **9.2** Polish
+
+### Phase 10: pangram
+
+- [ ] **10.1** Build `pangram` Rust CLI (separate repo)
+- [ ] **10.2** Polish — wire any dotfile integration that emerges
 
 ---
 
 ## Planned TUI tools
 
-> **Cross-cutting idea (Rust phases 6-9).** Each of `morsel`, `aloha`, `neopager`, `pangram` is designed standalone first — but they share a latent shape: tiny terminal surfaces that surface a bite-sized fragment of knowledge (a morse character, a greeting/aphorism, a paged passage, a pangram). Worth exploring whether they can compose into an overarching **shell-startup spaced-repetition framework**: every new shell instance offers an opportunity to memorise or revise one fragment from any of these knowledge areas. Integration targets: `splashboard` widgets, `starship` prompt blocks, `.zlogin`/`.zlogout` hooks. Keep each tool independently useful; design the composability as an optional layer (a thin orchestrator that picks one tool per shell-start based on a spaced-repetition schedule).
+> **Cross-cutting idea (Rust phases 7-10).** Each of `morsel`, `aloha`, `neopager`, `pangram` is designed standalone first — but they share a latent shape: tiny terminal surfaces that surface a bite-sized fragment of knowledge (a morse character, a greeting/aphorism, a paged passage, a pangram). Worth exploring whether they can compose into an overarching **shell-startup spaced-repetition framework**: every new shell instance offers an opportunity to memorise or revise one fragment from any of these knowledge areas. Integration targets: `splashboard` widgets, `starship` prompt blocks, `.zlogin`/`.zlogout` hooks. Keep each tool independently useful; design the composability as an optional layer (a thin orchestrator that picks one tool per shell-start based on a spaced-repetition schedule).
 
 ### morsel
 
