@@ -10,10 +10,13 @@ Verification checklists for dotfiles changes. The goal is not to break the shell
 ## starship
 
 - [ ] Open a new terminal tab (don't just source -- starship caches)
+- [ ] Left prompt renders: `╭─` connector on line 1, `╰─` on line 2 above `▶` character
 - [ ] Left prompt renders: directory, git branch, git status, shell indicator
-- [ ] Right prompt renders: time, OS icon, language versions (cd into a project)
+- [ ] Right prompt renders: colored chevrons ending in surface0 pill cap, then floating transparent OS icon in gap at right edge
+- [ ] Right prompt: gap between pill cap and OS icon visible regardless of terminal width
 - [ ] `cd` into a git repo -- branch/status segment appears
 - [ ] `cd /tmp` -- git segments disappear cleanly
+- [ ] Error exit: `▶` becomes `◀`, right prompt shows red error segment
 - [ ] `starship explain` -- all modules recognised
 
 ### docker context

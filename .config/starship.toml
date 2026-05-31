@@ -8,11 +8,11 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 scan_timeout = 250          # for scanning files
-command_timeout = 2000      # for executing commands
+command_timeout = 5000      # for executing commands
 
 # left prompt -- minimal -- key details often referred to
 format = """
-[╭╴](fg:overlay0)\
+[╭─](fg:overlay0)\
 [](fg:blue)\
 $directory\
 [](bg:teal fg:blue)\
@@ -27,12 +27,11 @@ $shell\
 $shlvl\
 [](fg:lavender)\
 $line_break\
-[╰╴](fg:overlay0)\
+[╰─](fg:overlay0)\
 $character"""
 
 # right prompt -- broader -- supplementary details less referred to
 right_format = """
-[╭╴](fg:overlay0)\
 [](mantle)\
 $custom\
 [](bg:mantle fg:blue)\
@@ -61,8 +60,9 @@ $hostname\
 $cmd_duration\
 [](bg:surface1 fg:surface0)\
 $time\
+[](fg:surface0)\
 $os\
-[](fg:surface0)"""
+"""
 
 palette = "catppuccin_macchiato"
 
@@ -140,7 +140,7 @@ vimcmd_symbol = "[](fg:green)"
 
 [os]
 disabled = false
-style = "bg:surface0 fg:subtext1"
+style = "fg:subtext1"
 format = "[ $symbol ]($style)"
 
 [os.symbols]
@@ -169,7 +169,7 @@ Windows = ""
 disabled = false
 time_format = "%R"
 style = "bg:surface0 fg:subtext1"
-format = "[ $time]($style)"
+format = "[ $time ]($style)"
 
 [cmd_duration]
 disabled = false
