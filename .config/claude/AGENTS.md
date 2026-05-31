@@ -89,9 +89,12 @@ Applying that rule to the two GitHub surfaces:
   and destructive ops). If a gh MCP write blocks, fix it in the *project's*
   settings, never user scope.
 - **git CLI (`git ...` via Bash): governed at user scope.** Only `git add` and
-  `git commit` are pre-allowed. Everything touching a remote (`git push`) or
-  destructive (`reset --hard`, `clean`, branch deletes, history rewrites) stays
-  `ask`/`deny`. **Remote git goes through the GitHub MCP, not `git push`.**
+  `git commit` are pre-allowed. `git push` is **`ask`-gated at project scope** —
+  each repo's `.claude/settings.json` holds the push rules (not user scope, so
+  the project can self-govern). Destructive ops (`reset --hard`, `clean`, branch
+  deletes, history rewrites) remain `ask` at user scope.
+  **Never use `mcp__plugin_github_github__push_files`** — it creates orphaned
+  commits that diverge from local history; it is denied at user scope.
 
 ## Credentials and secrets
 
